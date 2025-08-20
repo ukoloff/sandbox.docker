@@ -2,7 +2,7 @@ name: dev
 
 services:
   dev:
-    image: alpine
+    image: node:lts-alpine
     working_dir: /repo
     command:
       - sleep
