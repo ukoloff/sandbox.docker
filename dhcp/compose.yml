@@ -1,0 +1,15 @@
+name: dhcp
+
+services:
+  daemon:
+    image: busybox:musl
+    network_mode: host
+    command:
+      - udhcpd
+      - -f
+    volumes:
+      - etc:/etc
+      - leases:/var/lib/misc
+volumes:
+  etc:
+  leases:
