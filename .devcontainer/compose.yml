@@ -1,0 +1,15 @@
+name: dev
+
+services:
+  dev:
+    image: alpine
+    working_dir: /repo
+    command:
+      - sleep
+      - infinity
+    stop_signal: SIGKILL
+    volumes:
+      - repo:/repo
+
+volumes:
+  repo:
