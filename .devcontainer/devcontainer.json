@@ -12,8 +12,21 @@
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
   // Use 'postCreateCommand' to run commands after the container is created.
-  "onCreateCommand": "apk add git",
-  "postCreateCommand": "git clone https://github.com/ukoloff/sandbox.docker.git .",
+  "onCreateCommand": {
+    "apk": [
+      "apk",
+      "add",
+      "git"
+    ]
+  },
+  "postCreateCommand": {
+    "clone": [
+      "git",
+      "clone",
+      "https://github.com/ukoloff/sandbox.docker.git",
+      "."
+    ]
+  },
   // "postCreateCommand": "yarn install",
   // Configure tool-specific properties.
   // "customizations": {},
