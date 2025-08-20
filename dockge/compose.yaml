@@ -1,9 +1,14 @@
 services:
   dockge:
     image: louislam/dockge:1
-    restart: unless-stopped
+    deploy:
+      mode: global
+      restart_policy:
+        condition: any
     ports:
-      - 5001:5001
+      - target: 5001
+        published: 5001
+        mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - dockge:/app/data
@@ -15,7 +20,7 @@ services:
     environment:
       # Tell Dockge where to find the stacks
       DOCKGE_STACKS_DIR: /opt/stacks
-      DOCKGE_ENABLE_CONSOLE: true
+      DOCKGE_ENABLE_CONSOLE: "true"
 
 volumes:
   dockge:
