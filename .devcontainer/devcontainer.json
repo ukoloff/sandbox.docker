@@ -4,6 +4,7 @@
   "name": "Node.js",
   "dockerComposeFile": "compose.yml",
   "service": "dev",
+  "overrideCommand": true,
   "workspaceFolder": "/repo",
   // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
   // Features to add to the dev container. More info: https://containers.dev/features.
