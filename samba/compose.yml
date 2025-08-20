@@ -1,0 +1,26 @@
+services:
+  linux:
+    image: alpine
+    volumes:
+    - type: volume
+      source: cifs
+      target: /cifs
+      read_only: true
+    - type: bind
+      source: /home/stas/.ssh
+      target: /ssh
+      read_only: true
+    command:
+    - tail
+    - -f
+    - /dev/null
+    stop_signal: SIGKILL
+
+volumes:
+  # https://docs.docker.com/engine/storage/volumes/#create-cifssamba-volumes
+  cifs:
+    driver: local
+    driver_opts:
+      type: cifs
+      device: $SMB_SHARE
+      o: username=$SMB_USER,password=$SMB_PASS,domain=$SMB_DOM

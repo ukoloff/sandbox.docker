@@ -1,0 +1,10 @@
+# https://github.com/justincormack/nsenter1
+services:
+  nsenter:
+    stdin_open: true
+    tty: true
+    privileged: true
+    pid: host
+    image: justincormack/nsenter1
+    stop_signal: SIGKILL
+networks: {}
