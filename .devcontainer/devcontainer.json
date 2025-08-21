@@ -3,7 +3,6 @@
   "name": "Node.js",
   "dockerComposeFile": "compose.yml",
   "service": "dev",
-  "overrideCommand": true,
   "workspaceFolder": "/repo",
   "onCreateCommand": {
     "apk": [

@@ -4,6 +4,10 @@ services:
   dev:
     image: node:lts-alpine
     working_dir: /repo
+    command:
+      - sleep
+      - infinity
+    stop_signal: SIGKILL
     volumes:
       - repo:/repo
 
