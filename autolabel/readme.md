@@ -6,6 +6,7 @@
 ## Build
 ```sh
 docker compose build
+docker compose push
 ```
 
 ## Start / stop

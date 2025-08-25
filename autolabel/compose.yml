@@ -3,13 +3,14 @@ name: autolabel
 
 services:
   daemon:
+    image: &img ukoloff/autolabel
     build:
       dockerfile_inline: |
         FROM alpine
         RUN --mount=type=cache,target=/var/cache/apk apk add jq curl docker-cli
         COPY --chmod=0744 ./bin* /bin/
       tags:
-        - ukoloff/autolabel
+        - *img
       labels:
         org.opencontainers.image.authors: Stanislav.Ukolov@omzglobal.com
         org.opencontainers.image.description: Label Swarm nodes according to services running
