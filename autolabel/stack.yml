@@ -1,6 +1,7 @@
 # For docker stack
 services:
   daemon:
+    image: ukoloff/autolabel
     deploy:
       mode: replicated
       replicas: 1
