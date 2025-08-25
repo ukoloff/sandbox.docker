@@ -1,0 +1,19 @@
+# For: docker compose
+name: autolabel
+
+services:
+  daemon:
+    build:
+      dockerfile_inline: |
+        FROM alpine
+        RUN --mount=type=cache,target=/var/cache/apk apk add jq curl
+        COPY --chmod=0744 ./bin* /bin/
+      tags:
+        - ukoloff/autolabel
+      labels:
+        org.opencontainers.image.authors: Stanislav.Ukolov@omzglobal.com
+        org.opencontainers.image.description: Label Swarm nodes accrding to services running
+    command:
+      - sleep
+      - infinity
+    stop_signal: SIGKILL
