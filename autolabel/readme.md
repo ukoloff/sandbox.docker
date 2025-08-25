@@ -1,7 +1,7 @@
 # Docker AutoLabel
 
 Расстановка меток на узлы Swarm
-в зависимости от работающин на них сервисов
+в зависимости от работающих на них сервисов
 
 ## See also
 + https://github.com/davideshay/dockerautolabel
