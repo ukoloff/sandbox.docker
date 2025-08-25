@@ -6,7 +6,7 @@ services:
     build:
       dockerfile_inline: |
         FROM alpine
-        RUN --mount=type=cache,target=/var/cache/apk apk add jq curl
+        RUN --mount=type=cache,target=/var/cache/apk apk add jq curl docker-cli
         COPY --chmod=0744 ./bin* /bin/
       tags:
         - ukoloff/autolabel
