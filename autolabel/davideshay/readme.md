@@ -5,8 +5,7 @@
 
 ## Build
 ```sh
-docker compose build
-docker compose push
+docker bake --push
 ```
 
 ## Start / stop
