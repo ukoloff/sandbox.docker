@@ -8,7 +8,7 @@ target "daemon" {
   dockerfile-inline = <<-EOT
     FROM alpine
     RUN --mount=type=cache,target=/var/cache/apk apk add jq curl docker-cli
-    COPY --chmod=0744 ./bin* /bin/
+    COPY --chmod=0744 ./bin/* /bin/
     EOT
   labels = {
     "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
