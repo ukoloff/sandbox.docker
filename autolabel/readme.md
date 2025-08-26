@@ -16,10 +16,13 @@ docker stack rm AL
 ```
 
 ## Test affinity
+- Add `service name` + `label` to [config file](config/servicelist.txt)
+- Аdd label to [placement constraint](test.yml)
 ```sh
 docker stack deploy test -c .\test.yml
 docker stack rm test
 ```
+
 
 ## See also
 + https://github.com/davideshay/dockerautolabel
