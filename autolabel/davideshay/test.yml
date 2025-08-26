@@ -2,7 +2,7 @@
 services:
   first: &svc
     image: alpine
-    deploy:
+    deploy: &deploy
       mode: replicated
       replicas: 1
     command:
@@ -12,6 +12,7 @@ services:
   second:
     <<: *svc
     deploy:
+      <<: *deploy
       placement:
         constraints:
           - node.labels.running_first == 1
