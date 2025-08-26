@@ -1,0 +1,25 @@
+# For docker stack
+services:
+  first:
+    image: alpine
+    deploy:
+      mode: replicated
+      replicas: 1
+    command:
+      - sleep
+      - infinity
+
+  second:
+    image: alpine
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.running_first == 1
+    command:
+      - sleep
+      - infinity
+    depends_on:
+      - first
+
