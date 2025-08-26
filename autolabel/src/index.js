@@ -16,4 +16,12 @@ async function gather(docker) {
   let s = docker.listServices()
   let t = docker.listTasks()
   console.log('Nodes: ', n.length)
+  let n0 = docker.getNode(n[0].ID)
+  let i = await n0.inspect()
+  let upd = {
+    version: i.Version.Index,
+    ...i.Spec,
+    Labels: { a: "AAA", b: "BBB" },
+  }
+  let z = await n0.update(upd)
 }
