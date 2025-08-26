@@ -1,0 +1,17 @@
+{
+  "name": "autolabel",
+  "version": "1.0.0",
+  "description": "Расстановка меток на узлы Swarm в зависимости от работающих на них сервисов",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dockerode": "^4.0.7"
+  }
+}
