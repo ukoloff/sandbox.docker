@@ -19,3 +19,22 @@ services:
     depends_on:
       - first
 
+  third:
+    <<: *svc
+    deploy:
+      <<: *deploy
+      placement:
+        constraints:
+          - node.labels.running_first == 0
+    depends_on:
+      - first
+
+  fourth:
+    <<: *svc
+    deploy:
+      <<: *deploy
+      placement:
+        constraints:
+          - node.labels.running_third == 1
+    depends_on:
+      - third
