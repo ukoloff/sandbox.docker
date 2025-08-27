@@ -73,7 +73,7 @@ async function patchNodes(table) {
       if (!k.startsWith(prefix))
         continue
       if (!table.labels.has(k.substring(prefix.length))) {
-        remove.add(k)
+        remove.push(k)
       }
     }
     for (const k of remove) {
@@ -89,6 +89,12 @@ async function patchNodes(table) {
       labels[label] = value
       console.debug(`${name}:${label} = ${value}`)
     }
+    const upd = {
+      version: node.Version.Index,
+      ...node.Spec,
+    }
+    const nx = docker.getNode(node.ID)
+    await nx.update(upd)
   }
 
 }
