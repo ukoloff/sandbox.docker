@@ -7,6 +7,7 @@
 ```
 DOCKER_HOST=ssh://root@swarm01.ekb.ru
 SWARM_LABEL=ukoloff.swarm.label
+CLEAN_ON_EXIT=1
 ```
 
 ## Run test stack

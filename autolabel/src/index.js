@@ -8,6 +8,14 @@ if (!i.Swarm.Nodes) {
   process.exit(1)
 }
 
+for (let sig of 'HUP INT TERM'.split(' ')) {
+  let signal = `SIG${sig}`
+  process.on(signal, $ => {
+    console.debug(`Got ${signal}, exiting...`)
+    process.exit(1)
+  })
+}
+
 console.debug('Initial labeling')
 await gather()
 console.debug('Watching for changes...')
