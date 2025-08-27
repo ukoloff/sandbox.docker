@@ -46,7 +46,7 @@ async function gather() {
     mutex = 0
     if (pending) {
       pending = 0
-      setTimeout(gather, 300)
+      setTimeout(gather, 777)
     }
   }
 }
@@ -127,6 +127,7 @@ async function patchNodes(table) {
     }
     try {
       await docker.getNode(node.ID).update(upd)
+      setTimeout(gather, 3456)
     } catch (e) {
       console.error('Error:', e.message)
     }
