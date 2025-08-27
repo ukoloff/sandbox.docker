@@ -1,0 +1,50 @@
+# For docker stack
+services:
+  A: &svc
+    image: alpine
+    deploy: &deploy
+      mode: replicated
+      replicas: 1
+      labels:
+        ukoloff.swarm.label: test.A
+    command:
+      - sleep
+      - infinity
+    stop_signal: SIGKILL
+
+  B:
+    <<: *svc
+    deploy:
+      <<: *deploy
+      labels:
+        ukoloff.swarm.label: test.B
+      placement:
+        constraints:
+          - ukoloff.swarm.label.test.A == 1
+    depends_on:
+      - A
+
+  C:
+    <<: *svc
+    deploy:
+      <<: *deploy
+      labels:
+        ukoloff.swarm.label: test.C
+      placement:
+        constraints:
+          - ukoloff.swarm.label.test.A == 0
+    depends_on:
+      - A
+
+  D:
+    <<: *svc
+    deploy:
+      <<: *deploy
+      labels:
+        ukoloff.swarm.label: test.D
+      placement:
+        constraints:
+          - ukoloff.swarm.label.test.C == 1
+    depends_on:
+      - C
+
