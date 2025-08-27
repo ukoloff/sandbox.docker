@@ -69,7 +69,8 @@ async function patchNodes(table) {
   let prefix = table.label + '.'
   let sortedLabels = [...table.labels]
   sortedLabels.sort()
-  for (const node of await docker.listNodes()) {
+  for (const nn of await docker.listNodes()) {
+    const node = await docker.getNode(nn.ID).inspect()
     const name = node.Description.Hostname
     const labels = node.Spec.Labels
     let remove = []
@@ -80,10 +81,12 @@ async function patchNodes(table) {
         remove.push(k)
       }
     }
+    let changes = remove.length
     for (const k of remove) {
       delete labels[k]
       console.debug(`${name}:${k} --`)
     }
+
     const Ls = table.nodes[node.ID] || new Set
     for (const L of sortedLabels) {
       const value = Ls.has(L) ? '1' : '0'
@@ -91,15 +94,17 @@ async function patchNodes(table) {
       if (labels[label] === value)
         continue
       labels[label] = value
+      changes++
       console.debug(`${name}:${label} = ${value}`)
     }
+    if (!changes)
+      continue
     const upd = {
       version: node.Version.Index,
       ...node.Spec,
     }
-    const nx = docker.getNode(node.ID)
     try {
-      await nx.update(upd)
+      await docker.getNode(node.ID).update(upd)
     } catch (e) {
       console.error('Error:', e.message)
     }
