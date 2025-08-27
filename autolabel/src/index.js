@@ -12,7 +12,7 @@ await gather()
 
 async function gather() {
   let t = await buildTable()
-  console.log(t)
+  patchNodes(t)
   // let n = await docker.listNodes()
   // let s = docker.listServices()
   // let t = docker.listTasks()
@@ -40,7 +40,7 @@ async function buildTable() {
     let L = services[task.ServiceID]
     if (!L || !task.NodeID)
       continue
-    (nodes[task.NodeID] ||= new Set()).add(L)
+    (nodes[task.NodeID] ||= new Set).add(L)
   }
   return {
     label,
@@ -49,6 +49,46 @@ async function buildTable() {
   }
 }
 
+function buildEmptyTable() {
+  return {
+    label: getLabel(),
+    labels: new Set,
+    noder: {},
+  }
+}
+
 function getLabel() {
   return process.env.SWARM_LABEL || 'ukoloff.swarm.label'
+}
+
+async function patchNodes(table) {
+  let prefix = table.label + '.'
+  let sortedLabels = [...table.labels]
+  sortedLabels.sort()
+  for (const node of await docker.listNodes()) {
+    const name = node.Description.Hostname
+    const labels = node.Spec.Labels
+    let remove = []
+    for (const [k, v] of Object.entries(labels)) {
+      if (!k.startsWith(prefix))
+        continue
+      if (!table.labels.has(k.substring(prefix.length))) {
+        remove.add(k)
+      }
+    }
+    for (const k of remove) {
+      delete labels[k]
+      console.debug(`${name}:${k} --`)
+    }
+    const Ls = table.nodes[node.ID] || new Set
+    for (const L of sortedLabels) {
+      const value = Ls.has(L) ? '1' : '0'
+      const label = prefix + L
+      if (labels[label] === value)
+        continue
+      labels[label] = value
+      console.debug(`${name}:${label} = ${value}`)
+    }
+  }
+
 }
