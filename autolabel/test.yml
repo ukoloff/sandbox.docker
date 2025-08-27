@@ -20,7 +20,7 @@ services:
         ukoloff.swarm.label: test.B
       placement:
         constraints:
-          - ukoloff.swarm.label.test.A == 1
+          - node.labels.ukoloff.swarm.label.test.A == 1
     depends_on:
       - A
 
@@ -32,7 +32,7 @@ services:
         ukoloff.swarm.label: test.C
       placement:
         constraints:
-          - ukoloff.swarm.label.test.A == 0
+          - node.labels.ukoloff.swarm.label.test.A == 0
     depends_on:
       - A
 
@@ -44,7 +44,7 @@ services:
         ukoloff.swarm.label: test.D
       placement:
         constraints:
-          - ukoloff.swarm.label.test.C == 1
+          - node.labels.ukoloff.swarm.label.test.C == 1
     depends_on:
       - C
 
