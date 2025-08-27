@@ -87,7 +87,10 @@ async function patchNodes(table) {
       ...node.Spec,
     }
     const nx = docker.getNode(node.ID)
-    await nx.update(upd)
+    try {
+      await nx.update(upd)
+    } catch (e) {
+      console.error('Error:', e.message)
+    }
   }
-
 }
