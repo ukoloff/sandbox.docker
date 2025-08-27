@@ -3,12 +3,14 @@ group "default" {
 }
 
 target "daemon" {
-  tags = ["ukoloff/autolabel:sh"]
+  tags = ["ukoloff/autolabel:js"]
   pull = true
   dockerfile-inline = <<-EOT
-    FROM alpine
-    RUN --mount=type=cache,target=/var/cache/apk apk add jq curl docker-cli
-    COPY --chmod=0744 ./bin/* /bin/
+    FROM node:alpine
+    WORKDIR /repo
+    COPY package*.json .
+    RUN --mount=type=cache,target=/root/.npm npm ci --only=production
+    COPY src/* src/
     EOT
   labels = {
     "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"

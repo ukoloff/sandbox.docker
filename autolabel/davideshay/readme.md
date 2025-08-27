@@ -10,7 +10,7 @@ docker bake --push
 
 ## Start / stop
 ```sh
-docker stack deploy AL -c .\stack.yml
+docker stack deploy AL -dc .\stack.yml
 docker stack rm AL
 ```
 
@@ -18,7 +18,7 @@ docker stack rm AL
 - Add `service name` + `label` to [config file](config/servicelist.txt)
 - Аdd label to [placement constraint](test.yml)
 ```sh
-docker stack deploy test -c .\test.yml
+docker stack deploy test -dc .\test.yml
 docker stack rm test
 ```
 
