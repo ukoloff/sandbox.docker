@@ -11,6 +11,7 @@ if (!i.Swarm.Nodes) {
 for (let sig of 'HUP INT TERM'.split(' ')) {
   let signal = `SIG${sig}`
   process.on(signal, async $ => {
+    clearInterval(timer)
     console.debug(`Got ${signal}, exiting...`)
     if (process.env.CLEAN_ON_EXIT) {
       await patchNodes(buildEmptyTable())
@@ -22,7 +23,7 @@ for (let sig of 'HUP INT TERM'.split(' ')) {
 console.debug('Initial labeling')
 await gather()
 console.debug('Watching for changes...')
-setInterval(gather, 27000)
+let timer = setInterval(gather, 27000)
 
 async function gather() {
   let t = await buildTable()
