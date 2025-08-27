@@ -1,5 +1,7 @@
 import Docker from 'dockerode'
 
+let mutex, pending, exiting
+
 let docker = new Docker()
 let i = await docker.info()
 
@@ -11,8 +13,10 @@ if (!i.Swarm.Nodes) {
 for (let sig of 'HUP INT TERM'.split(' ')) {
   let signal = `SIG${sig}`
   process.on(signal, async $ => {
-    clearInterval(timer)
     console.debug(`Got ${signal}, exiting...`)
+    exiting = 1
+    clearInterval(timer)
+    events.off('data', gather)
     if (process.env.CLEAN_ON_EXIT) {
       await patchNodes(buildEmptyTable())
     }
@@ -24,10 +28,27 @@ console.debug('Initial labeling')
 await gather()
 console.debug('Watching for changes...')
 let timer = setInterval(gather, 27000)
+let events = await docker.getEvents({ filters: JSON.stringify({ type: ['service'] }) })
+events.on('data', gather)
 
 async function gather() {
-  let t = await buildTable()
-  patchNodes(t)
+  if (exiting)
+    return
+  if (mutex) {
+    pending = 1
+    return
+  }
+  mutex = 1
+  try {
+    let t = await buildTable()
+    patchNodes(t)
+  } finally {
+    mutex = 0
+    if (pending) {
+      pending = 0
+      setTimeout(gather, 300)
+    }
+  }
 }
 
 async function buildTable() {
