@@ -3,7 +3,7 @@ group "default" {
 }
 
 target "daemon" {
-  tags = ["ukoloff/autolabel"]
+  tags = ["ukoloff/autolabel:sh"]
   pull = true
   dockerfile-inline = <<-EOT
     FROM alpine
