@@ -13,18 +13,6 @@ await gather()
 async function gather() {
   let t = await buildTable()
   patchNodes(t)
-  // let n = await docker.listNodes()
-  // let s = docker.listServices()
-  // let t = docker.listTasks()
-  // console.log('Nodes: ', n.length)
-  // let n0 = docker.getNode(n[0].ID)
-  // let i = await n0.inspect()
-  // let upd = {
-  //   version: i.Version.Index,
-  //   ...i.Spec,
-  //   Labels: { a: "AAA", b: "BBB" },
-  // }
-  // let z = await n0.update(upd)
 }
 
 async function buildTable() {
@@ -40,6 +28,8 @@ async function buildTable() {
     let L = services[task.ServiceID]
     if (!L || !task.NodeID)
       continue
+    if (task.Status.State != 'running')
+      continue
     (nodes[task.NodeID] ||= new Set).add(L)
   }
   return {
@@ -53,7 +43,7 @@ function buildEmptyTable() {
   return {
     label: getLabel(),
     labels: new Set,
-    noder: {},
+    nodes: {},
   }
 }
 
