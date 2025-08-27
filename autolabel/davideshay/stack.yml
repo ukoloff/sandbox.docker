@@ -20,5 +20,4 @@ services:
 
 configs:
   servicelist:
-    external: true
-    name: autolabel.services
+    file: config/servicelist.txt

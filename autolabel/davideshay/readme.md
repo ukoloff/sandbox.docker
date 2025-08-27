@@ -8,11 +8,6 @@
 docker bake --push
 ```
 
-## Config
-```sh
-docker config create autolabel.services config/servicelist.txt
-```
-
 ## Start / stop
 ```sh
 docker stack deploy AL -c .\stack.yml
@@ -26,7 +21,6 @@ docker stack rm AL
 docker stack deploy test -c .\test.yml
 docker stack rm test
 ```
-
 
 ## See also
 + https://github.com/davideshay/dockerautolabel
