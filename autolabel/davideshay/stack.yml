@@ -11,10 +11,13 @@ services:
     network_mode: none
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - config:/config
+    configs:
+      - source: servicelist
+        target: /config/servicelist.txt
     command:
       - sh
       - /bin/monitor.sh
 
-volumes:
-  config:
+configs:
+  servicelist:
+    file: config/servicelist.txt

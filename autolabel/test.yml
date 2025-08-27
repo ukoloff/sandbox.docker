@@ -1,25 +1,50 @@
 # For docker stack
 services:
-  first:
+  A: &svc
     image: alpine
-    deploy:
+    deploy: &deploy
       mode: replicated
       replicas: 1
+      labels:
+        ukoloff.swarm.label: test.A
     command:
       - sleep
       - infinity
+    stop_signal: SIGKILL
 
-  second:
-    image: alpine
+  B:
+    <<: *svc
     deploy:
-      mode: replicated
-      replicas: 1
+      <<: *deploy
+      labels:
+        ukoloff.swarm.label: test.B
       placement:
         constraints:
-          - node.labels.running_first == 1
-    command:
-      - sleep
-      - infinity
+          - node.labels.ukoloff.swarm.label.test.A == 1
     depends_on:
-      - first
+      - A
+
+  C:
+    <<: *svc
+    deploy:
+      <<: *deploy
+      labels:
+        ukoloff.swarm.label: test.C
+      placement:
+        constraints:
+          - node.labels.ukoloff.swarm.label.test.A == 0
+    depends_on:
+      - A
+
+  D:
+    <<: *svc
+    deploy:
+      <<: *deploy
+      labels:
+        ukoloff.swarm.label: test.D
+      placement:
+        constraints:
+          - node.labels.ukoloff.swarm.label.test.C == 1
+    depends_on:
+      - C
 
