@@ -11,7 +11,7 @@ SWARM_LABEL=ukoloff.swarm.label
 
 ## Run test stack
 ```sh
-docker stack deploy test -c .\test.yml
+docker stack deploy test -dc .\test.yml
 docker stack rm test
 ```
 

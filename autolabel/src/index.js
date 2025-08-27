@@ -8,7 +8,10 @@ if (!i.Swarm.Nodes) {
   process.exit(1)
 }
 
+console.debug('Initial labeling')
 await gather()
+console.debug('Watching for changes...')
+setInterval(gather, 27000)
 
 async function gather() {
   let t = await buildTable()
