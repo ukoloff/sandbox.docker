@@ -1,0 +1,22 @@
+# For docker stack
+services:
+  daemon:
+    image: ukoloff/autolabel:js
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        ukoloff.swarm.label: autolabel.daemon
+    # network_mode: none
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /repo
+    environment:
+      SWARM_LABEL: ukoloff.swarm.label
+      CLEAN_ON_EXIT: 1
+    command:
+      - node
+      - .
