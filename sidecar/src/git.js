@@ -1,10 +1,9 @@
 import { spawn } from 'node:child_process'
 import { resolve } from 'node:path'
-import {text} from 'node:stream/consumers'
 
-export async function isGit(cwd='') {
+export async function isGit(cwd = '') {
   cwd = resolve(cwd)
-  let git = spawn('git', ['rev-parse', '--is-inside-work-tree'], {cwd: cwd})
+  let git = spawn('git', ['rev-parse', '--is-inside-work-tree'], { cwd: cwd })
   let res = await wait(git)
   return !res
 }
