@@ -3,14 +3,39 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { mkdtemp, rm } from 'node:fs/promises'
 import { clone } from '../src/git.js'
+import { spawn } from 'node:child_process'
+import {text} from 'node:stream/consumers'
 
-describe('git', $ => {
+describe('git clones', $ => {
   let tmps = []
   after(cleanUp)
 
-  it('clones repo', async $ => {
-    await clone('ukoloff/sandbox.docker/autolabel#al.js', await tmp())
-  })
+  let repos = [
+    {
+      name: "Branch's folder",
+      url: 'ukoloff/sandbox.docker/sidecar#sidecar',
+    },
+    {
+      name: "Branch",
+      url: 'ukoloff/sandbox.docker#al.js',
+    },
+    {
+      name: "Folder",
+      url: 'ukoloff/sandbox.docker/autolabel',
+    },
+    {
+      name: "Repo",
+      url: 'ukoloff/sandbox.docker',
+    },
+  ]
+
+  repos.sort($ => 0.5 - Math.random())
+  for (let test of repos) {
+    it(test.name, async $ => {
+      let folder = await tmp()
+      await clone(test.url, folder)
+    })
+  }
 
   async function tmp() {
     let tmp = await mkdtemp(join(tmpdir(), 'sidecar-git-'))

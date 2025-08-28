@@ -13,7 +13,7 @@ export async function clone(url, cwd = '') {
   if (branch)
     args.push('--branch', branch)
   args.push(U.toString(), '.')
-  let options = {cwd: cwd, stdio: 'inherit'}
+  let options = { cwd: cwd } //, stdio: 'inherit'}
   await execute('git', args, options)
   if (folder) {
     await execute('git',
