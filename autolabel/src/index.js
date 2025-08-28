@@ -16,6 +16,7 @@ for (let sig of 'HUP INT TERM'.split(' ')) {
     console.debug(`Got ${signal}, exiting...`)
     exiting = 1
     clearInterval(timer)
+    clearInterval(eventTimer)
     events.off('data', gather)
     if (process.env.CLEAN_ON_EXIT) {
       await patchNodes(buildEmptyTable())
@@ -28,8 +29,20 @@ console.debug('Initial labeling')
 await gather()
 console.debug('Watching for changes...')
 let timer = setInterval(gather, 27000)
-let events = await docker.getEvents({ filters: JSON.stringify({ type: ['service'] }) })
-events.on('data', gather)
+let events
+await listenEvents()
+let eventTimer = setInterval(listenEvents, 3600000)
+
+async function listenEvents() {
+  if (events) {
+    events.destroy()
+  }
+  events = await docker.getEvents({ filters: JSON.stringify({ type: ['service'] }) })
+  events
+    .on('data', $ => gather)
+    .on('end', listenEvents)
+    .on('error', listenEvents)
+}
 
 async function gather() {
   if (exiting)
