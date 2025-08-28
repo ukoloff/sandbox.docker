@@ -1,6 +1,6 @@
 import Docker from 'dockerode'
 
-let mutex, pending, exiting
+let mutex = 0, exiting = 0
 
 let docker = new Docker()
 let i = await docker.info()
@@ -16,6 +16,7 @@ for (let sig of 'HUP INT TERM'.split(' ')) {
     console.debug(`Got ${signal}, exiting...`)
     exiting = 1
     clearInterval(timer)
+    clearInterval(eventTimer)
     events.off('data', gather)
     if (process.env.CLEAN_ON_EXIT) {
       await patchNodes(buildEmptyTable())
@@ -28,14 +29,26 @@ console.debug('Initial labeling')
 await gather()
 console.debug('Watching for changes...')
 let timer = setInterval(gather, 27000)
-let events = await docker.getEvents({ filters: JSON.stringify({ type: ['service'] }) })
-events.on('data', gather)
+let events
+await listenEvents()
+let eventTimer = setInterval(listenEvents, 3600000)
+
+async function listenEvents() {
+  if (events) {
+    events.destroy()
+  }
+  events = await docker.getEvents({ filters: JSON.stringify({ type: ['service'] }) })
+  events
+    .on('data', gather)
+    .on('end', listenEvents)
+    .on('error', listenEvents)
+}
 
 async function gather() {
   if (exiting)
     return
   if (mutex) {
-    pending = 1
+    mutex++
     return
   }
   mutex = 1
@@ -43,11 +56,10 @@ async function gather() {
     let t = await buildTable()
     patchNodes(t)
   } finally {
-    mutex = 0
-    if (pending) {
-      pending = 0
+    if (mutex > 1) {
       setTimeout(gather, 777)
     }
+    mutex = 0
   }
 }
 
@@ -91,6 +103,7 @@ async function patchNodes(table) {
   let prefix = table.label + '.'
   let sortedLabels = [...table.labels]
   sortedLabels.sort()
+  let changedNodes = 0
   for (const nn of await docker.listNodes()) {
     const node = await docker.getNode(nn.ID).inspect()
     const name = node.Description.Hostname
@@ -106,7 +119,7 @@ async function patchNodes(table) {
     let changes = remove.length
     for (const k of remove) {
       delete labels[k]
-      console.debug(`${name}:${k} --`)
+      console.debug(`[${(new Date).toJSON()}] ${name}:${k} --`)
     }
 
     const Ls = table.nodes[node.ID] || new Set
@@ -117,19 +130,22 @@ async function patchNodes(table) {
         continue
       labels[label] = value
       changes++
-      console.debug(`${name}:${label} = ${value}`)
+      console.debug(`[${(new Date).toJSON()}] ${name}:${label} = ${value}`)
     }
     if (!changes)
       continue
+    changedNodes++
     const upd = {
       version: node.Version.Index,
       ...node.Spec,
     }
     try {
       await docker.getNode(node.ID).update(upd)
-      setTimeout(gather, 3456)
     } catch (e) {
       console.error('Error:', e.message)
     }
+  }
+  if (changedNodes) {
+    setTimeout(gather, 2025)
   }
 }
