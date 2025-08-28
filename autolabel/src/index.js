@@ -1,6 +1,6 @@
 import Docker from 'dockerode'
 
-let mutex, pending, exiting
+let mutex = 0, exiting = 0
 
 let docker = new Docker()
 let i = await docker.info()
@@ -35,7 +35,7 @@ async function gather() {
   if (exiting)
     return
   if (mutex) {
-    pending = 1
+    mutex++
     return
   }
   mutex = 1
@@ -43,11 +43,10 @@ async function gather() {
     let t = await buildTable()
     patchNodes(t)
   } finally {
-    mutex = 0
-    if (pending) {
-      pending = 0
+    if (mutex > 1) {
       setTimeout(gather, 777)
     }
+    mutex = 0
   }
 }
 
