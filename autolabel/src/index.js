@@ -90,6 +90,7 @@ async function patchNodes(table) {
   let prefix = table.label + '.'
   let sortedLabels = [...table.labels]
   sortedLabels.sort()
+  let changedNodes = 0
   for (const nn of await docker.listNodes()) {
     const node = await docker.getNode(nn.ID).inspect()
     const name = node.Description.Hostname
@@ -120,15 +121,18 @@ async function patchNodes(table) {
     }
     if (!changes)
       continue
+    changedNodes++
     const upd = {
       version: node.Version.Index,
       ...node.Spec,
     }
     try {
       await docker.getNode(node.ID).update(upd)
-      setTimeout(gather, 3456)
     } catch (e) {
       console.error('Error:', e.message)
     }
+  }
+  if (changedNodes) {
+    setTimeout(gather, 2025)
   }
 }
