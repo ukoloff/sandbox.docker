@@ -39,7 +39,7 @@ async function listenEvents() {
   }
   events = await docker.getEvents({ filters: JSON.stringify({ type: ['service'] }) })
   events
-    .on('data', $ => gather)
+    .on('data', gather)
     .on('end', listenEvents)
     .on('error', listenEvents)
 }
@@ -119,7 +119,7 @@ async function patchNodes(table) {
     let changes = remove.length
     for (const k of remove) {
       delete labels[k]
-      console.debug(`${name}:${k} --`)
+      console.debug(`[${(new Date).toJSON()}] ${name}:${k} --`)
     }
 
     const Ls = table.nodes[node.ID] || new Set
@@ -130,7 +130,7 @@ async function patchNodes(table) {
         continue
       labels[label] = value
       changes++
-      console.debug(`${name}:${label} = ${value}`)
+      console.debug(`[${(new Date).toJSON()}] ${name}:${label} = ${value}`)
     }
     if (!changes)
       continue
