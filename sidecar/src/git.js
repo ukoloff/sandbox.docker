@@ -14,13 +14,13 @@ export async function clone(url, cwd = '') {
     args.push('--branch', branch)
   args.push(U.toString(), '.')
   let options = {cwd: cwd, stdio: 'inherit'}
-  let res = await wait(spawn('git', args, options))
+  await execute('git', args, options)
   if (folder) {
-    let res = await wait(spawn('git',
+    await execute('git',
       ['sparse-checkout', 'set', '--no-cone', `/${folder}`],
-      options))
+      options)
   }
-  res = await wait(spawn('git', ['checkout'], options))
+  await execute('git', ['checkout'], options)
 }
 
 function splitPath(path) {
@@ -34,4 +34,10 @@ function wait(child) {
       .on('error', reject)
       .on('exit', resolve)
   })
+}
+
+async function execute(...params) {
+  let res = await wait(spawn(...params))
+  if (res)
+    throw Error(`Exited with code #${res}`)
 }
