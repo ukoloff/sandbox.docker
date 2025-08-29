@@ -3,6 +3,7 @@ import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { mkdtemp, rm } from 'node:fs/promises'
 import { clone, isGit } from '../src/git.js'
+import { execFile } from 'node:child_process'
 
 describe('git', $ => {
 
@@ -34,6 +35,17 @@ describe('git', $ => {
       it(test.name, async $ => {
         let folder = await tmp()
         await clone(test.url, folder)
+        let out = await new Promise(function(resolve, reject){
+          execFile('git', 'log --oneline -n 10'.split(' '), {cwd: folder}, cb)
+          function cb(error, stdout, stderr) {
+            if (error)
+              return reject(error)
+            if (stderr)
+              return reject(Error(`Said: $stderr`))
+            resolve(stdout)
+          }
+        })
+        $.assert.equal(out.trim().indexOf("\n"), -1)
       })
     }
 
