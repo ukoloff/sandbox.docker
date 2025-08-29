@@ -1,5 +1,11 @@
 # Traefik
 
+## Boot config
+```sh
+docker compose create
+docker compose cp etc/traefik itself:/etc/
+```
+
 ## See also
 + [Traefik]
 + @Habr:

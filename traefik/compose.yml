@@ -5,10 +5,10 @@ services:
     image: traefik:v3.5
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
-    command:
-      - --api.insecure=true
+      - etc:/etc/traefik
     ports:
       - 80:80
       - 8080:8080
 
-
+volumes:
+  etc:

@@ -1,0 +1,25 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: false
+
+entryPoints:
+  web:
+    address: ":80"
+
+  traefik:
+    address: :8080
+
+  tls:
+    address: :443
+
+api:
+  insecure: true
+  dashboard: true
+
+providers:
+  docker:
+    exposedByDefault: false
+
+# log:
+#   level: INFO
+
