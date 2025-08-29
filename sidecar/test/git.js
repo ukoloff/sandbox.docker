@@ -35,6 +35,8 @@ describe('git', $ => {
       it(test.name, async $ => {
         let folder = await tmp()
         await clone(test.url, folder)
+
+        // Check whether history.length == 1
         let out = await new Promise(function(resolve, reject){
           execFile('git', 'log --oneline -n 10'.split(' '), {cwd: folder}, cb)
           function cb(error, stdout, stderr) {
