@@ -1,0 +1,14 @@
+name: traefik
+
+services:
+  itself:
+    image: traefik:v3.5
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    command:
+      - --api.insecure=true
+    ports:
+      - 80:80
+      - 8080:8080
+
+
