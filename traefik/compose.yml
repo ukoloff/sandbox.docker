@@ -21,3 +21,8 @@ services:
 
 volumes:
   etc:
+
+networks:
+  default:
+    name: traefik
+    attachable: true

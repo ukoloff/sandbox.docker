@@ -34,3 +34,8 @@ services:
 configs:
   etc:
     file: etc/traefik/traefik.yml
+
+networks:
+  default:
+    name: traefik
+    attachable: true
