@@ -20,6 +20,9 @@ providers:
   docker:
     exposedByDefault: false
 
+  swarm:
+    exposedByDefault: false
+
 # log:
 #   level: INFO
 
