@@ -9,6 +9,12 @@ services:
     ports:
       - 80:80
       - 8080:8080
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
 
   whoami:
     image: traefik/whoami
