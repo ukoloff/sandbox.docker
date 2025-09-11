@@ -6,6 +6,11 @@ docker compose create
 docker compose cp etc/traefik itself:/etc/
 ```
 
+## Run in Swarm mode
+```sh
+docker stack deploy traefik -dc .\swarm.yml
+```
+
 ## See also
 + [Traefik]
 + @Habr:
