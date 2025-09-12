@@ -1,7 +1,14 @@
 services:
   itself:
     image: caddy:latest
+    volumes:
+      - etc:/etc/caddy
+      - www:/www
     ports:
       - 80:80
       - 443:443
     restart: unless-stopped
+
+volumes:
+  etc:
+  www:
