@@ -3,6 +3,6 @@
 ## Copy
 ```sh
 docker compose create
-docker compose cp Caddyfile itself:/etc/caddy/Caddyfile
+docker compose cp etc/caddy/. itself:/etc/caddy/.
 docker compose cp www/. itself:/www/.
 ```
