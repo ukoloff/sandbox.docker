@@ -12,7 +12,8 @@ target "sstp" {
     COPY *.toml .
     RUN   \
       --mount=type=cache,target=/var/cache/apt,sharing=locked \
-      --mount=type=cache,target=/var/lib/apt,sharing=locked   <<EORUN
+      --mount=type=cache,target=/var/lib/apt,sharing=locked   \
+      --mount=type=cache,target=/root/.cache/uv   <<EORUN
       apt update
       apt-get install -y ppp
       uv sync
