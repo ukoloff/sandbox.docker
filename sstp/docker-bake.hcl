@@ -7,6 +7,7 @@ target "sstp" {
   pull = true
   dockerfile-inline = <<-EOT
     FROM ghcr.io/astral-sh/uv:python3.9-trixie-slim
+    COPY /etc/. /etc/.
     WORKDIR /src
     COPY *.toml .
     RUN   \
