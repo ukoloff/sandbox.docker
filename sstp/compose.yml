@@ -1,0 +1,14 @@
+services:
+  sstp:
+    image: ukoloff/sstp
+    privileged: true
+    volumes:
+    - /dev/ppp:/dev/ppp
+    ports:
+    - 443:443
+    command:
+    - uv
+    - run
+    - sstpd
+    - -f
+    - /etc/sstpd.ini
