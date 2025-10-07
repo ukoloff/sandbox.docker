@@ -8,10 +8,13 @@ target "sstp" {
   dockerfile-inline = <<-EOT
     FROM ghcr.io/astral-sh/uv:python3.9-trixie-slim
     WORKDIR /src
+    COPY *.toml .
     RUN   \
       --mount=type=cache,target=/var/cache/apt,sharing=locked \
       --mount=type=cache,target=/var/lib/apt,sharing=locked   <<EORUN
-      apt update && apt-get install -y ppp
+      apt update
+      apt-get install -y ppp
+      uv sync
     EORUN
     EOT
   labels = {
