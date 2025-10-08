@@ -26,6 +26,21 @@ services:
     - sh
     - /scripts/copy.sh
 
+  ca:
+    profiles:
+    - ca
+    image: alpine/openssl
+    volumes:
+    - scripts:/scripts
+    - x509:/ssl
+    working_dir: /ssl
+    environment:
+      X509CN: docker.ekb.ru
+    entrypoint:
+    - sh
+    command:
+    - /scripts/ca.sh
+
 volumes:
   x509:
   scripts:
