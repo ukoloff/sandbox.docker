@@ -4,6 +4,7 @@ services:
     privileged: true
     volumes:
     - /dev/ppp:/dev/ppp
+    - /etc/ssl/uxm:/ssl
     ports:
     - 443:443
     command:

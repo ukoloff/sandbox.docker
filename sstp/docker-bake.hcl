@@ -17,7 +17,6 @@ target "sstp" {
       apt update
       apt-get install -y ppp
       uv sync
-      openssl req -newkey rsa:4096 -nodes -keyout sstp.key -x509 -days 365 -out sstp.cer -subj /CN=localhost
     EORUN
     EOT
   labels = {
