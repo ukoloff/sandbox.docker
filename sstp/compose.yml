@@ -4,7 +4,7 @@ services:
     privileged: true
     volumes:
     - /dev/ppp:/dev/ppp
-    - /etc/ssl/uxm:/ssl
+    - x509:/ssl
     ports:
     - 443:443
     command:
@@ -13,3 +13,19 @@ services:
     - sstpd
     - -f
     - /etc/sstpd.ini
+
+  crt:  # Copy existing certificate
+    profiles:
+      - ekb.ru
+    image: busybox
+    volumes:
+    - scripts:/scripts
+    - x509:/ssl
+    - /etc/ssl/uxm:/ssl/uxm
+    command:
+    - sh
+    - /scripts/copy.sh
+
+volumes:
+  x509:
+  scripts:
