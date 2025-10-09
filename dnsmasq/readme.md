@@ -4,7 +4,7 @@ Minimal DNS server
 
 ## Add records
 ```sh
-docker compose cp etc/dnsmasq.d/. dnsmasq:etc/dnsmasq.d/.
+docker compose cp etc/dnsmasq.hosts dnsmasq:etc/
 docker compose restart
 ```
 
