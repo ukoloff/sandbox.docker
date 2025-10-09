@@ -1,0 +1,3 @@
+# DNSmasq
+
+Minimal DNS server
