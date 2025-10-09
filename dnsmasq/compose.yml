@@ -10,6 +10,11 @@ services:
     cap_add:
       - NET_ADMIN
     restart: always
+    volumes:
+      - hosts:/etc/dnsmasq.hosts
     command:
       - --log-facility=-
       - --hostsdir=/etc/dnsmasq.hosts
+
+volumes:
+  hosts:
