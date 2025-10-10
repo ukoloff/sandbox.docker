@@ -19,6 +19,7 @@ services:
       - --auth-server=uxm
       - --no-resolv
       - --no-hosts
+      # - --log-queries
 
 volumes:
   hosts:
