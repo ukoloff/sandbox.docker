@@ -15,6 +15,11 @@ services:
     command:
       - --log-facility=-
       - --hostsdir=/etc/dnsmasq.hosts
+      - --auth-zone=uxm
+      - --auth-server=uxm
+      - --no-resolv
+      - --no-hosts
+      # - --log-queries
 
 volumes:
   hosts:
