@@ -2,15 +2,28 @@
   "dockerComposeFile": "./compose.yml",
   "service": "node",
   "onCreateCommand": {
-    "git": [
+    "clone": [
       "git",
       "clone",
       "-b",
       "sidecar",
       "--depth",
       "2",
+      "-n",
+      "--filter=tree:0",
       "https://github.com/ukoloff/sandbox.docker.git",
       "."
+    ],
+    "sparce": [
+      "git",
+      "sparse-checkout",
+      "set",
+      "--no-cone",
+      "/sidecar"
+    ],
+    "pull": [
+      "git",
+      "checkout"
     ]
   },
   "workspaceFolder": "/repo",
