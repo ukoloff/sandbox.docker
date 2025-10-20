@@ -16,7 +16,7 @@ export async function clone(url, cwd = '') {
   let branch = U.hash.replace(/^#?/, '')
   U.hash = ''
   let repo = U.toString()
-  let args = 'clone -n --depth=1 --filter=tree:0'.split(' ')
+  let args = 'clone -q -n --depth=1 --filter=tree:0'.split(' ')
   if (branch)
     args.push('--branch', branch)
   args.push(U.toString(), '.')
@@ -27,7 +27,7 @@ export async function clone(url, cwd = '') {
       ['sparse-checkout', 'set', '--no-cone', `/${folder}/`],
       options)
   }
-  await execute('git', ['checkout'], options)
+  await execute('git', ['checkout', '-q'], options)
 }
 
 function splitPath(path) {
