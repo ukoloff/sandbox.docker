@@ -8,7 +8,7 @@
       "-b",
       "sidecar",
       "--depth",
-      "1",
+      "2",
       "https://github.com/ukoloff/sandbox.docker.git",
       "."
     ]
