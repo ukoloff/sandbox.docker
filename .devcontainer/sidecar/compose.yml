@@ -3,9 +3,8 @@ name: sidecar-test
 services:
   node:
     build:
-      dockerfile_inline: |
-        FROM node:alpine
-        RUN --mount=type=cache,target=/var/cache/apk apk add git
+      context: .
+    working_dir: /repo
     command:
       - sleep
       - infinity
