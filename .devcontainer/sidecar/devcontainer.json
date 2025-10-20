@@ -1,31 +1,9 @@
 {
   "dockerComposeFile": "./compose.yml",
   "service": "node",
-  "onCreateCommand": {
-    "clone": [
-      "git",
-      "clone",
-      "-b",
-      "sidecar",
-      "--depth",
-      "2",
-      "-n",
-      "--filter=tree:0",
-      "https://github.com/ukoloff/sandbox.docker.git",
-      "."
-    ],
-    "sparce": [
-      "git",
-      "sparse-checkout",
-      "set",
-      "--no-cone",
-      "/sidecar"
-    ],
-    "pull": [
-      "git",
-      "checkout"
-    ]
-  },
+  "onCreateCommand": "git clone -b sidecar --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker.git .",
+  "updateContentCommand": "git sparse-checkout set --no-cone /sidecar",
+  "postCreateCommand": "git checkout",
   "workspaceFolder": "/repo",
   "customizations": {
     "vscode": {
