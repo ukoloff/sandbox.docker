@@ -20,11 +20,11 @@ export async function clone(url, cwd = '') {
   if (branch)
     args.push('--branch', branch)
   args.push(U.toString(), '.')
-  let options = { cwd: cwd } //, stdio: 'inherit'}
+  let options = { cwd: cwd, stdio: 'inherit'}
   await execute('git', args, options)
   if (folder) {
     await execute('git',
-      ['sparse-checkout', 'set', '--no-cone', `/${folder}`],
+      ['sparse-checkout', 'set', '--no-cone', `/${folder}/`],
       options)
   }
   await execute('git', ['checkout'], options)
