@@ -13,5 +13,13 @@
       "."
     ]
   },
-  "workspaceFolder": "/repo"
+  "workspaceFolder": "/repo",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mhutchie.git-graph",
+        "EditorConfig.EditorConfig"
+      ]
+    }
+  }
 }
