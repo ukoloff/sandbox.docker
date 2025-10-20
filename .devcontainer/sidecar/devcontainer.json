@@ -1,5 +1,17 @@
 {
   "dockerComposeFile": "./compose.yml",
   "service": "node",
+  "onCreateCommand": {
+    "git": [
+      "git",
+      "clone",
+      "-b",
+      "sidecar",
+      "--depth",
+      "1",
+      "https://github.com/ukoloff/sandbox.docker.git",
+      "."
+    ]
+  },
   "workspaceFolder": "/repo"
 }
