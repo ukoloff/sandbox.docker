@@ -1,4 +1,4 @@
-name: sidecar.test
+name: sidecar-test
 
 services:
   node:
@@ -9,3 +9,4 @@ services:
     command:
       - sleep
       - infinity
+    stop_signal: SIGKILL
