@@ -37,8 +37,8 @@ describe('git', $ => {
         await clone(test.url, folder)
 
         // Check whether history.length == 1
-        let out = await new Promise(function(resolve, reject){
-          execFile('git', 'log --oneline -n 10'.split(' '), {cwd: folder}, cb)
+        let out = await new Promise(function (resolve, reject) {
+          execFile('git', 'log --oneline -n 10'.split(' '), { cwd: folder }, cb)
           function cb(error, stdout, stderr) {
             if (error)
               return reject(error)
@@ -65,7 +65,7 @@ describe('git', $ => {
     }
   })
 
-  it('detects itself', async $=>{
+  it('detects itself', async $ => {
     $.assert.ok(await isGit())
     $.assert.ok(!await isGit(tmpdir()))
   })
