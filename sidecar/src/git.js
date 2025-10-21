@@ -3,18 +3,19 @@ import { wait, run, spawn } from './run.js'
 
 export function parse(uri) {
   let u = new URL(uri, 'https://github.com/')
-  let params = Object.fromEntries(u.searchParams)
+  const params = Object.fromEntries(u.searchParams)
   u.search = ''
-  let folders = u.pathname.split('/').filter($ => $)
-  let slug = folders.slice(0, 2).join('/')
-  let folder = folders.slice(2).join('/')
+  const slugcnt = Number(params.slug) || 2
+  const folders = u.pathname.split('/').filter($ => $)
+  const slug = folders.slice(0, slugcnt).join('/')
+  const folder = folders.slice(slugcnt).join('/')
   u.pathname = slug
-  let ref = u.hash.replace(/^#?/, '')
+  const ref = params.ref || u.hash.replace(/^#?/, '')
   u.hash = ''
-  let repo = u.toString()
+  const repo = u.toString()
   u.username = ''
   u.password = ''
-  let safe = u.toString()
+  const safe = u.toString()
   return { src: uri, repo, safe, slug, folder, ref, params }
 }
 
@@ -26,7 +27,8 @@ export async function isGit(cwd = '') {
 
 export async function clone(url, cwd = '') {
   let src = 'string' == typeof (url) ? parse(url) : url
-  let args = 'clone -q -n --depth=1 --filter=tree:0'.split(' ')
+  const depth = Number(src.params.depth) || 1
+  let args = `clone -q -n --depth=${depth} --filter=tree:0`.split(' ')
   if (src.ref)
     args.push('--branch', src.ref)
   args.push(src.repo, '.')
