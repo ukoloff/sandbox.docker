@@ -1,5 +1,5 @@
-import { spawn } from 'node:child_process'
 import { resolve } from 'node:path'
+import { wait, run, spawn } from './run.js'
 
 export async function isGit(cwd = '') {
   cwd = resolve(cwd)
@@ -20,31 +20,17 @@ export async function clone(url, cwd = '') {
   if (branch)
     args.push('--branch', branch)
   args.push(U.toString(), '.')
-  let options = { cwd: cwd, stdio: 'inherit'}
-  await execute('git', args, options)
+  let options = { cwd: cwd, stdio: 'inherit' }
+  await run('git', args, options)
   if (folder) {
-    await execute('git',
+    await run('git',
       ['sparse-checkout', 'set', '--no-cone', `/${folder}/`],
       options)
   }
-  await execute('git', ['checkout', '-q'], options)
+  await run('git', ['checkout', '-q'], options)
 }
 
 function splitPath(path) {
   let folders = path.split('/').filter($ => $)
   return [folders.slice(0, 2).join('/'), folders.slice(2).join('/')]
-}
-
-function wait(child) {
-  return new Promise(function (resolve, reject) {
-    child
-      .on('error', reject)
-      .on('exit', resolve)
-  })
-}
-
-async function execute(...params) {
-  let res = await wait(spawn(...params))
-  if (res)
-    throw Error(`Exited with code #${res}`)
 }
