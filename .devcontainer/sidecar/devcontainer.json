@@ -1,6 +1,7 @@
 {
   "dockerComposeFile": "./compose.yml",
   "service": "node",
+  "init": true,
   "onCreateCommand": "apk add git",
   // "updateContentCommand":
   "postCreateCommand": "git clone -b sidecar --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker.git . \n git sparse-checkout set --no-cone /sidecar \n git checkout",

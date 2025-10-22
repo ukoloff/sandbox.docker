@@ -10,4 +10,4 @@ services:
     command:
       - sleep
       - infinity
-    stop_signal: SIGKILL
+    # stop_signal: SIGKILL
