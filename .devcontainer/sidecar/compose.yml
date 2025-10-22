@@ -7,7 +7,3 @@ services:
       - type: tmpfs
         target: /var/cache/apk
     working_dir: /repo
-    command:
-      - sleep
-      - infinity
-    # stop_signal: SIGKILL
