@@ -1,4 +1,3 @@
-import { resolve } from 'node:path'
 import { wait, run, spawn } from './run.js'
 
 export function parse(uri) {
