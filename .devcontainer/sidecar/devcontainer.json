@@ -1,4 +1,5 @@
 {
+  "name": "sidecar",
   "dockerComposeFile": "./compose.yml",
   "service": "node",
   "init": true,
