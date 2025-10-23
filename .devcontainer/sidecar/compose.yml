@@ -7,3 +7,7 @@ services:
       - type: tmpfs
         target: /var/cache/apk
     working_dir: /repo
+    init: true
+    command:
+      - sleep
+      - infinity
