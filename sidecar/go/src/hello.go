@@ -3,5 +3,7 @@ package src
 import "fmt"
 
 func Main() {
-	fmt.Println("Hello, 世界")
+	for range 3 {
+		fmt.Println("Hello, 世界")
+	}
 }
