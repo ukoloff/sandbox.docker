@@ -2,8 +2,8 @@
   "name": "sidecar.go",
   "dockerComposeFile": "./compose.yml",
   "service": "go",
-  "onCreateCommand": "apk add git",
-  "updateContentCommand": "go install golang.org/x/tools/gopls@latest ; go install honnef.co/go/tools/cmd/staticcheck@latest ; go install github.com/go-delve/delve/cmd/dlv@latest",
+  // "onCreateCommand": "apk add git",
+  // "updateContentCommand": "go install golang.org/x/tools/gopls@latest ; go install honnef.co/go/tools/cmd/staticcheck@latest ; go install github.com/go-delve/delve/cmd/dlv@latest",
   "postCreateCommand": "git clone -b sidecar.go --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker . ; git sparse-checkout set --no-cone /sidecar/go/ ; git checkout",
   "workspaceFolder": "/repo",
   "customizations": {

@@ -2,10 +2,7 @@ name: sdcr-go
 
 services:
   go:
-    image: golang:alpine
-    volumes:
-      - type: tmpfs
-        target: /var/cache/apk
+    image: ukoloff/golang:dev
     working_dir: /repo
     init: true
     command:
