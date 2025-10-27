@@ -1,10 +1,10 @@
 {
-  "name": "sidecar",
+  "name": "sidecar.js",
   "dockerComposeFile": "./compose.yml",
   "service": "node",
   "onCreateCommand": "apk add git",
   // "updateContentCommand":
-  "postCreateCommand": "git clone -b sidecar --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker.git . \n git sparse-checkout set --no-cone /sidecar \n git checkout",
+  "postCreateCommand": "git clone -b sidecar --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker.git . ; git sparse-checkout set --no-cone /sidecar/js/ ; git checkout",
   "workspaceFolder": "/repo",
   "customizations": {
     "vscode": {
