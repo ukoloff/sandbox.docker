@@ -1,7 +1,7 @@
 name: sdcr-go
 
 services:
-  node:
+  go:
     image: golang:alpine
     volumes:
       - type: tmpfs
