@@ -1,8 +1,8 @@
-name: sidecar-test
+name: sdcr-go
 
 services:
   node:
-    image: node:lts-alpine
+    image: golang:alpine
     volumes:
       - type: tmpfs
         target: /var/cache/apk
