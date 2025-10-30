@@ -15,7 +15,7 @@ func TestStringify(t *testing.T) {
 		wantErr bool
 	}{{name: "Struct",
 		data: struct{ A string }{A: "Hello, world!"},
-		want: "{\"A\":\"Hello, world!\"}"},
+		want: `{"A":"Hello, world!"}`},
 		{name: "Array",
 			data: []int{3, 14, 159, 2, 6, 535},
 			want: "[3,14,159,2,6,535]"},
@@ -33,13 +33,13 @@ func TestStringify(t *testing.T) {
 				M *int
 				N *int `json:",omitempty"`
 			}{M: &five},
-			want: "{\"M\":5}"},
+			want: `{"M":5}`},
 		{name: "Omit0",
 			data: struct {
 				M int
 				N int `json:",omitzero"`
 			}{M: 6 * 7},
-			want: "{\"M\":42}"},
+			want: `{"M":42}`},
 	}
 
 	for _, tt := range tests {
