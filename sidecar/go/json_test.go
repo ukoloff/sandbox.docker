@@ -5,6 +5,16 @@ import (
 	"testing"
 )
 
+type Base struct {
+	P int
+	Q int
+}
+
+type Ext struct {
+	Base
+	R int
+}
+
 func TestStringify(t *testing.T) {
 	pi := 3.14
 	five := 5
@@ -40,6 +50,10 @@ func TestStringify(t *testing.T) {
 				N int `json:",omitzero"`
 			}{M: 6 * 7},
 			want: `{"M":42}`},
+		{name: "Inheritance",
+			data: Ext{Base: Base{P: 7, Q: 8}, R: 9},
+			want: `{"P":7,"Q":8,"R":9}`,
+		},
 	}
 
 	for _, tt := range tests {
