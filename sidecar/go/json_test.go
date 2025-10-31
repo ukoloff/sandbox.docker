@@ -50,10 +50,9 @@ func TestStringify(t *testing.T) {
 				N int `json:",omitzero"`
 			}{M: 6 * 7},
 			want: `{"M":42}`},
-		{name: "Inheritance",
+		{name: "Embedding",
 			data: Ext{Base: Base{P: 7, Q: 8}, R: 9},
-			want: `{"P":7,"Q":8,"R":9}`,
-		},
+			want: `{"P":7,"Q":8,"R":9}`},
 	}
 
 	for _, tt := range tests {
