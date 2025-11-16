@@ -13,6 +13,11 @@ Minimal container to develop via VSCode Tunnel
 7. ...
 8. Profit!
 
+# Credentials
+
+1. Install `git` for VSCode to pass `GIT_ASKPASS` et al.
+2. If `SSH_AUTH_SOCK` is set it will appear inside container
+
 ## See also
 + [Developing with Remote Tunnels](https://code.visualstudio.com/docs/remote/tunnels)
 + [reverie89/vscode-tunnel](https://github.com/reverie89/vscode-tunnel/)Sta

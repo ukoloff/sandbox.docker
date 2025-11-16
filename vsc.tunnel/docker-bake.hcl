@@ -10,7 +10,7 @@ target "vsct" {
 
     WORKDIR /tmp
     RUN --mount=type=cache,target=/var/cache/apk <<EOR
-      apk add curl docker-cli
+      apk add curl docker-cli git
       curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz
       tar -xzf vscode_cli.tar.gz -C /usr/bin
       rm vscode_cli.tar.gz
