@@ -14,8 +14,12 @@ target "vsct" {
       curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz
       tar -xzf vscode_cli.tar.gz -C /usr/bin
       rm vscode_cli.tar.gz
+
+      adduser stas -D
+      addgroup stas root
     EOR
 
+    USER stas
     ENTRYPOINT ["/usr/bin/code", "tunnel", "--accept-server-license-terms"]
     EOT
 
