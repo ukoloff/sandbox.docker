@@ -13,6 +13,10 @@ Minimal container to develop via VSCode Tunnel
 7. ...
 8. Profit!
 
+For some reason,
+steps 3 - 5 may be omitted.
+Run container and then connect to it from Remote Explorer...
+
 # Credentials
 
 1. Install `git` for VSCode to pass `GIT_ASKPASS` et al.

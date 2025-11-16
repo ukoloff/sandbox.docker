@@ -8,12 +8,11 @@ target "vsct" {
   dockerfile-inline = <<-EOT
     FROM alpine
 
-    WORKDIR /tmp
     RUN --mount=type=cache,target=/var/cache/apk <<EOR
       apk add curl docker-cli git
-      curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output vscode_cli.tar.gz
-      tar -xzf vscode_cli.tar.gz -C /usr/bin
-      rm vscode_cli.tar.gz
+      curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output /tmp/vscode_cli.tar.gz
+      tar -xzf /tmp/vscode_cli.tar.gz -C /usr/bin
+      rm /tmp/vscode_cli.tar.gz
 
       adduser stas -D
       addgroup stas root
