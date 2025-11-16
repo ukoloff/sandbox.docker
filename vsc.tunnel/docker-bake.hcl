@@ -20,7 +20,7 @@ target "vsct" {
     EOR
 
     USER stas
-    ENTRYPOINT ["/usr/bin/code", "tunnel", "--accept-server-license-terms"]
+    ENTRYPOINT ["/usr/bin/code", "tunnel", "--accept-server-license-terms", "--disable-telemetry"]
     EOT
 
   labels = {
