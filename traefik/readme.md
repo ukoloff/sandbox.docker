@@ -11,6 +11,11 @@ docker compose cp etc/traefik itself:/etc/
 docker stack deploy traefik -dc .\swarm.yml
 ```
 
+## .env
+```
+NETANGELS_API_KEY=XXXXXXXXXXXX
+```
+
 ## See also
 + [Traefik]
 + @Habr:
