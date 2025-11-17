@@ -4,8 +4,10 @@ services:
   itself:
     image: traefik:v3.6
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - etc:/etc/traefik
+      - acme:/letsenrypt/
     ports:
       - 80:80
       - 443:443
@@ -28,6 +30,8 @@ services:
   netangels:
     image: ukoloff/na01:golang
     restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
     environment:
@@ -35,6 +39,7 @@ services:
 
 volumes:
   etc:
+  acme:
 
 networks:
   default:

@@ -31,6 +31,7 @@ certificatesResolvers:
     acme:
       email: stas@ekb.ru
       caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      storage: /letsenrypt/acme.json
       dnsChallenge:
         provider: httpreq
         # resolvers:
