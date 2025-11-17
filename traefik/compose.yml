@@ -2,7 +2,7 @@ name: traefik
 
 services:
   itself:
-    image: traefik:v3.5
+    image: traefik:v3.6
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - etc:/etc/traefik
