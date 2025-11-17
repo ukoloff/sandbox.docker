@@ -20,9 +20,18 @@ providers:
   docker:
     exposedByDefault: false
 
-  swarm:
-    exposedByDefault: false
+  # swarm:
+  #   exposedByDefault: false
 
-# log:
-#   level: INFO
+log:
+  level: INFO
 
+certificatesResolvers:
+  le:
+    acme:
+      email: stas@ekb.ru
+      caServer: https://acme-staging-v02.api.letsencrypt.org/directory
+      dnsChallenge:
+        provider: httpreq
+        resolvers:
+          - 8.8.8.8
