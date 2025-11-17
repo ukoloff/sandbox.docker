@@ -9,7 +9,7 @@ target "vsct" {
     FROM alpine
 
     RUN --mount=type=cache,target=/var/cache/apk <<EOR
-      apk add curl docker-cli git
+      apk add curl docker-cli nodejs-lts git
       curl -Lk 'https://code.visualstudio.com/sha/download?build=stable&os=cli-alpine-x64' --output /tmp/vscode_cli.tar.gz
       tar -xzf /tmp/vscode_cli.tar.gz -C /usr/bin
       rm /tmp/vscode_cli.tar.gz
@@ -18,7 +18,7 @@ target "vsct" {
       addgroup stas root
     EOR
 
-    USER stas
+    # USER stas
     ENTRYPOINT ["/usr/bin/code", "tunnel", "--accept-server-license-terms", "--disable-telemetry"]
     EOT
 
