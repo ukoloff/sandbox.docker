@@ -17,11 +17,11 @@ api:
   dashboard: true
 
 providers:
-  file:
-    directory: /etc/traefik/conf.d/
-
   docker:
     exposedByDefault: false
+
+  file:
+    directory: /etc/traefik/conf.d/
 
   # swarm:
   #   exposedByDefault: false
