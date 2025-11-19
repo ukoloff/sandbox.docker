@@ -1,7 +1,7 @@
 http:
   routers:
     whoami:
-      rule: Host(`whoami.docker.ekb.ru`)
+      rule: Host(`t5k.docker.ekb.ru`) && PathPrefix(`/whoami`)
       service: whoami
 
   services:
