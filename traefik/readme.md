@@ -3,7 +3,7 @@
 ## Boot config
 ```sh
 docker compose create
-docker compose cp etc/traefik itself:/etc/
+docker compose cp etc/traefik proxy:/etc/
 ```
 
 ## Run in Swarm mode

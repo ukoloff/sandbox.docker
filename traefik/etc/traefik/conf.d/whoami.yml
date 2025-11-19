@@ -1,8 +1,5 @@
 http:
   routers:
     whoami:
-      rule: Host(`whoami.ekb.ru`)
-      entrypoints: tls
+      rule: Host(`who-am-i.docker.ekb.ru`)
       service: whoami-traefik@docker
-      tls:
-        certresolver: le

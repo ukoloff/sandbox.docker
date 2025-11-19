@@ -1,7 +1,7 @@
 name: traefik
 
 services:
-  itself:
+  proxy:
     image: traefik:v3.6
     volumes:
       - /etc/localtime:/etc/localtime:ro
@@ -22,6 +22,7 @@ services:
     restart: unless-stopped
     labels:
       traefik.enable: true
+      # traefik.http.routers.whoami.rule: Method(`none`)
 
   netangels:
     image: ukoloff/na01:golang

@@ -5,12 +5,23 @@ global:
 entryPoints:
   web:
     address: :80
+    http:
+      redirections:
+        entryPoint:
+          to: tls
+          scheme: https
+          permanent: true
 
   traefik:
     address: :8080
 
   tls:
     address: :443
+    asDefault: true
+    http:
+      tls:
+        certResolver: le
+
 
 api:
   insecure: true
