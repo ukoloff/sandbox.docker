@@ -3,3 +3,5 @@ http:
     whoami2:
       rule: Host(`t5k.docker.ekb.ru`) && PathPrefix(`/me`)
       service: whoami
+      middlewares:
+        - terry

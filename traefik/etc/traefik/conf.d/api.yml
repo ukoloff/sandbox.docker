@@ -5,12 +5,14 @@ http:
       service: api@internal
       middlewares:
         - t5k-auth
+        - terry
 
     dashboard:
       rule: Host(`t5k.docker.ekb.ru`)
       service: dashboard@internal
       middlewares:
         - t5k-auth
+        - terry
 
   middlewares:
     t5k-auth:
