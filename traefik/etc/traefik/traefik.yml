@@ -12,8 +12,8 @@ entryPoints:
           scheme: https
           permanent: true
 
-  traefik:
-    address: :8080
+  # traefik:
+  #   address: :8080
 
   tls:
     address: :443
@@ -22,9 +22,8 @@ entryPoints:
       tls:
         certResolver: le
 
-
 api:
-  insecure: true
+  # insecure: true
   dashboard: true
   debug: true
 
