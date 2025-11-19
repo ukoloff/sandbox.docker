@@ -1,5 +1,5 @@
 http:
   routers:
     whoami2:
-      rule: Host(`too.who-am-i.docker.ekb.ru`)
-      service: whoami-traefik@docker
+      rule: Host(`too.t5k.docker.ekb.ru`)
+      service: whoami

@@ -20,9 +20,6 @@ services:
   whoami:
     image: traefik/whoami
     restart: unless-stopped
-    labels:
-      traefik.enable: true
-      # traefik.http.routers.whoami.rule: Method(`none`)
 
   netangels:
     image: ukoloff/na01:golang
