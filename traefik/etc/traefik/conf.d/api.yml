@@ -1,0 +1,19 @@
+http:
+  routers:
+    api:
+      rule: Host(`t5k.docker.ekb.ru`) && PathRegexp(`/(api|debug)`)
+      service: api@internal
+      # priority: 11
+
+    dashboard:
+      rule: Host(`t5k.docker.ekb.ru`) && PathPrefix(`/-`)
+      service: dashboard@internal
+      # priority: 12
+      middlewares:
+        - stripanyprefix
+
+  middlewares:
+    stripanyprefix:
+      stripPrefixRegex:
+        regex:
+          - .*
