@@ -1,7 +1,7 @@
 http:
   routers:
     api:
-      rule: Host(`t5k.docker.ekb.ru`) && PathRegexp(`/(api|debug)`)
+      rule: Host(`t5k.docker.ekb.ru`) && PathRegexp(`^/(api|debug)`)
       service: api@internal
       middlewares:
         - t5k-auth
