@@ -1,0 +1,9 @@
+name: syncThing
+
+services:
+  sync:
+    image: lscr.io/linuxserver/syncthing:latest
+    ports:
+      - target: 8384
+        published: 8888
+    restart: unless-stopped
