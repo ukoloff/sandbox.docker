@@ -1,9 +1,27 @@
 name: syncThing
 
 services:
-  sync:
+  A: &service
     image: lscr.io/linuxserver/syncthing:latest
-    ports:
-      - target: 8384
-        published: 8888
     restart: unless-stopped
+    ports:
+      - 8887:8384
+    volumes:
+      - vA:/sync/A
+      - vB:/sync/B
+      - vC:/sync/C
+
+  B:
+    <<: *service
+    ports:
+      - 8888:8384
+
+  C:
+    <<: *service
+    ports:
+      - 8889:8384
+
+volumes:
+  vA:
+  vB:
+  vC:
