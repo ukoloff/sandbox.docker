@@ -19,8 +19,9 @@ func TestGit(t *testing.T) {
 		}
 
 		_, err = git.PlainClone(plain, &git.CloneOptions{
-			URL:   "https://github.com/ukoloff/sandbox.docker",
-			Depth: 2,
+			URL:      "https://github.com/ukoloff/sandbox.docker",
+			Depth:    2,
+			Progress: os.Stdout,
 		})
 		if err != nil {
 			t.Error(err)
