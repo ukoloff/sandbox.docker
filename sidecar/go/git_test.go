@@ -1,6 +1,7 @@
 package sidecar_test
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"testing"
@@ -29,7 +30,7 @@ func TestGit(t *testing.T) {
 	})
 
 	t.Run("Sparse clone", func(t *testing.T) {
-		t.Skip()
+		// t.Skip()
 		sparse := path.Join(tmp, "sparse")
 		err := os.Mkdir(sparse, 0700)
 		if err != nil {
@@ -37,14 +38,20 @@ func TestGit(t *testing.T) {
 		}
 
 		repo, err := git.PlainClone(sparse, &git.CloneOptions{
-			URL: "https://github.com/ukoloff/sandbox.docker",
-			// Depth:      2,
-			NoCheckout: true,
-			Progress:   os.Stdout,
+			URL:           "https://github.com/ukoloff/sandbox.docker",
+			Depth:         2,
+			ReferenceName: "sidecar",
+			NoCheckout:    true,
+			Progress:      os.Stdout,
+			Filter:        "tree:0",
 		})
 		if err != nil {
 			t.Error(err)
 		}
+
+		head, _ := repo.Head()
+		fmt.Println(head)
+
 		w, err := repo.Worktree()
 		if err != nil {
 			t.Error(err)
@@ -52,6 +59,7 @@ func TestGit(t *testing.T) {
 
 		err = w.Checkout(&git.CheckoutOptions{
 			SparseCheckoutDirectories: []string{"/sidecar"},
+			// Branch:                    "main",
 		})
 		if err != nil {
 			t.Error(err)
