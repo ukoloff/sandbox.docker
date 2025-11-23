@@ -28,4 +28,33 @@ func TestGit(t *testing.T) {
 		}
 	})
 
+	t.Run("Sparse clone", func(t *testing.T) {
+		sparse := path.Join(tmp, "sparse")
+		err := os.Mkdir(sparse, 0700)
+		if err != nil {
+			t.Error(err)
+		}
+
+		repo, err := git.PlainClone(sparse, &git.CloneOptions{
+			URL: "https://github.com/ukoloff/sandbox.docker",
+			// Depth:      2,
+			NoCheckout: true,
+			Progress:   os.Stdout,
+		})
+		if err != nil {
+			t.Error(err)
+		}
+		w, err := repo.Worktree()
+		if err != nil {
+			t.Error(err)
+		}
+
+		err = w.Checkout(&git.CheckoutOptions{
+			SparseCheckoutDirectories: []string{"/sidecar"},
+		})
+		if err != nil {
+			t.Error(err)
+		}
+	})
+
 }
