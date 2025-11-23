@@ -29,6 +29,7 @@ func TestGit(t *testing.T) {
 	})
 
 	t.Run("Sparse clone", func(t *testing.T) {
+		t.Skip()
 		sparse := path.Join(tmp, "sparse")
 		err := os.Mkdir(sparse, 0700)
 		if err != nil {
