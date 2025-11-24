@@ -5,24 +5,42 @@ services:
     image: traefik:v3.6
     init: true
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-      - etc:/etc/traefik
-      - acme:/letsenrypt/
+      - type: bind
+        source: /etc/localtime
+        target: /etc/localtime
+        read_only: true
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+      - type: volume
+        source: etc
+        target: /etc/traefik
+      - type: volume
+        source: acme
+        target: /letsenrypt/
+      - type: image
+        source: ukoloff/na01:golang
+        target: /na01
     ports:
       - 80:80
       - 443:443
       - 8080:8080
+    env_file:
+      - .env
     environment:
-      HTTPREQ_ENDPOINT: http://netangels
-      HTTPREQ_POLLING_INTERVAL: 10
-      HTTPREQ_PROPAGATION_TIMEOUT: 300
+      EXEC_PATH: /na01/bin/na01
+      EXEC_POLLING_INTERVAL: 10
+      EXEC_PROPAGATION_TIMEOUT: 300
+      NETANGELS_LOGGING: 1
 
   whoami:
     image: traefik/whoami
     restart: unless-stopped
 
   netangels:
+    profiles:
+      - none
     image: ukoloff/na01:golang
     restart: unless-stopped
     volumes:
