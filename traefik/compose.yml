@@ -38,18 +38,6 @@ services:
     image: traefik/whoami
     restart: unless-stopped
 
-  netangels:
-    profiles:
-      - none
-    image: ukoloff/na01:golang
-    restart: unless-stopped
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
-    environment:
-      NETANGELS_LOGGING: 1
-
 volumes:
   etc:
   acme:
