@@ -4,7 +4,7 @@
   "service": "node",
   "onCreateCommand": "apk add git",
   // "updateContentCommand":
-  "postCreateCommand": "git clone -b sidecar --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker . ; git sparse-checkout set --no-cone /sidecar/ ; git checkout",
+  "postCreateCommand": "git clone -b sidecar --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker . ; git sparse-checkout set --no-cone /sidecar/ /.editorconfig ; git checkout",
   "workspaceFolder": "/repo",
   "customizations": {
     "vscode": {
