@@ -6,7 +6,7 @@ import { tmpdir } from 'os'
 
 const skip = !await isLinux()
 
-describe('Shell', { skip }, async $ => {
+describe('Shell', { skip: skip ? 'Test on Linux' : '' }, async $ => {
   let tmp = await mkdtemp(join(tmpdir(), 'sidecar-sh-'))
   after($ =>
     rm(tmp, { recursive: true })
