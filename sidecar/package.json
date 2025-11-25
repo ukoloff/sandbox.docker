@@ -11,7 +11,14 @@
     "test": "node --test"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Stas Ukolov",
+    "email": "ukoloff@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ukoloff/sandbox.docker"
+  },
   "license": "ISC",
   "type": "module"
 }
