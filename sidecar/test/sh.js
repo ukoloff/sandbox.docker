@@ -3,7 +3,6 @@ import { isLinux, sh } from '../src/sh.js'
 import { join } from 'path'
 import { rm, mkdtemp, access, readFile, constants } from 'fs/promises'
 import { tmpdir } from 'os'
-import { fstat } from 'fs'
 
 const skip = !await isLinux()
 
