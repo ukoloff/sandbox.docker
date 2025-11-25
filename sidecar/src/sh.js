@@ -1,5 +1,5 @@
 import { access, constants } from 'node:fs/promises'
-import { run } from './run'
+import { run } from './run.js'
 import { chdir } from 'node:process'
 
 const SHELL = '/bin/sh'
