@@ -10,6 +10,7 @@
     "vscode": {
       "extensions": [
         "mhutchie.git-graph",
+        "connor4312.nodejs-testing",
         "EditorConfig.EditorConfig"
       ]
     }
