@@ -6,7 +6,7 @@ const SHELL = '/bin/sh'
 
 export async function isLinux() {
   try {
-    await access(SHELL, constants.F_OK)
+    await access(SHELL, constants.X_OK)
     return true
   } catch { }
 }
