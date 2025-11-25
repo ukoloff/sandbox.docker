@@ -12,5 +12,5 @@ export async function isLinux() {
 }
 
 export async function sh(file, folder = '') {
-  return run(SHELL, ['-e', file], {chdir: folder})
+  return run(SHELL, ['-e', file], {cwd: folder})
 }
