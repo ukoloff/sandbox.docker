@@ -1,4 +1,6 @@
+import { join } from 'node:path'
 import { wait, run, spawn } from './run.js'
+import { sidecar as shSideCar } from './sh.js'
 
 export function parse(uri) {
   let u = new URL(uri, 'https://github.com/')
@@ -45,4 +47,15 @@ export async function pull(cwd = '') {
   await run('git', ['pull', '--ff-only', '-q'], { cwd, stdio: 'inherit' })
 }
 
-
+export async function sidecar(url, cwd = '') {
+  const z = parse(url), safeUrl = z.safe, home = join(cwd, z.folder)
+  if (!isGit(cwd)) {
+    console.log('Clone:', safeUrl)
+    clone(url, cwd)
+  } else {
+    console.log('Pull:', safeUrl)
+    pull(cwd)
+  }
+  console.log('Run:', home)
+  shSideCar(home)
+}
