@@ -1,5 +1,5 @@
 import { it, describe, before, after } from 'node:test'
-import { isLinux, sh } from '../src/sh.js'
+import { isLinux, sh, sidecar } from '../src/sh.js'
 import { join } from 'path'
 import { rm, mkdtemp, access, readFile, constants } from 'fs/promises'
 import { tmpdir } from 'os'
@@ -42,11 +42,15 @@ it('Shell', $ => {
 
   it('errors 2', async $ =>
     await $.assert.rejects(async $ =>
-      await sh(join(import.meta.dirname, 'sh/404.sh'), tmp))
+      await sh(join(import.meta.dirname, 'sh/404.sh'), tmp, true))
   )
 
   it('errors 3', async $ =>
     await $.assert.rejects(async $ =>
       await sh(join(import.meta.dirname, 'sh/true.sh'), tmp + '!'))
   )
+
+  it('runs batch', async $=>{
+    await sidecar(join(import.meta.dirname, 'sh.d'))
+  })
 })
