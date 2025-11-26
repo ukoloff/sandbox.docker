@@ -42,7 +42,7 @@ export async function clone(url, cwd = '') {
 }
 
 export async function pull(cwd = '') {
-  await run('git', ['pull', '-q'], { cwd, stdio: 'inherit' })
+  await run('git', ['pull', '--ff-only', '-q'], { cwd, stdio: 'inherit' })
 }
 
 
