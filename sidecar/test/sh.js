@@ -1,4 +1,4 @@
-import { it, describe, after } from 'node:test'
+import { it, describe, before, after } from 'node:test'
 import { isLinux, sh } from '../src/sh.js'
 import { join } from 'path'
 import { rm, mkdtemp, access, readFile, constants } from 'fs/promises'
@@ -6,12 +6,21 @@ import { tmpdir } from 'os'
 
 const skip = !await isLinux()
 
-describe('Shell', { skip: skip ? 'Test on Linux' : '' }, async $ => {
-  let tmp = await mkdtemp(join(tmpdir(), 'sidecar-sh-'))
-  after($ =>
+it('Shell', $ => {
+  if (skip){
+    $.skip('Test on Linux')
+    return
+  }
+  let tmp
+
+  before(async $ => {
+    tmp = await mkdtemp(join(tmpdir(), 'sidecar-sh-'))
+  })
+
+  after($ => {
     rm(tmp, { recursive: true })
       .catch($ => 0)
-  )
+  })
 
   it('runs', async $ => {
     await sh(join(import.meta.dirname, 'sh/true.sh'), tmp)
