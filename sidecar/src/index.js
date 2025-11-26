@@ -4,6 +4,4 @@
 // import { parseArgs } from 'node:util'
 import { sidecar } from './git.js'
 
-console.log('Hello, world!')
-
-sidecar('')
+sidecar('ukoloff/sidecar/sidecar#sidecar')

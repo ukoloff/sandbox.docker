@@ -1,4 +1,4 @@
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { wait, run, spawn } from './run.js'
 import { sidecar as shSideCar } from './sh.js'
 
@@ -56,6 +56,6 @@ export async function sidecar(url, cwd = '') {
     console.log('Pull:', safeUrl)
     pull(cwd)
   }
-  console.log('Run:', home)
+  console.log('Run:', resolve(home))
   shSideCar(home)
 }
