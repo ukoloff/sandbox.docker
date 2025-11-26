@@ -49,7 +49,7 @@ export async function pull(cwd = '') {
 
 export async function sidecar(url, cwd = '') {
   const z = parse(url), safeUrl = z.safe, home = join(cwd, z.folder)
-  if (!isGit(cwd)) {
+  if (!await isGit(cwd)) {
     console.log('Clone:', safeUrl)
     await clone(url, cwd)
   } else {
