@@ -11,8 +11,11 @@ export async function isLinux() {
   } catch { }
 }
 
-export async function sh(file, folder = '') {
-  return run(SHELL, ['-e', file], { cwd: folder })
+export async function sh(file, folder = '', mute = false) {
+  let params = { cwd: folder }
+  if (!mute)
+    params.stdio = 'inherit'
+  return run(SHELL, ['-e', file], params)
 }
 
 export async function sidecar(folder = '') {
