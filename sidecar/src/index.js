@@ -4,14 +4,17 @@
 import { basename } from 'node:path'
 import { sidecar } from './git.js'
 
-let url = process.argv[2] || process.env.SIDECAR_GIT_URL
+const ENVVAR = 'SIDECAR_GIT_URL'
+let { argv, env } = process
+
+let url = argv[2] || env[ENVVAR]
 if (!url) Help()
 
-delete process.env.SIDECAR_GIT_URL
+delete env[ENVVAR]
 
-sidecar(url, process.argv[3] || '')
+sidecar(url, argv[3] || '')
 
 function Help() {
-  console.log(`Usage: ${basename(process.argv[1])} [[https://github.com/]user/repo/folder#branch] folder`)
+  console.log(`Usage: ${basename(argv[1])} [[https://github.com/]user/repo[/folder][#branch]] [folder]`)
   process.exit(1)
 }
