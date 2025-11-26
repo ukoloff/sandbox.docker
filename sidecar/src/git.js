@@ -35,7 +35,7 @@ export async function clone(url, cwd = '') {
   await run('git', args, options)
   if (src.folder) {
     await run('git',
-      ['sparse-checkout', 'set', '--no-cone', `/${src.folder}/`],
+      ['sparse-checkout', 'set', '--no-cone', '/' + src.folder],
       options)
   }
   await run('git', ['checkout', '-q'], options)
