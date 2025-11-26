@@ -51,6 +51,13 @@ it('Shell', $ => {
   )
 
   it('runs batch', async $=>{
+    process.env.SIDECAR_TMP = tmp
     await sidecar(join(import.meta.dirname, 'sh.d'))
+    let a = await readFile(join(tmp, 'a.txt'))
+    $.assert.equal(a.toString().trim(), 'A!')
+    let b = await readFile(join(tmp, 'b.txt'))
+    $.assert.equal(b.toString().trim(), 'Non-B!')
+    let z = await readFile(join(tmp, 'z.txt'))
+    $.assert.equal(z.toString().trim(), 'Z!')
   })
 })
