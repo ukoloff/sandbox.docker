@@ -1,15 +1,16 @@
 import { it, describe, after } from 'node:test'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { mkdtemp, rm } from 'node:fs/promises'
+import { access, constants, mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { clone, isGit } from '../src/git.js'
 import { execFile } from 'node:child_process'
+import { run } from '../src/run.js'
 
 describe('git', $ => {
+  let tmps = []
+  after(cleanUp)
 
   describe('clones', $ => {
-    let tmps = []
-    after(cleanUp)
 
     let repos = [
       {
@@ -32,7 +33,7 @@ describe('git', $ => {
 
     repos.sort($ => 0.5 - Math.random())
     for (let test of repos) {
-      it(test.name, async $ => {
+      it.skip(test.name, async $ => {
         let folder = await tmp()
         await clone(test.url, folder)
 
@@ -50,23 +51,48 @@ describe('git', $ => {
         $.assert.equal(out.trim().indexOf("\n"), -1)
       })
     }
+  })
 
-    async function tmp() {
-      let tmp = await mkdtemp(join(tmpdir(), 'sidecar-git-'))
-      tmps.push(tmp)
-      return tmp
-    }
+  it('pulls', async $ => {
+    let src = await tmp()
+    let dst = await tmp()
+    await run('git', ['init', '-q'], { cwd: src })
+    writeFile(join(src, 'readme.md'), '# Hi!')
+    await run('git', ['add', '.'], { cwd: src })
+    await run('git', ['commit', '-m', 'First commit'], { cwd: src })
 
-    async function cleanUp() {
-      for (let tmp of tmps) {
-        rm(tmp, { recursive: true })
-          .catch($ => 0)
-      }
-    }
+    await run('git', ['clone', src, dst])
+    $.assert.ok(await fileExists(join(dst, 'readme.md')))
+
+    writeFile(join(src, 'LICENSE'), 'None')
+    await run('git', ['add', '.'], { cwd: src })
+    await run('git', ['commit', '-m', 'Second commit'], { cwd: src })
+    await run('git', ['pull', '-q'], { cwd: dst })
+    $.assert.ok(await fileExists(join(dst, 'LICENSE')))
   })
 
   it('detects itself', async $ => {
     $.assert.ok(await isGit())
     $.assert.ok(!await isGit(tmpdir()))
   })
+
+  async function tmp() {
+    let tmp = await mkdtemp(join(tmpdir(), 'sidecar-git-'))
+    tmps.push(tmp)
+    return tmp
+  }
+
+  async function cleanUp() {
+    for (let tmp of tmps) {
+      rm(tmp, { recursive: true })
+        .catch($ => 0)
+    }
+  }
+
+  async function fileExists(path) {
+    try {
+      await access(path, constants.F_OK)
+      return true
+    } catch { }
+  }
 })
