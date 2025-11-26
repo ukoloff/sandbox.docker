@@ -41,3 +41,8 @@ export async function clone(url, cwd = '') {
   await run('git', ['checkout', '-q'], options)
 }
 
+export async function pull(cwd = '') {
+  await run('git', ['pull', '-q'], { cwd, stdio: 'inherit' })
+}
+
+

@@ -2,7 +2,7 @@ import { it, describe, after } from 'node:test'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { access, constants, mkdtemp, rm, writeFile } from 'node:fs/promises'
-import { clone, isGit } from '../src/git.js'
+import { clone, isGit, pull } from '../src/git.js'
 import { execFile } from 'node:child_process'
 import { run } from '../src/run.js'
 
@@ -33,7 +33,7 @@ describe('git', $ => {
 
     repos.sort($ => 0.5 - Math.random())
     for (let test of repos) {
-      it.skip(test.name, async $ => {
+      it(test.name, async $ => {
         let folder = await tmp()
         await clone(test.url, folder)
 
@@ -67,7 +67,7 @@ describe('git', $ => {
     writeFile(join(src, 'LICENSE'), 'None')
     await run('git', ['add', '.'], { cwd: src })
     await run('git', ['commit', '-m', 'Second commit'], { cwd: src })
-    await run('git', ['pull', '-q'], { cwd: dst })
+    await pull(dst)
     $.assert.ok(await fileExists(join(dst, 'LICENSE')))
   })
 
