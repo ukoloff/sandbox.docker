@@ -1,13 +1,13 @@
-import { it, describe, before, after } from 'node:test'
+import { join } from 'node:path'
+import { tmpdir } from 'node:os'
+import { rm, mkdtemp, access, readFile, constants } from 'node:fs/promises'
+import { it, before, after } from 'node:test'
 import { isLinux, sh, sidecar } from '../src/sh.js'
-import { join } from 'path'
-import { rm, mkdtemp, access, readFile, constants } from 'fs/promises'
-import { tmpdir } from 'os'
 
 const skip = !await isLinux()
 
 it('Shell', $ => {
-  if (skip){
+  if (skip) {
     $.skip('Test on Linux')
     return
   }
@@ -50,7 +50,7 @@ it('Shell', $ => {
       await sh(join(import.meta.dirname, 'sh/true.sh'), tmp + '!'))
   )
 
-  it('runs batch', async $=>{
+  it('runs batch', async $ => {
     process.env.SIDECAR_TMP = tmp
     await sidecar(join(import.meta.dirname, 'sh.d'))
     let a = await readFile(join(tmp, 'a.txt'))
