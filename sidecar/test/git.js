@@ -10,6 +10,11 @@ describe('git', $ => {
   let tmps = []
   after(cleanUp)
 
+  it('detects itself', async $ => {
+    $.assert.ok(await isGit())
+    $.assert.ok(!await isGit(tmpdir()))
+  })
+
   describe('clones', $ => {
 
     let repos = [
@@ -69,11 +74,6 @@ describe('git', $ => {
     await run('git', ['commit', '-m', 'Second commit'], { cwd: src })
     await pull(dst)
     $.assert.ok(await fileExists(join(dst, 'LICENSE')))
-  })
-
-  it('detects itself', async $ => {
-    $.assert.ok(await isGit())
-    $.assert.ok(!await isGit(tmpdir()))
   })
 
   async function tmp() {
