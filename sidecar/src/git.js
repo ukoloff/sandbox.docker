@@ -51,11 +51,11 @@ export async function sidecar(url, cwd = '') {
   const z = parse(url), safeUrl = z.safe, home = join(cwd, z.folder)
   if (!isGit(cwd)) {
     console.log('Clone:', safeUrl)
-    clone(url, cwd)
+    await clone(url, cwd)
   } else {
     console.log('Pull:', safeUrl)
-    pull(cwd)
+    await pull(cwd)
   }
   console.log('Run:', resolve(home))
-  shSideCar(home)
+  await shSideCar(home)
 }
