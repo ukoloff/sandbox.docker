@@ -44,6 +44,14 @@ it('Exec', async $ => {
       let pull = await doPull(join(tmp, 'dev/pull'))
       await run('node', ['.', pull.url, pull.dst])
       await pull.check()
+
+      it('envvar', async $ => {
+        let pull = await doPull(join(tmp, 'dev/pull.env'))
+        process.env.SIDECAR_GIT_URL = pull.url
+        await run('node', [resolve()], {cwd: pull.dst})
+        delete process.env.SIDECAR_GIT_URL
+        await pull.check()
+      })
     })
   })
 
@@ -76,8 +84,20 @@ it('Exec', async $ => {
         delete process.env.SIDECAR_GIT_URL
         await checkCloned(repo)
       })
-
     })
 
+    it('pull', async $ => {
+      let pull = await doPull(join(tmp, 'prod/pull'))
+      await run(bin, [pull.url, pull.dst])
+      await pull.check()
+
+      it('envvar', async $ => {
+        let pull = await doPull(join(tmp, 'prod/pull.env'))
+        process.env.SIDECAR_GIT_URL = pull.url
+        await run(bin, { cwd: pull.dst })
+        delete process.env.SIDECAR_GIT_URL
+        await pull.check()
+      })
+    })
   })
 })
