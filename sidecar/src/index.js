@@ -2,7 +2,7 @@
 // Command Line Interface
 //
 import { basename } from 'node:path'
-import { sidecar } from './git.js'
+import { parse, sidecar } from './git.js'
 
 const ENVVAR = 'SIDECAR_GIT_URL'
 let { argv, env } = process
@@ -21,6 +21,6 @@ Defaults:
 - URL:    \${${ENVVAR}}
 - folder: .
 
-See: https://github.com/ukoloff/sandbox.docker`)
+See: ${parse('ukoloff/sandbox.docker').safe}`)
   process.exit(1)
 }
