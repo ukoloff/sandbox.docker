@@ -1,4 +1,4 @@
-name: sidecar-test
+name: sdcr.js
 
 services:
   node:
