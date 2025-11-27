@@ -50,7 +50,7 @@ it('Shell', $ => {
       await sh(join(import.meta.dirname, 'sh/true.sh'), tmp + '!'))
   )
 
-  it('runs batch', async $ => {
+  it('executes sidecar scripts', async $ => {
     process.env.SIDECAR_TMP = tmp
     await sidecar(join(import.meta.dirname, 'sh.d'))
     let a = await readFile(join(tmp, 'a.txt'))

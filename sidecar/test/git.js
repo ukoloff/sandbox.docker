@@ -1,10 +1,11 @@
 import { it, describe, after } from 'node:test'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { access, constants, mkdtemp, rm, writeFile } from 'node:fs/promises'
-import { clone, isGit, pull } from '../src/git.js'
+import { access, constants, mkdtemp, rm, readFile, writeFile } from 'node:fs/promises'
+import { clone, isGit, pull, sidecar } from '../src/git.js'
 import { execFile } from 'node:child_process'
 import { run } from '../src/run.js'
+import { isLinux } from '../src/sh.js'
 
 describe('git', $ => {
   let tmps = []
@@ -37,6 +38,9 @@ describe('git', $ => {
     ]
 
     repos.sort($ => 0.5 - Math.random())
+    for (let i = 0; i < 3; i += 2) {
+      repos[i].url = 'https://github.com/' + repos[i].url
+    }
     for (let test of repos) {
       it(test.name, async $ => {
         let folder = await tmp()
@@ -74,6 +78,25 @@ describe('git', $ => {
     await run('git', ['commit', '-m', 'Second commit'], { cwd: src })
     await pull(dst)
     $.assert.ok(await fileExists(join(dst, 'LICENSE')))
+  })
+
+  it('executes sidecar scripts', async $ => {
+    if (!await isLinux()) {
+      $.skip('Run on Linux')
+      return
+    }
+
+    it('clone', async $ => {
+      let repo = await tmp()
+      await sidecar('ukoloff/sandbox.docker/sidecar/test/sh.d#sidecar', repo)
+      let home = join(repo, 'sidecar/test/sh.d')
+      let a = await readFile(join(home, 'a.txt'))
+      $.assert.equal(a.toString().trim(), 'A!')
+      let b = await readFile(join(home, 'b.txt'))
+      $.assert.equal(b.toString().trim(), 'Non-B!')
+      let z = await readFile(join(home, 'z.txt'))
+      $.assert.equal(z.toString().trim(), 'Z!')
+    })
   })
 
   async function tmp() {
