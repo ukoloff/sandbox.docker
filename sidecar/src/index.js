@@ -15,6 +15,12 @@ delete env[ENVVAR]
 sidecar(url, argv[3] || '')
 
 function Help() {
-  console.log(`Usage: ${basename(argv[1])} [[https://github.com/]user/repo[/folder][#branch]] [folder]`)
+  console.log(`Usage: ${basename(argv[1])} [[https://github.com/]user/repo[/folder][#branch]] [folder]
+
+Defaults:
+- URL:    \${${ENVVAR}}
+- folder: .
+
+See: https://github.com/ukoloff/sandbox.docker`)
   process.exit(1)
 }
