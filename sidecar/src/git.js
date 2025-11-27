@@ -1,7 +1,7 @@
-import { join, resolve } from 'node:path'
-import { wait, run, spawn } from './run.js'
-import { sidecar as shSideCar } from './sh.js'
 import { mkdir } from 'node:fs/promises'
+import { join, resolve } from 'node:path'
+import { run, spawn, wait } from './run.js'
+import { sidecar as shSideCar } from './sh.js'
 
 export function parse(uri) {
   let u = new URL(uri, 'https://github.com/')

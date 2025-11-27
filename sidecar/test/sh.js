@@ -1,7 +1,7 @@
-import { join } from 'node:path'
+import { access, constants, mkdtemp, readFile, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { rm, mkdtemp, access, readFile, constants } from 'node:fs/promises'
-import { it, before, after } from 'node:test'
+import { join } from 'node:path'
+import { after, before, it } from 'node:test'
 import { isLinux, sh, sidecar } from '../src/sh.js'
 
 const skip = !await isLinux()

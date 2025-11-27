@@ -1,5 +1,5 @@
-import { join } from 'node:path'
 import { access, constants, glob } from 'node:fs/promises'
+import { join } from 'node:path'
 import { run } from './run.js'
 
 const SHELL = '/bin/sh'
