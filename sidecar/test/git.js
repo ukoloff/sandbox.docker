@@ -1,7 +1,7 @@
 import { it, describe, after } from 'node:test'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { access, constants, mkdtemp, rm, readFile, writeFile } from 'node:fs/promises'
+import { access, constants, mkdtemp, rm, readFile, writeFile, mkdir } from 'node:fs/promises'
 import { clone, isGit, pull, sidecar } from '../src/git.js'
 import { execFile } from 'node:child_process'
 import { run } from '../src/run.js'
@@ -66,14 +66,14 @@ describe('git', $ => {
     let src = await tmp()
     let dst = await tmp()
     await run('git', ['init', '-q'], { cwd: src })
-    writeFile(join(src, 'readme.md'), '# Hi!')
+    await writeFile(join(src, 'readme.md'), '# Hi!')
     await run('git', ['add', '.'], { cwd: src })
     await run('git', ['commit', '-m', 'First commit'], { cwd: src })
 
     await run('git', ['clone', src, dst])
     $.assert.ok(await fileExists(join(dst, 'readme.md')))
 
-    writeFile(join(src, 'LICENSE'), 'None')
+    await writeFile(join(src, 'LICENSE'), 'None')
     await run('git', ['add', '.'], { cwd: src })
     await run('git', ['commit', '-m', 'Second commit'], { cwd: src })
     await pull(dst)
@@ -96,6 +96,29 @@ describe('git', $ => {
       $.assert.equal(b.toString().trim(), 'Non-B!')
       let z = await readFile(join(home, 'z.txt'))
       $.assert.equal(z.toString().trim(), 'Z!')
+    })
+
+    it('pulls', async $ => {
+      let folder = await tmp()
+      let src = join(folder, 'src')
+      let dst = join(folder, 'dst')
+      await mkdir(src, { recursive: true })
+      await mkdir(dst, { recursive: true })
+
+      await run('git', ['init', '-q'], { cwd: src })
+      await writeFile(join(src, '.gitignore'), '# None')
+      await run('git', ['add', '.'], { cwd: src })
+      await run('git', ['commit', '-m', 'Commit #1'], { cwd: src })
+      await run('git', ['clone', src, dst])
+      $.assert.ok(await fileExists(join(dst, '.gitignore')))
+      let sfolder = join(src, 'project/.sidecar')
+      await mkdir(sfolder, { recursive: true })
+      await writeFile(join(sfolder, 'run.sh'), 'echo $(( 6 * 7 )) > answer.txt')
+      await run('git', ['add', '.'], { cwd: src })
+      await run('git', ['commit', '-m', 'Commit #2'], { cwd: src })
+      await sidecar('none/none/project#none', dst)
+      let a = await readFile(join(dst, 'project/answer.txt'))
+      $.assert.equal(a.toString().trim(), '42')
     })
   })
 
