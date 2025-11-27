@@ -1,10 +1,10 @@
 import { mkdir, mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import { after, before, it } from 'node:test'
 import { run } from '../src/run.js'
 import { isLinux } from '../src/sh.js'
-import { checkCloned, doPull, Repo } from './common.js'
+import { checkCloned, doPull, fileExists, Repo } from './common.js'
 
 it('Exec', async $ => {
   if (!await isLinux()) {
@@ -48,6 +48,8 @@ it('Exec', async $ => {
   })
 
   it('prod', async $ => {
+    let bin = resolve('dist/sidecar-git')
+
     it('make', async $ => {
 
       it('install', async $ => {
@@ -57,7 +59,25 @@ it('Exec', async $ => {
       it('bundle', async $ => {
         await run('npm', ['run', 'build'])
         await run('chmod', ['+x', '-R', 'dist'])
+        $.assert.ok(fileExists(bin))
       })
     })
+
+    it('clone', async $ => {
+      let repo = join(tmp, 'prod/clone')
+      await run(bin, [Repo, repo])
+      await checkCloned(repo)
+
+      it('envvar', async $ => {
+        let repo = join(tmp, 'prod/clone.env')
+        await mkdir(repo, { recursive: true })
+        process.env.SIDECAR_GIT_URL = Repo
+        await run(bin, { cwd: repo })
+        delete process.env.SIDECAR_GIT_URL
+        await checkCloned(repo)
+      })
+
+    })
+
   })
 })
