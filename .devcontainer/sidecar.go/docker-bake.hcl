@@ -21,5 +21,6 @@ target "golang" {
   labels = {
     "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
     "org.opencontainers.image.description" = "Golang environment with some packages for DevContainer development preinstalled"
+		"org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
   }
 }
