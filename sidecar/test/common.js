@@ -37,7 +37,10 @@ export async function doPull(base) {
   return { src, dst, url: fakeRepo, check }
 }
 
-async function check() {
+async function check(noscript = false) {
+  assert.ok(await fileExists(join(this.dst, 'project/.sidecar')))
+  if (noscript)
+    return
   let a = await readFile(join(this.dst, 'project/answer.txt'))
   assert.equal(a.toString().trim(), '42')
 }

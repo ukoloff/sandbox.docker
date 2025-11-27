@@ -1,12 +1,11 @@
 import { execFile } from 'node:child_process'
-import { mkdtemp, rm, writeFile } from 'node:fs/promises'
+import { mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { after, describe, it } from 'node:test'
 import { clone, isGit, pull, sidecar } from '../src/git.js'
-import { run } from '../src/run.js'
 import { isLinux } from '../src/sh.js'
-import { checkCloned, doPull, fileExists, Repo } from './common.js'
+import { checkCloned, doPull, Repo } from './common.js'
 
 describe('git', $ => {
   let tmps = []
@@ -64,21 +63,9 @@ describe('git', $ => {
   })
 
   it('pulls', async $ => {
-    let src = await tmp()
-    let dst = await tmp()
-    await run('git', ['init', '-q'], { cwd: src })
-    await writeFile(join(src, 'readme.md'), '# Hi!')
-    await run('git', ['add', '.'], { cwd: src })
-    await run('git', ['commit', '-m', 'First commit'], { cwd: src })
-
-    await run('git', ['clone', src, dst])
-    $.assert.ok(await fileExists(join(dst, 'readme.md')))
-
-    await writeFile(join(src, 'LICENSE'), 'None')
-    await run('git', ['add', '.'], { cwd: src })
-    await run('git', ['commit', '-m', 'Second commit'], { cwd: src })
-    await pull(dst)
-    $.assert.ok(await fileExists(join(dst, 'LICENSE')))
+    let puller = await doPull(await tmp())
+    await pull(puller.dst)
+    await puller.check(true)
   })
 
   it('executes sidecar scripts', async $ => {
