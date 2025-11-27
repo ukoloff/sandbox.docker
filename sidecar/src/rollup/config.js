@@ -5,7 +5,7 @@ export default {
   output: {
     banner: '#!/usr/bin/env node\n',
     format: 'es',
-    dir: 'dist',
+    file: 'dist/sidecar-git',
     plugins: [terser({
       output: {
         max_line_len: 80,
