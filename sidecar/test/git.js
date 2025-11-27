@@ -1,12 +1,12 @@
+import { execFile } from 'node:child_process'
+import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { execFile } from 'node:child_process'
-import { it, describe, after } from 'node:test'
-import { access, constants, mkdtemp, rm, readFile, writeFile, mkdir } from 'node:fs/promises'
+import { after, describe, it } from 'node:test'
 import { clone, isGit, pull, sidecar } from '../src/git.js'
 import { run } from '../src/run.js'
 import { isLinux } from '../src/sh.js'
-import { checkCloned, fakeRepo, Repo } from './common.js'
+import { checkCloned, doPull, fileExists, Repo } from './common.js'
 
 describe('git', $ => {
   let tmps = []
@@ -94,26 +94,9 @@ describe('git', $ => {
     })
 
     it('pulls', async $ => {
-      let folder = await tmp()
-      let src = join(folder, 'src')
-      let dst = join(folder, 'dst')
-      await mkdir(src, { recursive: true })
-      await mkdir(dst, { recursive: true })
-
-      await run('git', ['init', '-q'], { cwd: src })
-      await writeFile(join(src, '.gitignore'), '# None')
-      await run('git', ['add', '.'], { cwd: src })
-      await run('git', ['commit', '-m', 'Commit #1'], { cwd: src })
-      await run('git', ['clone', src, dst])
-      $.assert.ok(await fileExists(join(dst, '.gitignore')))
-      let sfolder = join(src, 'project/.sidecar')
-      await mkdir(sfolder, { recursive: true })
-      await writeFile(join(sfolder, 'run.sh'), 'echo $(( 6 * 7 )) > answer.txt')
-      await run('git', ['add', '.'], { cwd: src })
-      await run('git', ['commit', '-m', 'Commit #2'], { cwd: src })
-      await sidecar(fakeRepo, dst)
-      let a = await readFile(join(dst, 'project/answer.txt'))
-      $.assert.equal(a.toString().trim(), '42')
+      let pull = await doPull(await tmp())
+      await sidecar(pull.url, pull.dst)
+      await pull.check()
     })
   })
 
@@ -128,12 +111,5 @@ describe('git', $ => {
       rm(tmp, { recursive: true })
         .catch($ => 0)
     }
-  }
-
-  async function fileExists(path) {
-    try {
-      await access(path, constants.F_OK)
-      return true
-    } catch { }
   }
 })

@@ -1,10 +1,10 @@
-import { join } from 'node:path'
+import { mkdir, mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
-import { it, before, after } from 'node:test'
-import { rm, mkdtemp, access, constants, mkdir } from 'node:fs/promises'
+import { join } from 'node:path'
+import { after, before, it } from 'node:test'
 import { run } from '../src/run.js'
 import { isLinux } from '../src/sh.js'
-import { checkCloned, Repo } from './common.js'
+import { checkCloned, doPull, Repo } from './common.js'
 
 it('Exec', async $ => {
   if (!await isLinux()) {
@@ -41,8 +41,9 @@ it('Exec', async $ => {
     })
 
     it('pull', async $ => {
-      let repo = join(tmp, 'dev/pull')
-
+      let pull = await doPull(join(tmp, 'dev/pull'))
+      await run('node', ['.', pull.url, pull.dst])
+      await pull.check()
     })
   })
 })
