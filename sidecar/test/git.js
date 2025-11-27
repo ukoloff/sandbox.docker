@@ -6,6 +6,7 @@ import { access, constants, mkdtemp, rm, readFile, writeFile, mkdir } from 'node
 import { clone, isGit, pull, sidecar } from '../src/git.js'
 import { run } from '../src/run.js'
 import { isLinux } from '../src/sh.js'
+import { checkCloned, fakeRepo, Repo } from './common.js'
 
 describe('git', $ => {
   let tmps = []
@@ -88,14 +89,8 @@ describe('git', $ => {
 
     it('clone', async $ => {
       let repo = join(await tmp(), 'subfolder')
-      await sidecar('ukoloff/sandbox.docker/sidecar/test/sh.d#sidecar', repo)
-      let home = join(repo, 'sidecar/test/sh.d')
-      let a = await readFile(join(home, 'a.txt'))
-      $.assert.equal(a.toString().trim(), 'A!')
-      let b = await readFile(join(home, 'b.txt'))
-      $.assert.equal(b.toString().trim(), 'Non-B!')
-      let z = await readFile(join(home, 'z.txt'))
-      $.assert.equal(z.toString().trim(), 'Z!')
+      await sidecar(Repo, repo)
+      await checkCloned(repo)
     })
 
     it('pulls', async $ => {
@@ -116,7 +111,7 @@ describe('git', $ => {
       await writeFile(join(sfolder, 'run.sh'), 'echo $(( 6 * 7 )) > answer.txt')
       await run('git', ['add', '.'], { cwd: src })
       await run('git', ['commit', '-m', 'Commit #2'], { cwd: src })
-      await sidecar('none/none/project#none', dst)
+      await sidecar(fakeRepo, dst)
       let a = await readFile(join(dst, 'project/answer.txt'))
       $.assert.equal(a.toString().trim(), '42')
     })
