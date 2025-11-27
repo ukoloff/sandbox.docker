@@ -12,7 +12,12 @@ if (!url) Help()
 
 delete env[ENVVAR]
 
-sidecar(url, argv[3] || '')
+try {
+  await sidecar(url, argv[3] || '')
+} catch (e) {
+  console.error('#err:', e.message)
+  process.exit(1)
+}
 
 function Help() {
   console.log(`Usage: ${basename(argv[1])} [[https://github.com/]user/repo[/folder][#branch]] [folder]
