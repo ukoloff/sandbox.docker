@@ -20,7 +20,7 @@ try {
 }
 
 function Help() {
-  console.log(`Usage: ${basename(argv[1])} [[https://github.com/]user/repo[/folder][#branch]] [folder]
+  console.log(`Usage: ${basename(argv[1])} [[${parse('').safe}]user/repo[/folder][#branch]] [folder]
 
 Defaults:
 - URL:    \${${ENVVAR}}
