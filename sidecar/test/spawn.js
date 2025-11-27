@@ -46,4 +46,18 @@ it('Exec', async $ => {
       await pull.check()
     })
   })
+
+  it('prod', async $ => {
+    it('make', async $ => {
+
+      it('install', async $ => {
+        await run('npm', ['install'])
+      })
+
+      it('bundle', async $ => {
+        await run('npm', ['run', 'build'])
+        await run('chmod', ['+x', '-R', 'dist'])
+      })
+    })
+  })
 })
