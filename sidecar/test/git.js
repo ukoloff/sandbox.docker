@@ -1,9 +1,9 @@
-import { it, describe, after } from 'node:test'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
+import { execFile } from 'node:child_process'
+import { it, describe, after } from 'node:test'
 import { access, constants, mkdtemp, rm, readFile, writeFile, mkdir } from 'node:fs/promises'
 import { clone, isGit, pull, sidecar } from '../src/git.js'
-import { execFile } from 'node:child_process'
 import { run } from '../src/run.js'
 import { isLinux } from '../src/sh.js'
 
