@@ -1,6 +1,7 @@
 import { join, resolve } from 'node:path'
 import { wait, run, spawn } from './run.js'
 import { sidecar as shSideCar } from './sh.js'
+import { mkdir } from 'node:fs/promises'
 
 export function parse(uri) {
   let u = new URL(uri, 'https://github.com/')
@@ -48,6 +49,7 @@ export async function pull(cwd = '') {
 }
 
 export async function sidecar(url, cwd = '') {
+  await mkdir(cwd = resolve(cwd), { recursive: true })
   const z = parse(url), safeUrl = z.safe, home = join(cwd, z.folder)
   if (!await isGit(cwd)) {
     console.log('Clone:', safeUrl)

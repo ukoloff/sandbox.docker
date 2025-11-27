@@ -87,7 +87,7 @@ describe('git', $ => {
     }
 
     it('clone', async $ => {
-      let repo = await tmp()
+      let repo = join(await tmp(), 'subfolder')
       await sidecar('ukoloff/sandbox.docker/sidecar/test/sh.d#sidecar', repo)
       let home = join(repo, 'sidecar/test/sh.d')
       let a = await readFile(join(home, 'a.txt'))
