@@ -8,11 +8,12 @@
   "workspaceFolder": "/repo",
   "customizations": {
     "vscode": {
-      "extensions": [
-        "golang.go",
-        "mhutchie.git-graph",
-        "EditorConfig.EditorConfig"
-      ]
+      // RosTelek blocks extensions loading :-(
+      // "extensions": [
+      //   "golang.go",
+      //   "mhutchie.git-graph",
+      //   "EditorConfig.EditorConfig"
+      // ]
     }
   }
 }

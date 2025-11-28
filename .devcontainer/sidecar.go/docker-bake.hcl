@@ -13,6 +13,7 @@ target "golang" {
       go install github.com/go-delve/delve/cmd/dlv@latest
     EOX
 
+    # Thanks to RosTelek!
     FROM debian:13-slim AS exts
     WORKDIR /tmp
     RUN <<EOX
