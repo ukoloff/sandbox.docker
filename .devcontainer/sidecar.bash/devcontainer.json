@@ -3,8 +3,8 @@
   "dockerComposeFile": "./compose.yml",
   "service": "bash",
   "onCreateCommand": "apt update; apt install -yq procps git shellcheck shfmt",
-  // "updateContentCommand":
-  "postCreateCommand": "git clone -b sidecar.bash --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker . ; git sparse-checkout set --no-cone /sidecar '/.*' ; git checkout",
+  "postCreateCommand": "sh /bin/repo.clone.sh",
+  "postStartCommand": "sh /bin/repo.pull.sh",
   "workspaceFolder": "/repo",
   "customizations": {
     "vscode": {

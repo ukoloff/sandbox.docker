@@ -2,9 +2,14 @@ name: sdcr-sh
 
 services:
   bash:
-    image: debian:13-slim
+    image: ukoloff/bash:dev
+    volumes:
+      - repo:/repo
     working_dir: /repo
     init: true
     command:
       - sleep
       - infinity
+
+volumes:
+  repo:
