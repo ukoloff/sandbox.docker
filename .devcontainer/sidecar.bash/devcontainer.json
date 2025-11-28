@@ -2,7 +2,7 @@
   "name": "sdcr.sh",
   "dockerComposeFile": "./compose.yml",
   "service": "bash",
-  "onCreateCommand": "apk add git",
+  "onCreateCommand": "apk add git shellcheck shftm",
   // "updateContentCommand":
   "postCreateCommand": "git clone -b sidecar.bash --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker . ; git sparse-checkout set --no-cone /sidecar /.editorconfig ; git checkout",
   "workspaceFolder": "/repo",
