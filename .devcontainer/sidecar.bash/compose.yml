@@ -2,10 +2,7 @@ name: sdcr.sh
 
 services:
   bash:
-    image: bash
-    volumes:
-      - type: tmpfs
-        target: /var/cache/apk
+    image: debian:13-slim
     working_dir: /repo
     init: true
     command:
