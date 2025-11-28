@@ -1,0 +1,19 @@
+{
+  "name": "sdcr.js",
+  "dockerComposeFile": "./compose.yml",
+  "service": "node",
+  "onCreateCommand": "apk add git",
+  // "updateContentCommand":
+  "postCreateCommand": "git clone -b sidecar --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker . ; git sparse-checkout set --no-cone /sidecar /.editorconfig ; git checkout",
+  "workspaceFolder": "/repo",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "connor4312.nodejs-testing",
+        "EditorConfig.EditorConfig",
+        "fabiospampinato.vscode-open-in-github",
+        "mhutchie.git-graph"
+      ]
+    }
+  }
+}
