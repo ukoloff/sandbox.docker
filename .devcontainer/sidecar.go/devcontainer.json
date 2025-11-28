@@ -1,0 +1,18 @@
+{
+  "name": "sidecar.go",
+  "dockerComposeFile": "./compose.yml",
+  "service": "go",
+  "postCreateCommand": "sh /bin/repo.clone.sh",
+  "postStartCommand": "sh /bin/repo.pull.sh",
+  "workspaceFolder": "/repo",
+  "customizations": {
+    "vscode": {
+      // RosTelek blocks extensions loading :-(
+      // "extensions": [
+      //   "golang.go",
+      //   "mhutchie.git-graph",
+      //   "EditorConfig.EditorConfig"
+      // ]
+    }
+  }
+}

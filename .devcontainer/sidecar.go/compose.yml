@@ -1,13 +1,15 @@
-name: sdcr-js
+name: sdcr-go
 
 services:
-  node:
-    image: node:lts-alpine
+  go:
+    image: ukoloff/golang:dev
     volumes:
-      - type: tmpfs
-        target: /var/cache/apk
+      - repo:/repo
     working_dir: /repo
     init: true
     command:
       - sleep
       - infinity
+
+volumes:
+  repo:
