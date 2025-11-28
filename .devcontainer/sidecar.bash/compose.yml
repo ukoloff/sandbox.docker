@@ -1,4 +1,4 @@
-name: sdcr.sh
+name: sdcr-sh
 
 services:
   bash:
