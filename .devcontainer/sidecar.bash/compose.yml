@@ -1,0 +1,13 @@
+name: sdcr.sh
+
+services:
+  node:
+    image: bash
+    volumes:
+      - type: tmpfs
+        target: /var/cache/apk
+    working_dir: /repo
+    init: true
+    command:
+      - sleep
+      - infinity

@@ -1,0 +1,21 @@
+{
+  "name": "sdcr.sh",
+  "dockerComposeFile": "./compose.yml",
+  "service": "bash",
+  "onCreateCommand": "apk add git",
+  // "updateContentCommand":
+  "postCreateCommand": "git clone -b sidecar.bash --depth 2 -n --filter=tree:0 https://github.com/ukoloff/sandbox.docker . ; git sparse-checkout set --no-cone /sidecar /.editorconfig ; git checkout",
+  "workspaceFolder": "/repo",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "fabiospampinato.vscode-open-in-github",
+        "mhutchie.git-graph",
+        "rogalmic.bash-debug",
+        "mads-hartmann.bash-ide-vscode",
+        "timonwong.shellcheck"
+      ]
+    }
+  }
+}
