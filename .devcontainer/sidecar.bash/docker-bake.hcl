@@ -26,8 +26,8 @@ target "bash" {
       apt update
       apt install -yq procps git shellcheck shfmt
     EOX
-    COPY --from=exts /root/.vscode-server/extensions/. /root/.vscode-server/extensions/.
     COPY ./bin/. /bin/.
+    COPY --from=exts /root/.vscode-server/extensions/. /root/.vscode-server/extensions/.
     EOT
   labels = {
     "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
