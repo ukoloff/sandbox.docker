@@ -31,6 +31,7 @@ target "golang" {
       apk add git
     EOX
     COPY --from=build /go/bin/. /go/bin/.
+    COPY --from=exts /root/.vscode-server/extensions/. /root/.vscode-server/extensions/.
     EOT
   labels = {
     "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
