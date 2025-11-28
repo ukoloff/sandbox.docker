@@ -1,4 +1,7 @@
-import { wait, run, spawn } from './run.js'
+import { mkdir } from 'node:fs/promises'
+import { join, resolve } from 'node:path'
+import { run, spawn, wait } from './run.js'
+import { sidecar as shSideCar } from './sh.js'
 
 export function parse(uri) {
   let u = new URL(uri, 'https://github.com/')
@@ -35,9 +38,26 @@ export async function clone(url, cwd = '') {
   await run('git', args, options)
   if (src.folder) {
     await run('git',
-      ['sparse-checkout', 'set', '--no-cone', `/${src.folder}/`],
+      ['sparse-checkout', 'set', '--no-cone', '/' + src.folder],
       options)
   }
   await run('git', ['checkout', '-q'], options)
 }
 
+export async function pull(cwd = '') {
+  await run('git', ['pull', '--ff-only', '-q'], { cwd, stdio: 'inherit' })
+}
+
+export async function sidecar(url, cwd = '') {
+  await mkdir(cwd = resolve(cwd), { recursive: true })
+  const z = parse(url), safeUrl = z.safe, home = join(cwd, z.folder)
+  if (!await isGit(cwd)) {
+    console.log('Clone:', safeUrl)
+    await clone(url, cwd)
+  } else {
+    console.log('Pull:', safeUrl)
+    await pull(cwd)
+  }
+  console.log('Run:', resolve(home))
+  await shSideCar(home)
+}
