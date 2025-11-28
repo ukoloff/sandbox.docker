@@ -3,8 +3,13 @@ name: sdcr-go
 services:
   go:
     image: ukoloff/golang:dev
+    volumes:
+      - repo:/repo
     working_dir: /repo
     init: true
     command:
       - sleep
       - infinity
+
+volumes:
+  repo:
