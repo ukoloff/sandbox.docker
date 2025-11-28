@@ -1,5 +1,5 @@
 {
-  "name": "sidecar.go",
+  "name": "sdcr.go",
   "dockerComposeFile": "./compose.yml",
   "service": "go",
   "postCreateCommand": "sh /bin/repo.clone.sh",
