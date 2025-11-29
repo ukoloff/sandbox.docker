@@ -4,6 +4,9 @@ services:
   node:
     image: node:lts-alpine
     volumes:
+      - type: volume
+        source: repo
+        target: /repo
       - type: tmpfs
         target: /var/cache/apk
     working_dir: /repo
@@ -11,3 +14,17 @@ services:
     command:
       - sleep
       - infinity
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+
+  sidecar:
+    image: ukoloff/sidecar:js
+    volumes:
+      - repo:/repo
+    working_dir: /sidecar
+    environment:
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/.devcontainer/sidecar.js/sidecar#sidecar
+
+volumes:
+  repo:
