@@ -20,7 +20,7 @@ services:
       - repo:/repo
     working_dir: /repo
     environment:
-      SIDECAR_GIT_URL: ukoloff/sandbox.docker/sidecar?dev=1#sidecar.go
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/sidecar/go?dev=1#sidecar.go
 
 volumes:
   repo:
