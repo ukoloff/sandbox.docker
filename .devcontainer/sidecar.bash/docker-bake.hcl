@@ -26,7 +26,6 @@ target "bash" {
       apt update
       apt install -yq procps git shellcheck shfmt bats
     EOX
-    COPY ./bin/. /bin/.
     COPY --from=exts /root/.vscode-server/extensions/. /root/.vscode-server/extensions/.
     EOT
   labels = {
