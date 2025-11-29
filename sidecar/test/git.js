@@ -5,7 +5,7 @@ import { join } from 'node:path'
 import { after, describe, it } from 'node:test'
 import { clone, isGit, pull, sidecar } from '../src/git.js'
 import { isLinux } from '../src/sh.js'
-import { checkCloned, doPull, Repo } from './common.js'
+import { checkCloned, doPull, fileExists, Repo } from './common.js'
 
 describe('git', $ => {
   let tmps = []
@@ -60,6 +60,12 @@ describe('git', $ => {
         $.assert.equal(out.trim().indexOf("\n"), -1)
       })
     }
+
+    it('for dev', async $ => {
+      let folder = await tmp()
+      await clone('ukoloff/sandbox.docker/sidecar?dev=y#sidecar', folder)
+      $.assert.ok(fileExists(join(folder, '.git')))
+    })
   })
 
   it('pulls', async $ => {
