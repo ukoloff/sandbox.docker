@@ -1,0 +1,19 @@
+{
+  "name": "sdcr.sh",
+  "dockerComposeFile": "./compose.yml",
+  "service": "bash",
+  "workspaceFolder": "/repo",
+  "customizations": {
+    "vscode": {
+      // RosTelek blocks extensions loading :-(
+      // "extensions": [
+      //   "EditorConfig.EditorConfig",
+      //   "fabiospampinato.vscode-open-in-github",
+      //   "mhutchie.git-graph",
+      //   "rogalmic.bash-debug",
+      //   "mads-hartmann.bash-ide-vscode",
+      //   "timonwong.shellcheck"
+      // ]
+    }
+  }
+}

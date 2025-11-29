@@ -1,0 +1,26 @@
+name: sdcr-sh
+
+services:
+  bash:
+    image: ukoloff/bash:dev
+    volumes:
+      - repo:/repo
+    working_dir: /repo
+    init: true
+    command:
+      - sleep
+      - infinity
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+
+  sidecar:
+    image: ukoloff/sidecar:js
+    volumes:
+      - repo:/repo
+    working_dir: /repo
+    environment:
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/sidecar?dev=1#sidecar.bash
+
+volumes:
+  repo:
