@@ -29,7 +29,7 @@ export async function isGit(cwd = '') {
 
 export async function clone(url, cwd = '') {
   let src = 'string' == typeof (url) ? parse(url) : url
-  const depth = Number(src.params.depth) || 1
+  const depth = Number(src.params.depth) || (src.params.dev ? 2 : 1)
   let args = `clone -q -n --depth=${depth} --filter=tree:0`.split(' ')
   if (src.ref)
     args.push('--branch', src.ref)
@@ -37,9 +37,10 @@ export async function clone(url, cwd = '') {
   let options = { cwd, stdio: 'inherit' }
   await run('git', args, options)
   if (src.folder) {
-    await run('git',
-      ['sparse-checkout', 'set', '--no-cone', '/' + src.folder],
-      options)
+    args = ['sparse-checkout', 'set', '--no-cone', '/' + src.folder]
+    if (src.params.dev)
+      args.push('/.*')
+    await run('git', args, options)
   }
   await run('git', ['checkout', '-q'], options)
 }
