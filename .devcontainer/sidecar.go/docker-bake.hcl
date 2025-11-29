@@ -21,7 +21,7 @@ target "golang" {
       apt install -y wget
       wget https://update.code.visualstudio.com/latest/server-linux-x64/stable -O server.tar.gz
       tar xfz server.tar.gz
-      for ext in golang.go mhutchie.git-graph EditorConfig.EditorConfig
+      for ext in golang.go mhutchie.git-graph EditorConfig.EditorConfig fabiospampinato.vscode-open-in-github
       do
         vscode-server-linux-x64/bin/code-server --install-extension $ext
       done
