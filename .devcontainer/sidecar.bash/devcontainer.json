@@ -1,3 +1,4 @@
+// For format details, see https://aka.ms/devcontainer.json
 {
   "name": "sdcr.sh",
   "dockerComposeFile": "./compose.yml",
@@ -6,14 +7,15 @@
   "customizations": {
     "vscode": {
       // RosTelek blocks extensions loading :-(
-      // "extensions": [
-      //   "EditorConfig.EditorConfig",
-      //   "fabiospampinato.vscode-open-in-github",
-      //   "mhutchie.git-graph",
-      //   "rogalmic.bash-debug",
-      //   "mads-hartmann.bash-ide-vscode",
-      //   "timonwong.shellcheck"
-      // ]
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "fabiospampinato.vscode-open-in-github",
+        "jetmartin.bats",
+        "mhutchie.git-graph",
+        "mads-hartmann.bash-ide-vscode",
+        "rogalmic.bash-debug",
+        "timonwong.shellcheck"
+      ]
     }
   }
 }
