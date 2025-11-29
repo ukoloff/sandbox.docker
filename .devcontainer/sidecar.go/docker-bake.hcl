@@ -16,12 +16,14 @@ target "golang" {
     # Thanks to RosTelek!
     FROM debian:13-slim AS exts
     WORKDIR /tmp
+    COPY devcontainer.json .
     RUN <<EOX
       apt update
-      apt install -y wget
+      apt install -y wget jq
       wget https://update.code.visualstudio.com/latest/server-linux-x64/stable -O server.tar.gz
       tar xfz server.tar.gz
-      for ext in golang.go mhutchie.git-graph EditorConfig.EditorConfig fabiospampinato.vscode-open-in-github
+      sed 's|[[:blank:]]*//.*||' devcontainer.json | jq -r '.customizations.vscode.extensions.[]' |
+      while read ext
       do
         vscode-server-linux-x64/bin/code-server --install-extension $ext
       done
