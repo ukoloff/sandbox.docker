@@ -2,8 +2,6 @@
   "name": "sdcr.go",
   "dockerComposeFile": "./compose.yml",
   "service": "go",
-  "postCreateCommand": "sh /bin/repo.clone.sh",
-  "postStartCommand": "sh /bin/repo.pull.sh",
   "workspaceFolder": "/repo",
   "customizations": {
     "vscode": {

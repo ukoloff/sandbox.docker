@@ -33,7 +33,6 @@ target "golang" {
     EOX
     COPY --from=build /go/bin/. /go/bin/.
     COPY --from=exts /root/.vscode-server/extensions/. /root/.vscode-server/extensions/.
-    COPY ./bin/. /bin/.
     EOT
   labels = {
     "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
