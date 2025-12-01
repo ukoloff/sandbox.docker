@@ -1,0 +1,13 @@
+name: rClone
+
+services:
+  http:
+    image: rclone/rclone:latest
+    command:
+      - serve
+      - http
+      - /etc
+      - --addr
+      - 0.0.0.0:80
+    ports:
+      - 1488:80
