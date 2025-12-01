@@ -1,0 +1,63 @@
+import { access, constants, mkdtemp, readFile, rm } from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { after, before, it } from 'node:test'
+import { isLinux, sh, sidecar } from '../src/sh.js'
+
+const skip = !await isLinux()
+
+it('Shell', $ => {
+  if (skip) {
+    $.skip('Test on Linux')
+    return
+  }
+  let tmp
+
+  before(async $ => {
+    tmp = await mkdtemp(join(tmpdir(), 'sidecar-sh-'))
+  })
+
+  after($ => {
+    rm(tmp, { recursive: true })
+      .catch($ => 0)
+  })
+
+  it('runs', async $ => {
+    await sh(join(import.meta.dirname, 'sh/true.sh'), tmp)
+    let one = await readFile(join(tmp, '1.txt'))
+    $.assert.equal(one.toString().trim(), 'One')
+    let two = await readFile(join(tmp, '2.txt'))
+    $.assert.equal(two.toString().trim(), 'Two')
+  })
+
+  it('fails', async $ => {
+    await $.assert.rejects(async $ =>
+      await sh(join(import.meta.dirname, 'sh/false.sh'), tmp))
+    let three = await readFile(join(tmp, '3.txt'))
+    $.assert.equal(three.toString().trim(), 'Three')
+    await $.assert.rejects(async $ =>
+      access(join(tmp, '4.txt'), constants.F_OK)
+    )
+  })
+
+  it('errors 2', async $ =>
+    await $.assert.rejects(async $ =>
+      await sh(join(import.meta.dirname, 'sh/404.sh'), tmp, true))
+  )
+
+  it('errors 3', async $ =>
+    await $.assert.rejects(async $ =>
+      await sh(join(import.meta.dirname, 'sh/true.sh'), tmp + '!'))
+  )
+
+  it('executes sidecar scripts', async $ => {
+    process.env.SIDECAR_TMP = tmp
+    await sidecar(join(import.meta.dirname, 'sh.d'))
+    let a = await readFile(join(tmp, 'a.txt'))
+    $.assert.equal(a.toString().trim(), 'A!')
+    let b = await readFile(join(tmp, 'b.txt'))
+    $.assert.equal(b.toString().trim(), 'Non-B!')
+    let z = await readFile(join(tmp, 'z.txt'))
+    $.assert.equal(z.toString().trim(), 'Z!')
+  })
+})
