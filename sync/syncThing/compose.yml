@@ -14,7 +14,7 @@ services:
       - world
 
   A: &service
-    image: lscr.io/linuxserver/syncthing:latest
+    image: syncthing/syncthing
     restart: unless-stopped
     networks:
       default:

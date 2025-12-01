@@ -5,5 +5,5 @@ import { join } from 'node:path'
 
 await writeFile(join(import.meta.dirname, '..', '.env'), `# Generated file
 STGUIAPIKEY=${randomUUID()}
-STGUIADDRESS=0.0.0.0:8384
+# STGUIADDRESS=0.0.0.0:8384
 `)
