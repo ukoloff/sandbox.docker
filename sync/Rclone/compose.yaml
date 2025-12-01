@@ -43,6 +43,7 @@ services:
       - mount
     volumes:
       - /mnt/shara:/mnt:rslave
+    init: true
     command:
       - sleep
       - infinity
