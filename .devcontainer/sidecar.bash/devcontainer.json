@@ -14,7 +14,8 @@
         "mhutchie.git-graph",
         "mads-hartmann.bash-ide-vscode",
         "rogalmic.bash-debug",
-        "timonwong.shellcheck"
+        "timonwong.shellcheck",
+        "kherring.bats-test-runner"
       ]
     }
   }
