@@ -30,10 +30,22 @@ services:
         target: /config/rclone
         volume:
           subpath: sync/Rclone/config/mount
+      - /mnt/shara:/mnt:rshared
     command:
       - mount
       - "serve.http:"
       - /mnt
+      - --allow-non-empty
+
+  sh:
+    image: alpine
+    depends_on:
+      - mount
+    volumes:
+      - /mnt/shara:/mnt:rslave
+    command:
+      - sleep
+      - infinity
 
   sidecar:
     image: ukoloff/sidecar:js
