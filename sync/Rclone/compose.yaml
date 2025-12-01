@@ -17,11 +17,11 @@ services:
     depends_on:
       sidecar:
         condition: service_completed_successfully
-    privileged: true
-    # cap_add:
-    #   - SYS_ADMIN
-    # security_opt:
-    #   - apparmor=unconfined
+    # privileged: true
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
     devices:
       - /dev/fuse
     volumes:
