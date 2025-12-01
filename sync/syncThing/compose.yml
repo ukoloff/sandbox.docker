@@ -14,16 +14,18 @@ services:
   A: &service
     image: lscr.io/linuxserver/syncthing:latest
     restart: unless-stopped
+    networks:
+      default:
+        aliases:
+          - sthng
+    env_file:
+      - .env
     ports:
       - 8887:8384
     volumes:
       - vA:/sync/A
       - vB:/sync/B
       - vC:/sync/C
-    networks:
-      default:
-        aliases:
-          - sthng
 
   B:
     <<: *service
