@@ -3,13 +3,6 @@ name: rClone
 services:
   http:
     image: rclone/rclone:latest
-    # privileged: true
-    cap_add:
-      - SYS_ADMIN
-    security_opt:
-      - apparmor=unconfined
-    devices:
-      - /dev/fuse
     command:
       - serve
       - http
@@ -18,3 +11,37 @@ services:
       - 0.0.0.0:80
     ports:
       - 1488:80
+
+  mount:
+    image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    privileged: true
+    # cap_add:
+    #   - SYS_ADMIN
+    # security_opt:
+    #   - apparmor=unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/mount
+    command:
+      - mount
+      - "serve.http:"
+      - /mnt
+
+  sidecar:
+    image: ukoloff/sidecar:js
+    volumes:
+      - config:/config
+    working_dir: /config
+    environment:
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/sync/Rclone/config#rClone
+
+volumes:
+  config:
