@@ -3,12 +3,23 @@ name: rClone
 services:
   http:
     image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    volumes:
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/http
     command:
       - serve
       - http
       - /etc
       - --addr
       - 0.0.0.0:80
+      - --htpasswd
+      - /config/rclone/passwd
     ports:
       - 1488:80
 
