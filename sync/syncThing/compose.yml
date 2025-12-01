@@ -4,6 +4,8 @@ services:
   sentinel:
     image: alpine
     init: true
+    env_file:
+      - .env
     command:
       - sleep
       - infinity
