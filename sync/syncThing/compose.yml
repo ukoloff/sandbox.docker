@@ -1,6 +1,16 @@
 name: syncThing
 
 services:
+  sentinel:
+    image: alpine
+    init: true
+    command:
+      - sleep
+      - infinity
+    networks:
+      - default
+      - world
+
   A: &service
     image: lscr.io/linuxserver/syncthing:latest
     restart: unless-stopped
@@ -10,6 +20,10 @@ services:
       - vA:/sync/A
       - vB:/sync/B
       - vC:/sync/C
+    networks:
+      default:
+        aliases:
+          - sthng
 
   B:
     <<: *service
@@ -29,3 +43,4 @@ volumes:
 networks:
   default:
     internal: true
+  world:
