@@ -1,0 +1,17 @@
+{
+  "name": "sdcr.js",
+  "dockerComposeFile": "./compose.yml",
+  "service": "node",
+  "onCreateCommand": "apk add git",
+  "workspaceFolder": "/repo",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "connor4312.nodejs-testing",
+        "EditorConfig.EditorConfig",
+        "fabiospampinato.vscode-open-in-github",
+        "mhutchie.git-graph"
+      ]
+    }
+  }
+}

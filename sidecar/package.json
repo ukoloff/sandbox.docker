@@ -3,12 +3,27 @@
   "private": true,
   "version": "1.0.0",
   "description": "Контейнер для 1. Загрузки содержимого репозитория (-ев) 2. Выполнения кода 3. Донастройки других контейнеров",
-  "main": "index.js",
+  "main": "src",
+  "engines": {
+    "node": ">=22.0.0"
+  },
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "build": "rollup --config src/rollup/config.js"
   },
   "keywords": [],
-  "author": "",
+  "author": {
+    "name": "Stas Ukolov",
+    "email": "ukoloff@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ukoloff/sandbox.docker"
+  },
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@rollup/plugin-terser": "^0.4.4",
+    "rollup": "^4.53.3"
+  }
 }

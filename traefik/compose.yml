@@ -1,0 +1,42 @@
+name: traefik
+
+services:
+  proxy:
+    image: traefik:v3.6
+    init: true
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - etc:/etc/traefik
+      - acme:/letsenrypt/
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    environment:
+      HTTPREQ_ENDPOINT: http://netangels
+      HTTPREQ_POLLING_INTERVAL: 10
+      HTTPREQ_PROPAGATION_TIMEOUT: 300
+
+  whoami:
+    image: traefik/whoami
+    restart: unless-stopped
+
+  netangels:
+    image: ukoloff/na01:golang
+    restart: unless-stopped
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    env_file:
+      - .env
+    environment:
+      NETANGELS_LOGGING: 1
+
+volumes:
+  etc:
+  acme:
+
+networks:
+  default:
+    name: traefik
+    attachable: true
