@@ -52,12 +52,23 @@ services:
 
   webdav:
     image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    volumes:
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/webdav
     command:
       - serve
       - webdav
       - /etc
       - --addr
       - :80
+      - --htpasswd
+      - /config/rclone/htpasswd
       - --dir-cache-time
       - 1s
     ports:
