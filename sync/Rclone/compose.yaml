@@ -91,12 +91,33 @@ services:
       - --allow-non-empty
       - /mnt
 
+  mnt80:
+    image: rclone/rclone:latest
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - /mnt/rclone/80:/mnt:rshared
+    command:
+      - mount
+      - ":webdav:"
+      - --webdav-url
+      - http://webdav
+      - --allow-non-empty
+      - /mnt
+
   sh:
     image: alpine
     depends_on:
       - mnt88
+      - mnt80
+      - mnt22
     volumes:
       - /mnt/rclone/88:/mnt/88:rslave
+      - /mnt/rclone/80:/mnt/80:rslave
       - /mnt/rclone/22:/mnt/22:rslave
     init: true
     command:
