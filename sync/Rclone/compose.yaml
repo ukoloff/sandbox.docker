@@ -17,13 +17,25 @@ services:
       - http
       - /etc
       - --addr
-      - 0.0.0.0:80
+      - :80
       - --htpasswd
       - /config/rclone/passwd
     ports:
       - 1488:80
 
-  mount:
+  sftp:
+    image: rclone/rclone:latest
+    command:
+      - serve
+      - sftp
+      - /etc
+      - --addr
+      - :22
+      - --no-auth
+    ports:
+      - 1422:22
+
+  mnt88:
     image: rclone/rclone:latest
     depends_on:
       sidecar:
@@ -40,8 +52,8 @@ services:
         source: config
         target: /config/rclone
         volume:
-          subpath: sync/Rclone/config/mount
-      - /mnt/shara:/mnt:rshared
+          subpath: sync/Rclone/config/mnt88
+      - /mnt/rclone/88:/mnt:rshared
     command:
       - mount
       - "serve.http:"
@@ -51,9 +63,9 @@ services:
   sh:
     image: alpine
     depends_on:
-      - mount
+      - mnt88
     volumes:
-      - /mnt/shara:/mnt:rslave
+      - /mnt/rclone/88:/mnt:rslave
     init: true
     command:
       - sleep
