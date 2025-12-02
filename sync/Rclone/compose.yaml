@@ -60,12 +60,33 @@ services:
       - /mnt
       - --allow-non-empty
 
+  mnt22:
+    image: rclone/rclone:latest
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - /mnt/rclone/22:/mnt:rshared
+    command:
+      - mount
+      - ":sftp:"
+      - --sftp-host
+      - sftp
+      - --sftp-pass
+      - J7BQtiXqWfRXEM1wiK30bhhDSg  # Any password. No auth yet
+      - --allow-non-empty
+      - /mnt
+
   sh:
     image: alpine
     depends_on:
       - mnt88
     volumes:
-      - /mnt/rclone/88:/mnt:rslave
+      - /mnt/rclone/88:/mnt/88:rslave
+      - /mnt/rclone/22:/mnt/22:rslave
     init: true
     command:
       - sleep
