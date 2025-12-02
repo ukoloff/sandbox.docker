@@ -76,7 +76,7 @@ services:
       - --sftp-host
       - sftp
       - --sftp-pass
-      - J7BQtiXqWfRXEM1wiK30bhhDSg  # Any password. No auth yet
+      - DZQCQ8J6va7Rt1Ep3cqPmA  # Any password. No auth yet
       - --allow-non-empty
       - /mnt
 
