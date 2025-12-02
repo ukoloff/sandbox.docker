@@ -9,6 +9,8 @@ services:
       - apparmor=unconfined
     devices:
       - /dev/fuse
+    volumes:
+      - /mnt/rclone/smb:/mnt:rshared
     env_file:
       - .env
     command:
