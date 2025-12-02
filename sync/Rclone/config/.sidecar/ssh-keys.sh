@@ -1,4 +1,4 @@
-apk add --no-cache openssh-keygen
+apk add openssh-keygen
 
 mkdir -p sftp/.ssh
 mkdir -p mnt22/.ssh
