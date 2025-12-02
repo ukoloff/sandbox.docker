@@ -84,7 +84,7 @@ services:
       - /mnt/rclone/88:/mnt:rshared
     command:
       - mount
-      - "serve.http:"
+      - "http:"
       - /mnt
       - --allow-non-empty
       - --dir-cache-time
