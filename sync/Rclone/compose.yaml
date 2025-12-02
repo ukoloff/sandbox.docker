@@ -35,6 +35,17 @@ services:
     ports:
       - 1422:22
 
+  webdav:
+    image: rclone/rclone:latest
+    command:
+      - serve
+      - webdav
+      - /etc
+      - --addr
+      - :80
+    ports:
+      - 1480:80
+
   mnt88:
     image: rclone/rclone:latest
     depends_on:
