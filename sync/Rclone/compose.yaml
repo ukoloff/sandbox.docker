@@ -16,6 +16,9 @@ services:
 
   sftp:
     image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
     volumes:
       - type: volume
         source: config
