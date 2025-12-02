@@ -107,13 +107,7 @@ services:
           subpath: sync/Rclone/config/mnt22
     command:
       - mount
-      - ":sftp:"
-      - --sftp-host
-      - sftp
-      - --sftp-user
-      - rclone
-      - --sftp-key-file
-      - /config/rclone/.ssh/id_ed25519
+      - "sftp:"
       - --allow-non-empty
       - --dir-cache-time
       - 1s
