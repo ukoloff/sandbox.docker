@@ -27,13 +27,24 @@ services:
 
   sftp:
     image: rclone/rclone:latest
+    volumes:
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/sftp
     command:
       - serve
       - sftp
       - /etc
       - --addr
       - :22
-      - --no-auth
+      - --key
+      - /config/rclone/.ssh/id_ed25519
+      - --user
+      - rclone
+      - --authorized-keys
+      - /config/rclone/.ssh/authorized_keys
       - --dir-cache-time
       - 1s
     ports:
@@ -89,13 +100,20 @@ services:
       - /dev/fuse
     volumes:
       - /mnt/rclone/22:/mnt:rshared
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/mnt22
     command:
       - mount
       - ":sftp:"
       - --sftp-host
       - sftp
-      - --sftp-pass
-      - DZQCQ8J6va7Rt1Ep3cqPmA  # Any password. No auth yet
+      - --sftp-user
+      - rclone
+      - --sftp-key-file
+      - /config/rclone/.ssh/id_ed25519
       - --allow-non-empty
       - --dir-cache-time
       - 1s
