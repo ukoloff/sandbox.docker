@@ -20,6 +20,8 @@ services:
       - :80
       - --htpasswd
       - /config/rclone/passwd
+      - --dir-cache-time
+      - 1s
     ports:
       - 1488:80
 
@@ -32,6 +34,8 @@ services:
       - --addr
       - :22
       - --no-auth
+      - --dir-cache-time
+      - 1s
     ports:
       - 1422:22
 
@@ -43,6 +47,8 @@ services:
       - /etc
       - --addr
       - :80
+      - --dir-cache-time
+      - 1s
     ports:
       - 1480:80
 
@@ -70,6 +76,8 @@ services:
       - "serve.http:"
       - /mnt
       - --allow-non-empty
+      - --dir-cache-time
+      - 1s
 
   mnt22:
     image: rclone/rclone:latest
@@ -89,6 +97,8 @@ services:
       - --sftp-pass
       - DZQCQ8J6va7Rt1Ep3cqPmA  # Any password. No auth yet
       - --allow-non-empty
+      - --dir-cache-time
+      - 1s
       - /mnt
 
   mnt80:
@@ -107,6 +117,8 @@ services:
       - --webdav-url
       - http://webdav
       - --allow-non-empty
+      - --dir-cache-time
+      - 1s
       - /mnt
 
   sh:
