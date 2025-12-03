@@ -165,13 +165,9 @@ services:
           subpath: sync/Rclone/config/multi
     ports:
       - 5572:5572
-    command:
-      - rcd
-      - --rc-no-auth
-      - --rc-addr
-      - :5572
-      - --rc-web-gui
-      - --rc-web-gui-no-open-browser
+    entrypoint:
+      - /bin/sh
+      - /config/rclone/mount.sh
 
   sh:
     image: alpine
