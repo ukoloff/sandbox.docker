@@ -2,7 +2,7 @@ name: syncThing
 
 services:
   sentinel:
-    image: alpine
+    image: node:lts-alpine
     init: true
     env_file:
       - .env
