@@ -145,6 +145,30 @@ services:
       - 1s
       - /mnt
 
+  multi:
+    image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - /mnt/rclone/multi:/mnt:rshared
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/multi
+    ports:
+      - 5572:5572
+    entrypoint:
+      - /bin/sh
+      - /config/rclone/mount.sh
+
   sh:
     image: alpine
     depends_on:
@@ -152,9 +176,7 @@ services:
       - mnt80
       - mnt22
     volumes:
-      - /mnt/rclone/88:/mnt/88:rslave
-      - /mnt/rclone/80:/mnt/80:rslave
-      - /mnt/rclone/22:/mnt/22:rslave
+      - /mnt/rclone/:/mnt/:rslave
     init: true
     command:
       - sleep

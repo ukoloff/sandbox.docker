@@ -2,6 +2,7 @@ apk add openssh-keygen
 
 mkdir -p sftp/.ssh
 mkdir -p mnt22/.ssh
+mkdir -p multi/.ssh
 
 if [ ! -f sftp/.ssh/id_ed25519 ]
 then
@@ -14,3 +15,6 @@ then
   ssh-keygen -t ed25519 -f mnt22/.ssh/id_ed25519 -N ''
   cat mnt22/.ssh/id_ed25519.pub > sftp/.ssh/authorized_keys
 fi
+
+cp mnt22/.ssh/id_ed25519 multi/.ssh/id_ed25519
+cp mnt22/.ssh/known_hosts multi/.ssh/known_hosts
