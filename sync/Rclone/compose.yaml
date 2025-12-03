@@ -176,9 +176,7 @@ services:
       - mnt80
       - mnt22
     volumes:
-      - /mnt/rclone/88:/mnt/88:rslave
-      - /mnt/rclone/80:/mnt/80:rslave
-      - /mnt/rclone/22:/mnt/22:rslave
+      - /mnt/rclone/:/mnt/:rslave
     init: true
     command:
       - sleep
