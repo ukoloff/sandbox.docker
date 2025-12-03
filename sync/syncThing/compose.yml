@@ -23,6 +23,8 @@ services:
     working_dir: /repo
     environment:
       SIDECAR_GIT_URL: ukoloff/sandbox.docker/sync/syncThing?dev=1#syncThing
+    networks:
+      - world
 
 
   A: &service
