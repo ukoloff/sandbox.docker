@@ -6,12 +6,24 @@ services:
     init: true
     env_file:
       - .env
+    volumes:
+      - repo:/repo
+    working_dir: /repo
     command:
       - sleep
       - infinity
     networks:
       - default
       - world
+
+  sidecar:
+    image: ukoloff/sidecar:js
+    volumes:
+      - repo:/repo
+    working_dir: /repo
+    environment:
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/sync/syncThing?dev=1#syncThing
+
 
   A: &service
     image: syncthing/syncthing
@@ -40,6 +52,7 @@ services:
       - 8889:8384
 
 volumes:
+  repo:
   vA:
   vB:
   vC:
