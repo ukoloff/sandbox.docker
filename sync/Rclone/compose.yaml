@@ -1,0 +1,194 @@
+name: rClone
+
+services:
+  http:
+    image: rclone/rclone:latest
+    command:
+      - serve
+      - http
+      - /etc
+      - --addr
+      - :80
+      - --dir-cache-time
+      - 1s
+    ports:
+      - 1488:80
+
+  sftp:
+    image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    volumes:
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/sftp
+    command:
+      - serve
+      - sftp
+      - /etc
+      - --addr
+      - :22
+      - --key
+      - /config/rclone/.ssh/id_ed25519
+      - --user
+      - rclone
+      - --authorized-keys
+      - /config/rclone/.ssh/authorized_keys
+      - --dir-cache-time
+      - 1s
+    ports:
+      - 1422:22
+
+  webdav:
+    image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    volumes:
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/webdav
+    command:
+      - serve
+      - webdav
+      - /etc
+      - --addr
+      - :80
+      - --htpasswd
+      - /config/rclone/htpasswd
+      - --dir-cache-time
+      - 1s
+    ports:
+      - 1480:80
+
+  mnt88:
+    image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    # privileged: true
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/mnt88
+      - /mnt/rclone/88:/mnt:rshared
+    command:
+      - mount
+      - "http:"
+      - /mnt
+      - --allow-non-empty
+      - --dir-cache-time
+      - 1s
+
+  mnt22:
+    image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - /mnt/rclone/22:/mnt:rshared
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/mnt22
+    command:
+      - mount
+      - "sftp:"
+      - --allow-non-empty
+      - --dir-cache-time
+      - 1s
+      - /mnt
+
+  mnt80:
+    image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - /mnt/rclone/80:/mnt:rshared
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/mnt80
+    command:
+      - mount
+      - "webdav:"
+      - --allow-non-empty
+      - --dir-cache-time
+      - 1s
+      - /mnt
+
+  multi:
+    image: rclone/rclone:latest
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
+    cap_add:
+      - SYS_ADMIN
+    security_opt:
+      - apparmor=unconfined
+    devices:
+      - /dev/fuse
+    volumes:
+      - /mnt/rclone/multi:/mnt:rshared
+      - type: volume
+        source: config
+        target: /config/rclone
+        volume:
+          subpath: sync/Rclone/config/multi
+    ports:
+      - 5572:5572
+    entrypoint:
+      - /bin/sh
+      - /config/rclone/mount.sh
+
+  sh:
+    image: alpine
+    depends_on:
+      - mnt88
+      - mnt80
+      - mnt22
+    volumes:
+      - /mnt/rclone/:/mnt/:rslave
+    init: true
+    command:
+      - sleep
+      - infinity
+
+  sidecar:
+    image: ukoloff/sidecar:js
+    volumes:
+      - config:/config
+    working_dir: /config
+    environment:
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/sync/Rclone/config#rClone
+
+volumes:
+  config:
