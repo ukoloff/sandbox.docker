@@ -1,7 +1,7 @@
 #!/bin/sh
 
 (
-  sleep 1
+  sleep 3
 
   for remote in http webdav sftp
   do
