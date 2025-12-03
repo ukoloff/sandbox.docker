@@ -1,7 +1,7 @@
 #!/bin/sh
 
 (
-  for n in seq 60
+  for n in $(seq 60)
   do
     rclone rc rc/noop --no-output && break
     sleep 0.61803398875
