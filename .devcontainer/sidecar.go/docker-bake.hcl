@@ -3,7 +3,10 @@ group "default" {
 }
 
 target "golang" {
-  tags = ["ukoloff/golang:dev", "ghcr.io/ukoloff/golang:dev"]
+  tags = flatten(
+    [for reg in ["", "ghcr.io/"] :
+      [for date in ["", formatdate("-YYYY.MM", timestamp())] :
+	    "${reg}ukoloff/dev:go${date}"]])
   pull = true
   dockerfile-inline = <<-EOT
     FROM golang:alpine AS build
@@ -39,6 +42,6 @@ target "golang" {
   labels = {
     "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
     "org.opencontainers.image.description" = "Golang environment with some packages for DevContainer development preinstalled"
-		"org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
+    "org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
   }
 }

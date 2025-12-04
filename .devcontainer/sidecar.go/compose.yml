@@ -2,7 +2,7 @@ name: sdcr-go
 
 services:
   go:
-    image: ukoloff/golang:dev
+    image: ukoloff/dev:go
     volumes:
       - repo:/repo
     working_dir: /repo
