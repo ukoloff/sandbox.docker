@@ -12,6 +12,8 @@ services:
     volumes:
       - config:/var/syncthing
       - folder:/folders/folder
+    labels:
+      com.docker.compose.project: SyncThing@swarm
 
 volumes:
   config:
