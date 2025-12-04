@@ -40,7 +40,6 @@ services:
 
   sidecar:
     image: ukoloff/sidecar:js
-    restart: on-failure
     labels: *vscode-container-explorer
     deploy:
       mode: replicated
@@ -49,6 +48,12 @@ services:
         constraints:
           - node.role == manager
           - node.hostname == swarm01
+      restart_policy:
+        condition: on-failure  # Options: none, on-failure, any
+        delay: 15s             # Duration between restart attempts
+        max_attempts: 3        # Maximum number of restart attempts
+        window: 300s
+
     volumes:
       - repo:/repo
     working_dir: /repo
