@@ -1,8 +1,8 @@
-name: syncThing
+name: s-thing
 
 services:
-  sentinel:
-    image: node:lts-alpine
+  dev:
+    image: ukoloff/dev:js
     init: true
     env_file:
       - .env
