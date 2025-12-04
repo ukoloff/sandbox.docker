@@ -2,7 +2,7 @@ name: sdcr-js
 
 services:
   node:
-    image: node:lts-alpine
+    image: ukoloff/dev:js
     volumes:
       - type: volume
         source: repo
