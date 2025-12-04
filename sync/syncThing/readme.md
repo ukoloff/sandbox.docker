@@ -8,3 +8,11 @@ node script/make.env.js
 ```sh
 curl -sk -H "X-API-Key: $STGUIAPIKEY" http://sthng:8384/rest/system/discovery
 ```
+
+## Swarm
+```sh
+# Start:
+docker stack deploy s-thing -c swarm.yml -d
+# Stop:
+docker stack rm s-thing
+```

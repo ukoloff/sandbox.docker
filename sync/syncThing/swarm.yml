@@ -1,0 +1,23 @@
+services:
+  syncthing:
+    image: syncthing/syncthing
+    deploy:
+      mode: global
+    networks:
+      default:
+        aliases:
+          - sthng
+    env_file:
+      - .env
+    volumes:
+      - config:/var/syncthing
+      - folder:/folders/folder
+
+volumes:
+  config:
+  folder:
+
+networks:
+  default:
+    internal: true
+

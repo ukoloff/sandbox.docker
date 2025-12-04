@@ -5,6 +5,8 @@
   "type": "module",
   "main": "src",
   "scripts": {
+    "swarm.start": "docker stack deploy s-thing -c swarm.yml -d",
+    "swarm.stop": "docker stack rm s-thing",
     "make.env": "node script/make.env.js"
   },
   "keywords": [],
