@@ -25,10 +25,11 @@ services:
         constraints:
           - node.role == manager
           - node.hostname == swarm01
-
     init: true
     env_file:
       - .env
+    volumes:
+      - repo:/repo
     working_dir: /repo
     command:
       - sleep
@@ -37,9 +38,30 @@ services:
       - default
       - world
 
+  sidecar:
+    image: ukoloff/sidecar:js
+    restart: on-failure
+    labels: *vscode-container-explorer
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.role == manager
+          - node.hostname == swarm01
+    volumes:
+      - repo:/repo
+    working_dir: /repo
+    environment:
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/sync/syncThing?dev=1#syncThing
+    networks:
+      - world
+
+
 volumes:
   config:
   folder:
+  repo:
 
 networks:
   default:
