@@ -3,7 +3,10 @@ group "default" {
 }
 
 target "bash" {
-  tags = ["ukoloff/bash:dev", "ghcr.io/ukoloff/bash:dev"]
+  tags = flatten(
+    [for reg in ["", "ghcr.io/"] :
+      [for date in ["", formatdate("-YYYY.MM", timestamp())] :
+	    "${reg}ukoloff/dev:sh${date}"]])
   pull = true
   dockerfile-inline = <<-EOT
     # Thanks to RosTelek!

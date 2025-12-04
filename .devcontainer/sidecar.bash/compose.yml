@@ -2,7 +2,7 @@ name: sdcr-sh
 
 services:
   bash:
-    image: ukoloff/bash:dev
+    image: ukoloff/dev:sh
     volumes:
       - repo:/repo
     working_dir: /repo
