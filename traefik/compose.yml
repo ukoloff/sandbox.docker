@@ -5,20 +5,10 @@ services:
     image: traefik:v3.6
     init: true
     volumes:
-      - type: bind
-        source: /etc/localtime
-        target: /etc/localtime
-        read_only: true
-      - type: bind
-        source: /var/run/docker.sock
-        target: /var/run/docker.sock
-        read_only: true
-      - type: volume
-        source: etc
-        target: /etc/traefik
-      - type: volume
-        source: acme
-        target: /letsenrypt/
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - etc:/etc/traefik
+      - acme:/letsenrypt/
       - type: image
         source: ukoloff/na01:golang
         target: /bin/na01
