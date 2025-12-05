@@ -3,12 +3,20 @@ name: traefik
 services:
   proxy:
     image: traefik:v3.6
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
     init: true
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - etc:/etc/traefik
       - acme:/letsenrypt/
+      - type: volume
+        source: config
+        target: /etc/traefik
+        volume:
+          subpath: traefik/etc/traefik
       - type: image
         source: ukoloff/na01:golang
         target: /bin/na01
@@ -30,8 +38,16 @@ services:
     image: traefik/whoami
     restart: unless-stopped
 
+  sidecar:
+    image: ukoloff/sidecar:js
+    volumes:
+      - config:/repo
+    working_dir: /repo
+    environment:
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/traefik/etc/traefik#traefik
+
 volumes:
-  etc:
+  config:
   acme:
 
 networks:
