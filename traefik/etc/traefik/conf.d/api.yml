@@ -16,7 +16,7 @@ http:
       tls:
         domains:
           - main: docker.ekb.ru
-            sans: *.docker.ekb.ru
+            sans: "*.docker.ekb.ru"
 
   middlewares:
     t5k-auth:
