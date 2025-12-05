@@ -21,7 +21,9 @@ services:
         target: /letsenrypt/
       - type: image
         source: ukoloff/na01:golang
-        target: /na01
+        target: /bin/na01
+        image:
+          subpath: bin/na01
     ports:
       - 80:80
       - 443:443
@@ -29,7 +31,7 @@ services:
     env_file:
       - .env
     environment:
-      EXEC_PATH: /na01/bin/na01
+      EXEC_PATH: na01
       EXEC_POLLING_INTERVAL: 10
       EXEC_PROPAGATION_TIMEOUT: 300
       NETANGELS_LOGGING: 1
