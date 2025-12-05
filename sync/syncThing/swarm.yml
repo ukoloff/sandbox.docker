@@ -6,7 +6,7 @@ services:
     networks:
       default:
         aliases:
-          - sthng
+          - st-node
     env_file:
       - .env
     volumes:
