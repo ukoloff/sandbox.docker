@@ -92,6 +92,8 @@ services:
       - --allow-non-empty
       - --dir-cache-time
       - 1s
+      - --vfs-cache-mode
+      - full
 
   mnt22:
     image: rclone/rclone:latest
@@ -114,10 +116,12 @@ services:
     command:
       - mount
       - "sftp:"
+      - /mnt
       - --allow-non-empty
       - --dir-cache-time
       - 1s
-      - /mnt
+      - --vfs-cache-mode
+      - full
 
   mnt80:
     image: rclone/rclone:latest
@@ -140,10 +144,12 @@ services:
     command:
       - mount
       - "webdav:"
+      - /mnt
       - --allow-non-empty
       - --dir-cache-time
       - 1s
-      - /mnt
+      - --vfs-cache-mode
+      - full
 
   multi:
     image: rclone/rclone:latest
