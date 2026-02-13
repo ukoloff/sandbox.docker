@@ -34,7 +34,7 @@ target "bash" {
     COPY --from=exts /root/.vscode-server/extensions/. /root/.vscode-server/extensions/.
     EOT
   labels = {
-    "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
+    "org.opencontainers.image.authors" = "ukoloff@gmail.com"
     "org.opencontainers.image.description" = "Dev container for Bash development"
 		"org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
   }
