@@ -40,7 +40,7 @@ target "golang" {
     COPY --from=exts /root/.vscode-server/extensions/. /root/.vscode-server/extensions/.
     EOT
   labels = {
-    "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
+    "org.opencontainers.image.authors" = "ukoloff@gmail.com"
     "org.opencontainers.image.description" = "Golang environment with some packages for DevContainer development preinstalled"
     "org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
   }
