@@ -1,0 +1,3 @@
+# wg
+
+Test WireGuard client
