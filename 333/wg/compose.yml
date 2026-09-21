@@ -10,5 +10,16 @@ services:
       - config:/etc/wireguard/
     restart: unless-stopped
 
+  tweedledum:
+    image: curlimages/curl
+    command: ifconfig.io
+    network_mode: service:wireguard
+    depends_on:
+      - wireguard
+
+  tweedledee:
+    image: curlimages/curl
+    command: ifconfig.io
+
 volumes:
   config:
