@@ -7,7 +7,7 @@ services:
     sysctls:
       net.ipv4.conf.all.src_valid_mark: 1
     volumes:
-      - config:/etc/wireguard/wg0.conf
+      - config:/etc/wireguard/
     restart: unless-stopped
 
 volumes:
