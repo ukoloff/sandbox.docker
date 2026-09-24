@@ -46,6 +46,8 @@ docker compose cp ./etc tweedledee:/tmp/.
 Address = 10.10.0.1/24
 PrivateKey = **************************************
 ListenPort = 54321
+PostUp =   iptables -t nat -A POSTROUTING -o awg0 -j MASQUERADE
+PostDown = iptables -t nat -D POSTROUTING -o awg0 -j MASQUERADE
 
 [Peer]
 PublicKey = **************************************
