@@ -12,6 +12,8 @@ services:
     restart: always
     environment:
       WG_QUICK_USERSPACE_IMPLEMENTATION: amneziawg-go
+    post_start:
+      - command: sh -c "ip route add 10.0.0.0/8 via $(ip route | grep default | awk '{print $3}')"
 
   tweedledum:
     image: alpine/curl
