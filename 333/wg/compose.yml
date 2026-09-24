@@ -6,20 +6,22 @@ services:
       - SYS_MODULE
     sysctls:
       net.ipv4.conf.all.src_valid_mark: 1
+    environment:
+      LOCAL_SUBNETS: 10.0.0.0/8
     volumes:
       - config:/etc/wireguard/
     restart: unless-stopped
 
   tweedledum:
     image: curlimages/curl
-    command: ifconfig.io
+    command: -s ifconfig.io
     network_mode: service:wireguard
     depends_on:
       - wireguard
 
   tweedledee:
     image: curlimages/curl
-    command: ifconfig.io
+    command: -s ifconfig.io
 
 volumes:
   config:
