@@ -10,16 +10,18 @@ services:
     cap_add:
       - NET_ADMIN
     restart: always
+    environment:
+      WG_QUICK_USERSPACE_IMPLEMENTATION: amneziawg-go
 
   tweedledum:
-    image: curlimages/curl
+    image: alpine/curl
     command: -s https://api.ipify.org
     network_mode: service:awg
     depends_on:
       - awg
 
   tweedledee:
-    image: curlimages/curl
+    image: alpine/curl
     command: -s https://api.ipify.org
 
 
