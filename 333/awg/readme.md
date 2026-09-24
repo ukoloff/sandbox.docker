@@ -43,3 +43,4 @@ docker compose cp ./etc/amnezia/amneziawg/. awg:./etc/amnezia/amneziawg/.
 
 ## See also
 + https://habr.com/ru/articles/1080342/
++ https://github.com/vernette/amneziawg-docker
