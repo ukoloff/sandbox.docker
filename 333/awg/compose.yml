@@ -2,7 +2,12 @@ services:
   awg:
     image: vernette/amneziawg
     volumes:
-      - configs:/etc/amnezia/amneziawg
+      - type: volume
+        source: etc
+        target: /etc/amnezia/amneziawg
+        volume:
+          subpath: amnezia/amneziawg
+        read_only: true
     devices:
       - /dev/net/tun:/dev/net/tun # только userspace-режим
     sysctls:
@@ -25,7 +30,8 @@ services:
   tweedledee:
     image: alpine/curl
     command: -s https://api.ipify.org
-
+    volumes:
+      - etc:/tmp/etc
 
 volumes:
-  configs:
+  etc:

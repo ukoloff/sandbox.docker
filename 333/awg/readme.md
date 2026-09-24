@@ -37,7 +37,7 @@ Save it as
 ### Copy
 ```sh
 docker compose create
-docker compose cp ./etc/amnezia/amneziawg/. awg:./etc/amnezia/amneziawg/.
+docker compose cp ./etc tweedledee:/tmp/.
 ```
 
 
