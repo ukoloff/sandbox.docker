@@ -1,0 +1,15 @@
+services:
+  awg:
+    image: vernette/amneziawg
+    volumes:
+      - configs:/etc/amnezia/amneziawg
+    devices:
+      - /dev/net/tun:/dev/net/tun # только userspace-режим
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1 # нужно для full-tunnel
+    cap_add:
+      - NET_ADMIN
+    restart: always
+
+volumes:
+  configs:
