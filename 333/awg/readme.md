@@ -2,7 +2,7 @@
 
 AmneziaWG in docker
 
-## conf
+## AmneziaWG client
 ```ini
 [Interface]
 PrivateKey = **************************************
@@ -40,6 +40,29 @@ docker compose create
 docker compose cp ./etc tweedledee:/tmp/.
 ```
 
+## WireGuard server
+```ini
+[Interface]
+Address = 10.10.0.1/24
+PrivateKey = **************************************
+ListenPort = 54321
+
+[Peer]
+PublicKey = **************************************
+AllowedIPs = 10.10.0.10/32
+```
+Client
+```ini
+[Interface]
+Address = 10.10.0.10/32
+PrivateKey = **************************************
+
+[Peer]
+PublicKey = **************************************
+Endpoint = awg.ekb.ru:54321
+AllowedIPs = 0.0.0.0/0
+PersistentKeepalive = 27
+```
 
 ## See also
 + https://habr.com/ru/articles/1080342/
