@@ -11,5 +11,17 @@ services:
       - NET_ADMIN
     restart: always
 
+  tweedledum:
+    image: curlimages/curl
+    command: -s https://api.ipify.org
+    network_mode: service:awg
+    depends_on:
+      - awg
+
+  tweedledee:
+    image: curlimages/curl
+    command: -s https://api.ipify.org
+
+
 volumes:
   configs:
