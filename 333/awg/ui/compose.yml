@@ -3,6 +3,10 @@ name: awg-ui
 services:
   app:
     image: myceliummesh/amneziawg-ui:latest
+    init: true
+    command:
+      - /usr/bin/api
+    entrypoint: []
     restart: unless-stopped
     ports:
       - "54845:54845/tcp"   # веб-интерфейс
