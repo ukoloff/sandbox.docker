@@ -20,7 +20,8 @@ services:
     post_start:
       - command: sh -c "ip route add 10.0.0.0/8 via $(ip route | grep default | awk '{print $3}')"
     ports:
-      - "54321:54321/udp"
+      - 54321:54321/udp
+      - 3128:8888
 
   tweedledum:
     image: alpine/curl
@@ -34,6 +35,14 @@ services:
     command: -s https://api.ipify.org?format=json
     volumes:
       - etc:/tmp/etc
+
+  proxy:
+    image: monokal/tinyproxy
+    network_mode: service:awg
+    depends_on:
+      - awg
+    command:
+      - ANY
 
 volumes:
   etc:
