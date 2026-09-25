@@ -1,0 +1,34 @@
+name: awg-ui
+
+services:
+  app:
+    image: myceliummesh/amneziawg-ui:latest
+    restart: unless-stopped
+    ports:
+      - "54845:54845/tcp"   # веб-интерфейс
+      - "54844:54844/udp"   # VPN (Можно задать диапазон)
+    environment:
+      - WEB_UI_USER=admin
+      # base64(sha256(пароль)); значение ниже — это "changeme", замените:
+      # printf 'ваш-пароль' | openssl dgst -binary -sha256 | base64
+      - WEB_UI_PASSWORD=BXugPWxEEEhj3HNh/kV4ll0YhzYPkKCJWILlimJI/IY=
+    volumes:
+      - data:/etc/amnezia
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    devices:
+      - /dev/net/tun
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+      - net.ipv6.conf.all.disable_ipv6=0
+      - net.ipv6.conf.all.forwarding=1
+      - net.ipv6.conf.default.forwarding=1
+    logging:
+      options:
+        max-size: 10m
+        max-file: 3
+
+volumes:
+  data:
