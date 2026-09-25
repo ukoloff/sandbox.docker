@@ -24,14 +24,14 @@ services:
 
   tweedledum:
     image: alpine/curl
-    command: -s https://api.ipify.org
+    command: -s https://api.ipify.org?format=json
     network_mode: service:awg
     depends_on:
       - awg
 
   tweedledee:
     image: alpine/curl
-    command: -s https://api.ipify.org
+    command: -s https://api.ipify.org?format=json
     volumes:
       - etc:/tmp/etc
 

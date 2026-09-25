@@ -5,7 +5,7 @@ AmneziaWG in docker
 ## AmneziaWG client
 ```ini
 [Interface]
-PrivateKey = **************************************
+PrivateKey = mememememememememememememememememememememe
 Address = 10.119.33.40/32
 DNS = 1.1.1.1, 8.8.8.8
 MTU = 1280
@@ -25,8 +25,8 @@ I2 = <b 0x0103><r 2><b 0x2112A442><r 12><r 24>
 I3 = <b 0x0008><r 2><b 0x2112A442><r 12><r 16>
 
 [Peer]
-PublicKey = **************************************
-PresharedKey = **************************************
+PublicKey = VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+PresharedKey = PskPskPskPskPskPskPskPskPskPskPskPskPskPskPsk
 AllowedIPs = 0.0.0.0/0, ::/0
 PersistentKeepalive = 25
 Endpoint = serv.e.r:50119
@@ -44,26 +44,40 @@ docker compose cp ./etc tweedledee:/tmp/.
 ```ini
 [Interface]
 Address = 10.10.0.1/24
-PrivateKey = **************************************
+PrivateKey = sssssssssssssssssssssssssssssssssssssssssssss
 ListenPort = 54321
 PostUp =   iptables -t nat -A POSTROUTING -o awg0 -j MASQUERADE
 PostDown = iptables -t nat -D POSTROUTING -o awg0 -j MASQUERADE
 
 [Peer]
-PublicKey = **************************************
+PublicKey = CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+PresharedKey = PskPskPskPskPskPskPskPskPskPskPskPskPskPskPskPsk
 AllowedIPs = 10.10.0.10/32
 ```
 Client
 ```ini
 [Interface]
 Address = 10.10.0.10/32
-PrivateKey = **************************************
+PrivateKey = cccccccccccccccccccccccccccccccccccccccccccc
 
 [Peer]
-PublicKey = **************************************
+PublicKey = SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+PresharedKey = PskPskPskPskPskPskPskPskPskPskPskPskPskPskPskPsk
 Endpoint = awg.ekb.ru:54321
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 27
+```
+
+## NB
+Refresh config
+```sh
+awg syncconf wg0 <(awg-quick strip wg0)
+```
+
+Check versions
+```sh
+awg version
+amneziawg-go --version
 ```
 
 ## See also
