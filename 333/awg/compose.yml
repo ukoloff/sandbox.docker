@@ -1,5 +1,5 @@
 services:
-  awg:
+  client:
     image: vernette/amneziawg
     volumes:
       - type: volume
@@ -16,7 +16,6 @@ services:
       - NET_ADMIN
     restart: always
     ports:
-      - 54321:54321/udp
       - 3128:8888         # Proxy
       - 54845:54845/tcp   # веб-интерфейс
       - 54844:54844/udp   # VPN (Можно задать диапазон)
@@ -30,9 +29,9 @@ services:
   tweedledum:
     image: alpine/curl
     command: -s https://api.ipify.org?format=json
-    network_mode: service:awg
+    network_mode: service:client
     depends_on:
-      - awg
+      - client
 
   tweedledee:
     image: alpine/curl
@@ -42,9 +41,9 @@ services:
 
   proxy:
     image: monokal/tinyproxy
-    network_mode: service:awg
+    network_mode: service:client
     depends_on:
-      - awg
+      - client
     command:
       - 10.164.200.0/24
       - 10.160.206.0/24
@@ -72,7 +71,7 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
-    network_mode: service:awg
+    network_mode: service:client
     logging:
       options:
         max-size: 10m

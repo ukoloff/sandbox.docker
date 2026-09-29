@@ -56,32 +56,6 @@ WEB_UI_USER=admin
 WEB_UI_PASSWORD=BXugPWxEEEhj3HNh/kV4ll0YhzYPkKCJWILlimJI/IY=
 ```
 
-## WireGuard server
-```ini
-[Interface]
-Address = 10.10.0.1/24
-PrivateKey = sssssssssssssssssssssssssssssssssssssssssssss
-ListenPort = 54321
-
-[Peer]
-PublicKey = CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-PresharedKey = PskPskPskPskPskPskPskPskPskPskPskPskPskPskPskPsk
-AllowedIPs = 10.10.0.10/32
-```
-Client
-```ini
-[Interface]
-Address = 10.10.0.10/32
-PrivateKey = cccccccccccccccccccccccccccccccccccccccccccc
-
-[Peer]
-PublicKey = SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
-PresharedKey = PskPskPskPskPskPskPskPskPskPskPskPskPskPskPskPsk
-Endpoint = awg.ekb.ru:54321
-AllowedIPs = 0.0.0.0/0
-PersistentKeepalive = 27
-```
-
 ## NB
 Refresh config
 ```sh
