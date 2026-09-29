@@ -15,10 +15,6 @@ services:
     cap_add:
       - NET_ADMIN
     restart: always
-    environment:
-      WG_QUICK_USERSPACE_IMPLEMENTATION: amneziawg-go
-    post_start:
-      - command: sh -c "ip route add 10.0.0.0/8 via $(ip route | grep default | awk '{print $3}')"
     ports:
       - 54321:54321/udp
       - 3128:8888
@@ -50,6 +46,7 @@ services:
     command:
       - 10.164.200.0/24
       - 10.160.206.0/24
+    stop_signal: SIGKILL
 
 volumes:
   etc:
