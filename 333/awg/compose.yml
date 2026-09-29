@@ -22,6 +22,12 @@ services:
     ports:
       - 54321:54321/udp
       - 3128:8888
+    healthcheck:
+      test:
+        - CMD
+        - ping
+        - -qc1
+        - ya.ru
 
   tweedledum:
     image: alpine/curl
