@@ -17,7 +17,9 @@ services:
     restart: always
     ports:
       - 54321:54321/udp
-      - 3128:8888
+      - 3128:8888         # Proxy
+      - 54845:54845/tcp   # веб-интерфейс
+      - 54844:54844/udp   # VPN (Можно задать диапазон)
     healthcheck:
       test:
         - CMD
@@ -48,5 +50,34 @@ services:
       - 10.160.206.0/24
     stop_signal: SIGKILL
 
+  server:
+    image: myceliummesh/amneziawg-ui:latest
+    init: true
+    command:
+      - /usr/bin/api
+    entrypoint: []
+    restart: unless-stopped
+    # ports:
+    #   - "54845:54845/tcp"   # веб-интерфейс
+    #   - "54844:54844/udp"   # VPN (Можно задать диапазон)
+    env_file:
+      - .env
+    volumes:
+      - data:/etc/amnezia
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    devices:
+      - /dev/net/tun
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    network_mode: service:awg
+    logging:
+      options:
+        max-size: 10m
+        max-file: 3
+
 volumes:
   etc:
+  data:

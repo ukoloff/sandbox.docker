@@ -48,6 +48,14 @@ docker compose create
 docker compose cp ./etc tweedledee:/tmp/.
 ```
 
+## .env
+```
+WEB_UI_USER=admin
+# base64(sha256(пароль)); значение ниже — это "changeme", замените:
+# printf 'ваш-пароль' | openssl dgst -binary -sha256 | openssl base64
+WEB_UI_PASSWORD=BXugPWxEEEhj3HNh/kV4ll0YhzYPkKCJWILlimJI/IY=
+```
+
 ## WireGuard server
 ```ini
 [Interface]
@@ -89,3 +97,4 @@ amneziawg-go --version
 ## See also
 + https://habr.com/ru/articles/1080342/
 + https://github.com/vernette/amneziawg-docker
++ https://github.com/mycelium-mesh/amneziawg-ui
