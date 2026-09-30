@@ -25,6 +25,8 @@ services:
         - ping
         - -qc1
         - ya.ru
+    labels:
+      autoheal: "true"
 
   tweedledum:
     image: alpine/curl
@@ -76,6 +78,12 @@ services:
       options:
         max-size: 10m
         max-file: 3
+
+  autoheal:
+    image: willfarrell/autoheal:latest
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   etc:
