@@ -2,6 +2,14 @@
 
 AmneziaWG in docker
 
+## Build
+
+Jist run
+```sh
+docker bake
+```
+Pushing to registry is not neccessary
+
 ## AmneziaWG client
 ```ini
 [Interface]

@@ -65,6 +65,9 @@ services:
       - .env
     volumes:
       - data:/etc/amnezia
+      - type: image
+        source: ukoloff/2empty
+        target: /app/scripts
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
