@@ -9,6 +9,7 @@ target "2empty" {
   dockerfile-inline = <<-EOT
     FROM alpine AS build
     WORKDIR /scripts
+    COPY scripts/. .
     RUN <<EOX
       for script in cleanup setup
       do

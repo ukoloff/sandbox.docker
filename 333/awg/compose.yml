@@ -8,6 +8,9 @@ services:
         volume:
           subpath: amnezia/amneziawg
         read_only: true
+      - type: image
+        source: ukoloff/2empty
+        target: /scripts
     devices:
       - /dev/net/tun:/dev/net/tun # только userspace-режим
     sysctls:
@@ -25,6 +28,8 @@ services:
         - ping
         - -qc1
         - ya.ru
+    post_start:
+      - command: /scripts/awg-monitor.sh
 
   tweedledum:
     image: alpine/curl
