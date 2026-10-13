@@ -1,0 +1,20 @@
+name: dockge-bad
+
+services:
+  dockge:
+    image: louislam/dockge:1
+    ports:
+      - target: 5001
+        published: 5002
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - dockge:/app/data
+      - stacks:/opt/stacks
+    environment:
+      # Tell Dockge where to find the stacks
+      DOCKGE_STACKS_DIR: /opt/stacks
+      DOCKGE_ENABLE_CONSOLE: "true"
+
+volumes:
+  dockge:
+  stacks:

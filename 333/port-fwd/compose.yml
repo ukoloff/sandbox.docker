@@ -1,0 +1,7 @@
+services:
+  port-fwd:
+    image: marcnuri/port-forward
+    ports:
+      - ${LOCAL_PORT}:${LOCAL_PORT}
+    env_file:
+      - .env
