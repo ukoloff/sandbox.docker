@@ -32,7 +32,7 @@ services:
         target: /config/rclone
         volume:
           subpath: sync/Rclone/named-v/config/www
-      - shared:/mnt:shared
+      - /mnt/n-v:/mnt:shared
 
     command:
       - mount
@@ -54,4 +54,3 @@ services:
 
 volumes:
   config:
-  shared:
