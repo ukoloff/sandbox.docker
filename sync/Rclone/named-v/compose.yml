@@ -59,7 +59,7 @@ services:
       - sleep
       - infinity
     volumes:
-      - /mnt/rclone-nv:/mnt
+      - /mnt/rclone-nv:/mnt:slave
     depends_on:
       - www
 
