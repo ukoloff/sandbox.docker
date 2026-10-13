@@ -1,0 +1,15 @@
+name: rclone-nv
+
+services:
+  http:
+    image: rclone/rclone:latest
+    command:
+      - serve
+      - http
+      - /etc
+      - --addr
+      - :80
+      - --dir-cache-time
+      - 1s
+    ports:
+      - 1488:80
