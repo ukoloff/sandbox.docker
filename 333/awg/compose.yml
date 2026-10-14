@@ -51,7 +51,7 @@ services:
       - client
     command:
       - 10.164.200.0/24
-      - 10.160.206.0/24
+      - 10.160.204.0/22
     stop_signal: SIGKILL
 
   server:
