@@ -19,7 +19,6 @@ services:
     depends_on:
       sidecar:
         condition: service_completed_successfully
-    # privileged: true
     cap_add:
       - SYS_ADMIN
     security_opt:
@@ -32,7 +31,11 @@ services:
         target: /config/rclone
         volume:
           subpath: sync/Rclone/named-v/config/www
-      - /mnt/rclone-nv:/mnt:shared
+      - type: bind
+        source: /mnt/rclone-nv
+        target: /mnt
+        bind:
+          propagation: shared
 
     command:
       - mount
@@ -59,7 +62,11 @@ services:
       - sleep
       - infinity
     volumes:
-      - /mnt/rclone-nv:/mnt:slave
+      - type: bind
+        source: /mnt/rclone-nv
+        target: /mnt
+        bind:
+          propagation: slave
     depends_on:
       - www
 
