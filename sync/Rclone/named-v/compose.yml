@@ -25,6 +25,7 @@ services:
       - apparmor=unconfined
     devices:
       - /dev/fuse
+    user: &User guest
     volumes:
       - type: volume
         source: config
@@ -36,6 +37,14 @@ services:
         target: &mntDst /mnt
         bind:
           propagation: shared
+    pre_start:
+      - user: root
+        image: alpine
+        command:
+          - chown
+          - -R
+          - *User
+          - *mntDst
 
     command:
       - mount
@@ -46,6 +55,7 @@ services:
       - 1s
       - --vfs-cache-mode
       - full
+      - --allow-other
 
   sidecar:
     image: ukoloff/sidecar:js
