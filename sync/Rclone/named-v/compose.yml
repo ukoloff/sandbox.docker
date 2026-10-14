@@ -32,15 +32,15 @@ services:
         volume:
           subpath: sync/Rclone/named-v/config/www
       - type: bind
-        source: /mnt/rclone-nv
-        target: /mnt
+        source: &mntSrc /mnt/rclone-nv
+        target: &mntDst /mnt
         bind:
           propagation: shared
 
     command:
       - mount
       - "http:"
-      - /mnt
+      - *mntDst
       - --allow-non-empty
       - --dir-cache-time
       - 1s
@@ -63,10 +63,11 @@ services:
       - infinity
     volumes:
       - type: bind
-        source: /mnt/rclone-nv
-        target: /mnt
+        source: *mntSrc
+        target: *mntDst
         bind:
           propagation: slave
+    working_dir: *mntDst
     depends_on:
       - www
 
