@@ -1,0 +1,5 @@
+[tasks.up]
+run = "docker stack deploy -dc compose.yml viz"
+
+[tasks.down]
+run = "docker stack rm viz"
