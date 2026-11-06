@@ -3,6 +3,8 @@ services:
     image: amir20/dozzle:latest
     environment:
       - DOZZLE_MODE=swarm
+    command:
+      - --enable-actions
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - data:/data
