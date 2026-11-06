@@ -1,0 +1,11 @@
+services:
+  viz:
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+    image: mikesir87/swarm-viz
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    ports:
+      - 3000:3000
