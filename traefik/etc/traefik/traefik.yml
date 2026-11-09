@@ -11,6 +11,8 @@ entryPoints:
           to: tls
           scheme: https
           permanent: true
+      middlewares:
+        - terry
 
   # traefik:
   #   address: :8080
@@ -24,6 +26,8 @@ entryPoints:
         domains:
           - main: "*.ekb.ru"
             # sans: ekb.ru
+      middlewares:
+        - terry
 
 api:
   # insecure: true
