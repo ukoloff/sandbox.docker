@@ -12,7 +12,7 @@ entryPoints:
           scheme: https
           permanent: true
       middlewares:
-        - terry
+        - terry@file
 
   # traefik:
   #   address: :8080
