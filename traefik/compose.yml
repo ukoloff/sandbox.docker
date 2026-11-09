@@ -2,38 +2,51 @@ name: traefik
 
 services:
   proxy:
-    image: traefik:v3.6
+    image: traefik:v3.7
+    depends_on:
+      sidecar:
+        condition: service_completed_successfully
     init: true
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - etc:/etc/traefik
       - acme:/letsenrypt/
+      - type: volume
+        source: config
+        target: /etc/traefik
+        volume:
+          subpath: traefik/etc/traefik
+      - type: image
+        source: ukoloff/na01:golang
+        target: /bin/na01
+        image:
+          subpath: bin/na01
     ports:
       - 80:80
       - 443:443
-      - 8080:8080
+    env_file:
+      - .env
     environment:
-      HTTPREQ_ENDPOINT: http://netangels
-      HTTPREQ_POLLING_INTERVAL: 10
-      HTTPREQ_PROPAGATION_TIMEOUT: 300
+      EXEC_PATH: na01
+      EXEC_POLLING_INTERVAL: 10
+      EXEC_PROPAGATION_TIMEOUT: 300
+      NETANGELS_LOGGING: 1
 
   whoami:
     image: traefik/whoami
     restart: unless-stopped
 
-  netangels:
-    image: ukoloff/na01:golang
-    restart: unless-stopped
+  sidecar:
+    image: ukoloff/sidecar:js
     volumes:
-      - /etc/localtime:/etc/localtime:ro
-    env_file:
-      - .env
+      - config:/repo
+    working_dir: /repo
     environment:
-      NETANGELS_LOGGING: 1
+      SIDECAR_GIT_URL: ukoloff/sandbox.docker/traefik/etc/traefik#traefik
 
 volumes:
-  etc:
+  config:
   acme:
 
 networks:
