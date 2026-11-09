@@ -1,0 +1,18 @@
+// For format details, see https://aka.ms/devcontainer.json
+{
+  "name": "sdcr.go",
+  "dockerComposeFile": "./compose.yml",
+  "service": "go",
+  "workspaceFolder": "/repo",
+  "customizations": {
+    "vscode": {
+      // RosTelek blocks extensions loading :-(
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "fabiospampinato.vscode-open-in-github",
+        "golang.go",
+        "mhutchie.git-graph"
+      ]
+    }
+  }
+}

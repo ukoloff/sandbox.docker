@@ -3,7 +3,7 @@ group "default" {
 }
 
 target "daemon" {
-  tags = ["ukoloff/autolabel:js"]
+  tags = ["ukoloff/autolabel:js", "ghcr.io/ukoloff/autolabel:js"]
   pull = true
   dockerfile-inline = <<-EOT
     FROM node:alpine
@@ -15,5 +15,6 @@ target "daemon" {
   labels = {
     "org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
     "org.opencontainers.image.description" = "Label Swarm nodes according to services running"
+		"org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
   }
 }

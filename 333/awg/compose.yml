@@ -1,0 +1,90 @@
+services:
+  client:
+    image: vernette/amneziawg
+    volumes:
+      - type: volume
+        source: etc
+        target: /etc/amnezia/amneziawg
+        volume:
+          subpath: amnezia/amneziawg
+        read_only: true
+      - type: image
+        source: ukoloff/2empty
+        target: /scripts
+    devices:
+      - /dev/net/tun:/dev/net/tun # только userspace-режим
+    sysctls:
+      - net.ipv4.conf.all.src_valid_mark=1 # нужно для full-tunnel
+    cap_add:
+      - NET_ADMIN
+    restart: always
+    ports:
+      - 3128:8888         # Proxy
+      - 54845:54845/tcp   # веб-интерфейс
+      - 54844:54844/udp   # VPN (Можно задать диапазон)
+    healthcheck:
+      test:
+        - CMD
+        - ping
+        - -qc1
+        - ya.ru
+    post_start:
+      - command: /scripts/awg-monitor.sh
+
+  tweedledum:
+    image: alpine/curl
+    command: -s https://api.ipify.org?format=json
+    network_mode: service:client
+    depends_on:
+      - client
+
+  tweedledee:
+    image: alpine/curl
+    command: -s https://api.ipify.org?format=json
+    volumes:
+      - etc:/tmp/etc
+
+  proxy:
+    image: monokal/tinyproxy
+    network_mode: service:client
+    depends_on:
+      - client
+    command:
+      - 10.164.200.0/24
+      - 10.160.204.0/22
+    stop_signal: SIGKILL
+
+  server:
+    image: myceliummesh/amneziawg-ui:latest
+    init: true
+    command:
+      - /usr/bin/api
+    entrypoint: []
+    restart: unless-stopped
+    # ports:
+    #   - "54845:54845/tcp"   # веб-интерфейс
+    #   - "54844:54844/udp"   # VPN (Можно задать диапазон)
+    env_file:
+      - .env
+    volumes:
+      - data:/etc/amnezia
+      - type: image
+        source: ukoloff/2empty
+        target: /app/scripts
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    devices:
+      - /dev/net/tun
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    network_mode: service:client
+    logging:
+      options:
+        max-size: 10m
+        max-file: 3
+
+volumes:
+  etc:
+  data:
