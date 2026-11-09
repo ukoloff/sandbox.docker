@@ -45,6 +45,9 @@ services:
       # - /path/to/core.config.toml:/config/config.toml
       ## Optionally mount custom root CA certificate to trust
       # - /path/to/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
+    labels:
+      traefik.enable: true
+      traefik.http.routers.whoami.rule: Host(`komodo.ekb.ru`)
 
   ## Deploy Periphery container using this block,
   ## or deploy the Periphery binary with systemd using
@@ -80,3 +83,8 @@ volumes:
   mongo-config:
   # Core / Periphery
   keys:
+
+networks:
+  default:
+    external: true
+    name: traefik
