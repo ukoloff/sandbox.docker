@@ -1,10 +1,8 @@
 http:
   routers:
     whoami:
-      rule: Host(`t5k.docker.ekb.ru`) && PathPrefix(`/whoami`)
+      rule: Host(`t5k.ekb.ru`) && PathPrefix(`/whoami`)
       service: whoami
-      middlewares:
-        - terry
 
   services:
     whoami:
