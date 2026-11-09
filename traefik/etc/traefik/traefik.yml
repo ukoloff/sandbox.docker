@@ -27,7 +27,7 @@ entryPoints:
           - main: "*.ekb.ru"
             # sans: ekb.ru
       middlewares:
-        - terry
+        - terry@file
 
 api:
   # insecure: true
