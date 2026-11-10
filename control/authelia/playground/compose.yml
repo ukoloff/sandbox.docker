@@ -1,0 +1,26 @@
+name: auth-test
+
+services:
+  observer:
+    image: traefik/whoami
+    labels:
+      traefik.enable: true
+      traefik.http.routers.sso-area.rule: Host(`t5k.ekb.ru`) && PathPrefix(`/protected/`)
+      traefik.http.routers.sso-area.middlewares: sso@docker
+      traefik.http.routers.sso-area.service: sso-area
+      traefik.http.services.sso-area.loadBalancer.server.port: 80
+
+      # ForwardAuth middleware
+      traefik.http.middlewares.sso.forwardAuth.address: http://host.docker.internal:1488/verify
+      traefik.http.middlewares.sso.forwardAuth.trustForwardHeader: true
+      traefik.http.middlewares.sso.forwardAuth.authResponseHeaders: Remote-User,Remote-Groups,Remote-Email,Remote-Name
+
+      # SSO router
+      traefik.http.routers.sso.rule: Host(`auth.ekb.ru`)
+      traefik.http.routers.sso.service: sso
+      traefik.http.services.sso.loadBalancer.server.url: http://host.docker.internal:1488/
+
+networks:
+  default:
+    external: true
+    name: traefik
