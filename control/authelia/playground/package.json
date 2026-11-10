@@ -1,0 +1,12 @@
+{
+  "name": "playground",
+  "version": "1.0.0",
+  "description": "Implement Authelia in Node.js",
+  "main": "src",
+  "scripts": {
+    "start": "node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
