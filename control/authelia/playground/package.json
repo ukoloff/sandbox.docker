@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Implement Authelia in Node.js",
+  "type": "module",
   "main": "src",
   "scripts": {
     "start": "node ."

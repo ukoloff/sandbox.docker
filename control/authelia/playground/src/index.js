@@ -1,6 +1,6 @@
-const http = require('http');
+import { createServer } from 'http'
 
-http.createServer(handler)
+createServer(handler)
   .listen(1488, logger)
 
 function handler(req, res) {
