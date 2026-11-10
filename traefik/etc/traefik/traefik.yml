@@ -33,7 +33,7 @@ api:
   # insecure: true
   dashboard: true
   debug: true
-  disableDashboardAd: true
+  disabledashboardad: true
 
 providers:
   docker:
