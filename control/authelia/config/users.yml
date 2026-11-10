@@ -1,0 +1,8 @@
+users:
+  stas:
+    disabled: false
+    displayname: Stanislav U.
+    password: '$argon2id$v=19$m=65536,t=3,p=4$r7pktiMgv+IF27mAvNKZUQ$2+iOvCbcfYhv2QuheplSQzKvg1gm1+yOLh5WHeHAUWM'
+    email: stas@ekb.ru
+    groups:
+      - admins

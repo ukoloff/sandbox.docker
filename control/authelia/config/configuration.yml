@@ -1,0 +1,42 @@
+---
+theme: dark
+# default_redirection_url: https://auth.ekb.ru
+
+server:
+  address: tcp://:9091
+
+log:
+  level: debug
+
+authentication_backend:
+  file:
+    path: /config/users.yml
+
+access_control:
+  default_policy: deny
+  rules:
+    - domain: auth.ekb.ru
+      resources: ^/whoami/
+      policy: one_factor
+    - domain: auth.ekb.ru
+      policy: bypass
+
+session:
+  secret: 3eb9bcae25a78f7e77977b370c3b4ed97da16e54f04a974e94d94f8d60356bc2
+  cookies:
+    - domain: ekb.ru
+      authelia_url: https://auth.ekb.ru
+      default_redirection_url: https://auth.ekb.ru/whoami/
+
+storage:
+  encryption_key: d87ee011338e6523a0e94eb54dac589a5a156cb5f51a78bc400034da0666964d
+  local:
+    path: /config/data/db.sqlite3
+
+notifier:
+  filesystem:
+    filename: /config/data/notification.txt
+
+identity_validation:
+  reset_password:
+    jwt_secret: daa997a52de42e684a1db4e8b8055b22e60b0eb86805aee0be6a90f5235c8b90
