@@ -47,7 +47,7 @@ services:
       # - /path/to/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
     labels:
       traefik.enable: true
-      traefik.http.routers.whoami.rule: Host(`komodo.ekb.ru`)
+      traefik.http.routers.komodo.rule: Host(`komodo.ekb.ru`)
 
   ## Deploy Periphery container using this block,
   ## or deploy the Periphery binary with systemd using
