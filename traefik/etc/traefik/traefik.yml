@@ -6,6 +6,7 @@ entryPoints:
   web:
     address: :80
     http:
+      aliasHeadersStrategy: delete
       redirections:
         entryPoint:
           to: tls
@@ -19,6 +20,7 @@ entryPoints:
 
   tls:
     address: :443
+    aliasHeadersStrategy: delete
     asDefault: true
     http:
       tls:
