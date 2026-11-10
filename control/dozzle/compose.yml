@@ -4,8 +4,19 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - dozzle_data:/data
-    ports:
-      - 8080:8080
+    # ports:
+    #   - 8080:8080
+    command:
+      - --base
+      - /dozzle
+    labels:
+      traefik.enable: true
+      traefik.http.routers.dozzle.rule: Host(`t5k.ekb.ru`) && PathPrefix(`/dozzle`)
 
 volumes:
   dozzle_data:
+
+networks:
+  default:
+    external: true
+    name: traefik
