@@ -27,6 +27,12 @@ services:
       traefik.enable: true
       traefik.http.routers.auth-php.rule: Host(`auth.ekb.ru`)
 
+  observer:
+    image: traefik/whoami
+    labels:
+      traefik.enable: true
+      traefik.http.routers.sso-area.rule: Host(`t5k.ekb.ru`) && PathPrefix(`/protected/`)
+
 networks:
   default:
     external: true
