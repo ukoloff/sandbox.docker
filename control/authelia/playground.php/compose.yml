@@ -31,6 +31,11 @@ services:
       traefik.enable: true
       traefik.http.routers.auth-php.rule: Host(`auth.ekb.ru`)
 
+      # ForwardAuth middleware
+      traefik.http.middlewares.authelia.forwardAuth.address: http://www/verify/
+      traefik.http.middlewares.authelia.forwardAuth.trustForwardHeader: true
+      traefik.http.middlewares.authelia.forwardAuth.authResponseHeaders: Remote-User,Remote-Groups,Remote-Email,Remote-Name
+
   observer:
     image: traefik/whoami
     labels:
