@@ -41,6 +41,7 @@ services:
     labels:
       traefik.enable: true
       traefik.http.routers.sso-area.rule: Host(`t5k.ekb.ru`) && PathPrefix(`/protected/`)
+      traefik.http.routers.sso-area.middlewares: authelia@docker
 
 networks:
   default:
