@@ -1,0 +1,33 @@
+name: Authelia.php
+
+services:
+  php:
+    image: ukoloff/php56
+    restart: unless-stopped
+    init: true
+    environment:
+      TZ: Asia/Yekaterinburg
+      PHP_INI_SCAN_DIR: /etc/php/5.6/fpm/conf.d:/etc/php/5.6/docker/conf.d
+    volumes:
+      - ./src:/src
+      - ./etc/php/5.6/fpm/conf.d:/etc/php/5.6/docker/conf.d
+      - ./etc/php/5.6/fpm/pool.d:/etc/php/5.6/fpm/pool.d
+
+  www:
+    image: nginx:latest
+    depends_on:
+      - php
+    restart: unless-stopped
+    environment:
+      TZ: Asia/Yekaterinburg
+    volumes:
+      - ./src:/src
+      - ./etc/nginx/conf.d:/etc/nginx/conf.d
+    labels:
+      traefik.enable: true
+      traefik.http.routers.auth-php.rule: Host(`auth.ekb.ru`)
+
+networks:
+  default:
+    external: true
+    name: traefik
