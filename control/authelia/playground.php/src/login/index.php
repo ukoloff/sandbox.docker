@@ -1,5 +1,5 @@
 <?
-if ($_REQUEST['id']):
+if (isset($_REQUEST['id'])):
   setcookie('uxm-trusted-headers-sso', $_REQUEST['id']);
   Header('Location: ./');
   exit();
