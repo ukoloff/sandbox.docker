@@ -8,8 +8,10 @@ session_name('uxm-trusted-headers-sso');
 session_start();
 ?>
 Login:
-<form>
-  <input type="text" name="login">
+<form method="POST">
+  <input type="text" name="login" disabled>
+  <p>
+  <button type="submit">Login!</button>
   <pre>
   <?php
   print_r($_SESSION);
