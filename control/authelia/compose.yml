@@ -18,7 +18,7 @@ services:
     image: traefik/whoami
     labels:
       traefik.enable: true
-      traefik.http.routers.authelia-whoami.rule: Host(`auth.ekb.ru`) && PathPrefix(`/whoami/`)
+      traefik.http.routers.authelia-whoami.rule: Host(`auth.ekb.ru`) && PathPrefix(`/protected/`)
       traefik.http.routers.authelia-whoami.middlewares: authelia@docker
 
 networks:

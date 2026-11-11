@@ -16,7 +16,7 @@ access_control:
   default_policy: deny
   rules:
     - domain: auth.ekb.ru
-      resources: ^/whoami/
+      resources: ^/protected/
       policy: one_factor
     - domain: auth.ekb.ru
       policy: bypass
@@ -26,7 +26,7 @@ session:
   cookies:
     - domain: ekb.ru
       authelia_url: https://auth.ekb.ru
-      default_redirection_url: https://auth.ekb.ru/whoami/
+      # default_redirection_url: https://auth.ekb.ru/whoami/
 
 storage:
   encryption_key: d87ee011338e6523a0e94eb54dac589a5a156cb5f51a78bc400034da0666964d
