@@ -1,8 +1,11 @@
+name: authelia
+
 services:
   authelia:
     image: authelia/authelia:latest
     volumes:
       - ./config:/config
+      - data:/data
     labels:
       traefik.enable: true
       traefik.http.routers.authelia.rule: Host(`auth.ekb.ru`)
@@ -15,10 +18,13 @@ services:
     image: traefik/whoami
     labels:
       traefik.enable: true
-      traefik.http.routers.whoami.rule: Host(`auth.ekb.ru`) && PathPrefix(`/whoami/`)
-      traefik.http.routers.whoami.middlewares: authelia@docker
+      traefik.http.routers.authelia-whoami.rule: Host(`auth.ekb.ru`) && PathPrefix(`/whoami/`)
+      traefik.http.routers.authelia-whoami.middlewares: authelia@docker
 
 networks:
   default:
     external: true
     name: traefik
+
+volumes:
+  data:

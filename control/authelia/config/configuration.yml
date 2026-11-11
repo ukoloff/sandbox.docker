@@ -31,11 +31,11 @@ session:
 storage:
   encryption_key: d87ee011338e6523a0e94eb54dac589a5a156cb5f51a78bc400034da0666964d
   local:
-    path: /config/data/db.sqlite3
+    path: /data/db.sqlite3
 
 notifier:
   filesystem:
-    filename: /config/data/notification.txt
+    filename: /data/notification.txt
 
 identity_validation:
   reset_password:
