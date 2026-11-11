@@ -5,6 +5,10 @@ services:
     image: ukoloff/php56
     restart: unless-stopped
     init: true
+    command:
+    - php-fpm5.6
+    - --nodaemonize
+    - --force-stderr
     environment:
       TZ: Asia/Yekaterinburg
       PHP_INI_SCAN_DIR: /etc/php/5.6/fpm/conf.d:/etc/php/5.6/docker/conf.d
