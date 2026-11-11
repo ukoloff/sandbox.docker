@@ -3,4 +3,5 @@ $me = 'World';
 ?>
 <h1>Hello, <?= $me ?></h1>
 
-<? phpinfo(); ?>
+<li><a href="i">PHP Info</a>
+
