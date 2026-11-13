@@ -42,6 +42,8 @@ services:
   observer:
     image: traefik/whoami
     labels:
+      dev.dozzle.url: http://t5k.ekb.ru/protected/
+
       traefik.enable: true
       traefik.http.routers.sso-area.rule: Host(`t5k.ekb.ru`) && PathPrefix(`/protected/`)
       traefik.http.routers.sso-area.middlewares: authelia@docker
