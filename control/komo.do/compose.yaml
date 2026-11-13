@@ -46,6 +46,8 @@ services:
       ## Optionally mount custom root CA certificate to trust
       # - /path/to/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
     labels:
+      dev.dozzle.url: http://komodo.ekb.ru
+
       traefik.enable: true
       traefik.http.routers.komodo.rule: Host(`komodo.ekb.ru`)
 
@@ -76,6 +78,8 @@ services:
       # - /path/to/periphery.config.toml:/config/config.toml
       ## Optionally mount custom root CA certificate to trust
       # - /path/to/root_ca.crt:/usr/local/share/ca-certificates/root_ca.crt
+    labels:
+      dev.dozzle.icon: komodo
 
 volumes:
   # Mongo
