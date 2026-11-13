@@ -30,6 +30,7 @@ services:
       - ./src:/src
       - ./etc/nginx/conf.d:/etc/nginx/conf.d
     labels:
+      dev.dozzle.url: http://auth.ekb.ru
       traefik.enable: true
       traefik.http.routers.auth-php.rule: Host(`auth.ekb.ru`)
 
