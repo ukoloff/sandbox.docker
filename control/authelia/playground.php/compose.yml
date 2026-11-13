@@ -16,6 +16,8 @@ services:
       - ./src:/src
       - ./etc/php/5.6/fpm/conf.d:/etc/php/5.6/docker/conf.d
       - ./etc/php/5.6/fpm/pool.d:/etc/php/5.6/fpm/pool.d
+    labels:
+      dev.dozzle.icon: php
 
   www:
     image: nginx:latest
