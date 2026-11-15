@@ -1,0 +1,46 @@
+services:
+  sstp:
+    image: ukoloff/sstp
+    privileged: true
+    volumes:
+    - /dev/ppp:/dev/ppp
+    - x509:/ssl
+    ports:
+    - 443:443
+    command:
+    - uv
+    - run
+    - sstpd
+    - -f
+    - /etc/sstpd.ini
+
+  crt:  # Copy existing certificate
+    profiles:
+      - ekb.ru
+    image: busybox
+    volumes:
+    - scripts:/scripts
+    - x509:/ssl
+    - /etc/ssl/uxm:/ssl/uxm
+    command:
+    - sh
+    - /scripts/copy.sh
+
+  ca:
+    profiles:
+    - ca
+    image: alpine/openssl
+    volumes:
+    - scripts:/scripts
+    - x509:/ssl
+    working_dir: /ssl
+    environment:
+      X509CN: docker.ekb.ru
+    entrypoint:
+    - sh
+    command:
+    - /scripts/ca.sh
+
+volumes:
+  x509:
+  scripts:

@@ -28,7 +28,7 @@ target "js" {
 		EOT
 
 	labels = {
-		"org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
+		"org.opencontainers.image.authors" = "ukoloff@gmail.com"
 		"org.opencontainers.image.description" = "Sidecar container fetches config from repo and performs some setup"
 		"org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
 	}

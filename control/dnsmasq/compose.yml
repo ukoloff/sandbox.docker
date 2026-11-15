@@ -1,0 +1,25 @@
+services:
+  dnsmasq:
+    image: 4km3/dnsmasq
+    # environment:
+    #   DNS1: "1.0.0.1"
+    #   DNS2: "1.1.1.1"
+    ports:
+      - 53:53/udp
+      - 53:53/tcp
+    cap_add:
+      - NET_ADMIN
+    restart: always
+    volumes:
+      - hosts:/etc/dnsmasq.hosts
+    command:
+      - --log-facility=-
+      - --hostsdir=/etc/dnsmasq.hosts
+      - --auth-zone=uxm
+      - --auth-server=uxm
+      - --no-resolv
+      - --no-hosts
+      # - --log-queries
+
+volumes:
+  hosts:
