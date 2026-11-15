@@ -32,10 +32,14 @@ services:
       EXEC_POLLING_INTERVAL: 10
       EXEC_PROPAGATION_TIMEOUT: 300
       NETANGELS_LOGGING: 1
+    labels:
+      dev.dozzle.url: https://t5k.ekb.ru
 
   whoami:
     image: traefik/whoami
     restart: unless-stopped
+    labels:
+      dev.dozzle.url: https://t5k.ekb.ru/whoami
 
   sidecar:
     image: ukoloff/sidecar:js
