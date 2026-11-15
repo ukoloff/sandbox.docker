@@ -31,5 +31,6 @@ target "js" {
 		"org.opencontainers.image.authors" = "ukoloff@gmail.com"
 		"org.opencontainers.image.description" = "Sidecar container fetches config from repo and performs some setup"
 		"org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
+    "dev.dozzle.icon" = "it-tools"
 	}
 }
