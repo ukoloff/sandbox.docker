@@ -4,7 +4,7 @@ $isLogin = isset($_REQUEST['login']);
 $id = $isLogin ? trim($_REQUEST['login']) : '';
 if ($id):
   setcookie($cookieName, $id);
-  Header('Location: ./?login');
+  Header('Location: ./');
   exit();
 endif;
 
