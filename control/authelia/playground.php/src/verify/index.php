@@ -1,11 +1,14 @@
 <?
 session_name('uxm-trusted-headers-sso');
 session_start();
-$_SESSION['headers'] = getHeaders();
 
-Header('X-PHP-SSO: Yes!');
-Header('Remote-User: nobody');
-Header('Location: https://auth.ekb.ru/login/?id=' . session_id());
+if ($_SESSION['auth']):
+  foreach ($_SESSION['auth'] as $k => $v)
+    Header("Remote-" . ucfirst($k) . ": " . $v);
+else:
+  $_SESSION['headers'] = getHeaders();
+  Header('Location: https://auth.ekb.ru/?login=' . session_id());
+endif;
 
 function getHeaders()
 {
