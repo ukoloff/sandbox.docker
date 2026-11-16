@@ -21,7 +21,7 @@ if (isset($_REQUEST['login!'])):
   print_r($_SESSION);
   $fwd = getForwards();
   $to = ($fwd->proto && $fwd->host && $fwd->port && $fwd->uri) ?
-    $fwd->proto . "://" . $fwd->host . ":" . $fwd->port . "/" . $fwd->uri
+    $fwd->proto . "://" . $fwd->host . ":" . $fwd->port . $fwd->uri
     :
     './';
   header("Location: $to");
