@@ -37,5 +37,6 @@ target "bash" {
     "org.opencontainers.image.authors" = "ukoloff@gmail.com"
     "org.opencontainers.image.description" = "Dev container for Bash development"
 		"org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
+    "dev.dozzle.icon"= "shell"
   }
 }
