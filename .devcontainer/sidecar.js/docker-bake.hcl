@@ -35,5 +35,6 @@ target "node-js" {
     "org.opencontainers.image.authors" = "ukoloff@gmail.com"
     "org.opencontainers.image.description" = "Node.js environment, a few packages for DevContainer development preinstalled"
     "org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
+    "dev.dozzle.icon"= "nodejs"
   }
 }
