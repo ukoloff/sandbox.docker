@@ -1,0 +1,18 @@
+http:
+  routers:
+    api:
+      rule: Host(`t5k.ekb.ru`) && PathRegexp(`^/(api|debug)`)
+      service: api@internal
+      middlewares:
+        - t5k-auth
+
+    dashboard:
+      rule: Host(`t5k.ekb.ru`)
+      service: dashboard@internal
+      middlewares:
+        - t5k-auth
+
+  middlewares:
+    t5k-auth:
+      basicAuth:
+        usersFile: /etc/traefik/passwd

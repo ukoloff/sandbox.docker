@@ -5,10 +5,10 @@ services:
       mode: global
       restart_policy:
         condition: any
-    ports:
-      - target: 5001
-        published: 5001
-        mode: host
+    # ports:
+    #   - target: 5001
+    #     published: 5001
+    #     mode: host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - dockge:/app/data
@@ -21,6 +21,14 @@ services:
       # Tell Dockge where to find the stacks
       DOCKGE_STACKS_DIR: /opt/stacks
       DOCKGE_ENABLE_CONSOLE: "true"
+    labels:
+      traefik.enable: true
+      traefik.http.routers.dockge.rule: Host(`dockge.docker.ekb.ru`)
 
 volumes:
   dockge:
+
+networks:
+  default:
+    name: traefik
+    external: true

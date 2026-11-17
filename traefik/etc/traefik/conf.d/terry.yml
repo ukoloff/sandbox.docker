@@ -1,0 +1,6 @@
+http:
+  middlewares:
+    terry:
+      headers:
+        customResponseHeaders:
+          X-Clacks-Overhead: GNU Terry Pratchett
