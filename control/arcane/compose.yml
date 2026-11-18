@@ -16,6 +16,8 @@ services:
       - ARCANE_PROJECTS_DIRECTORY=/opt/docker
     cgroup: host
     restart: unless-stopped
+    labels:
+      dev.dozzle.icon: it-tools
 
 volumes:
   arcane-data:
