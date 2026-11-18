@@ -1,0 +1,44 @@
+services:
+  manager:
+    image: ghcr.io/getarcaneapp/manager:latest
+    ports:
+      - "3552:3552"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - data:/app/data
+      - /opt/docker:/opt/docker
+    environment:
+      - ARCANE_APP_URL=http://localhost:3552
+      - PUID=1000
+      - PGID=1000
+      # - ARCANE_ENCRYPTION_KEY=${ARCANE_ENCRYPTION_KEY}
+      - ARCANE_PROJECTS_DIRECTORY=/opt/docker
+    env_file:
+      - .env
+    # cgroup: host
+    restart: unless-stopped
+    labels:
+      dev.dozzle.icon: it-tools
+
+  agent:
+    image: ghcr.io/getarcaneapp/agent:latest
+    deploy:
+      mode: global
+    # container_name: arcane-agent
+    restart: unless-stopped
+    environment:
+      - ARCANE_AGENT=true
+      - ARCANE_AGENT_TRANSPORT=auto
+      # - ARCANE_AGENT_TOKEN=arc_etkn_17...
+      - ARCANE_MANAGER_API_URL=http://manager:3552
+    env_file:
+      - .env
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - adata:/app/data
+    labels:
+      dev.dozzle.icon: it-tools
+
+volumes:
+  data:
+  adata:
