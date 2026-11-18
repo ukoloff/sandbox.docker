@@ -30,6 +30,8 @@ services:
         - ya.ru
     post_start:
       - command: /scripts/awg-monitor.sh
+    labels:
+      dev.dozzle.icon: wireguard
 
   tweedledum:
     image: alpine/curl
@@ -84,6 +86,8 @@ services:
       options:
         max-size: 10m
         max-file: 3
+    labels:
+      dev.dozzle.icon: wireguard
 
 volumes:
   etc:
