@@ -1,10 +1,13 @@
 # Traefik
 
 ## Boot config
+No longer needed to run
 ```sh
 docker compose create
 docker compose cp etc/traefik proxy:/etc/
 ```
+Performed by `sidecar` container.
+Restart it to refresh data...
 
 ## Run in Swarm mode
 ```sh

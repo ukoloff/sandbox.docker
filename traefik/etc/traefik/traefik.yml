@@ -11,6 +11,8 @@ entryPoints:
           to: tls
           scheme: https
           permanent: true
+      middlewares:
+        - terry@file
 
   # traefik:
   #   address: :8080
@@ -21,12 +23,18 @@ entryPoints:
     http:
       tls:
         certResolver: le
+        domains:
+          - main: "*.ekb.ru"
+            # sans: ekb.ru
+      middlewares:
+        - terry@file
 
 api:
   # insecure: true
   dashboard: true
   debug: true
   disabledashboardad: true
+
 providers:
   docker:
     exposedByDefault: false
@@ -48,7 +56,7 @@ certificatesResolvers:
       storage: /letsenrypt/acme.json
       keyType: EC384
       dnsChallenge:
-        provider: httpreq
+        provider: exec
         # resolvers:
         #   - 8.8.8.8
         propagation:

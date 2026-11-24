@@ -1,11 +1,14 @@
 group "default" {
-	targets = ["js"]
+  targets = ["js"]
 }
 
 target "js" {
-	tags = ["ukoloff/sidecar:js", "ghcr.io/ukoloff/sidecar:js"]
-	pull = true
-	dockerfile-inline = <<-EOT
+  tags = flatten(
+    [for reg in ["", "ghcr.io/"] :
+      [for date in ["", formatdate("-YYYY.MM", timestamp())] :
+	    "${reg}ukoloff/sidecar:js${date}"]])
+  pull = true
+  dockerfile-inline = <<-EOT
 		FROM node:lts-alpine AS build
 
 		WORKDIR /build
@@ -27,9 +30,10 @@ target "js" {
 		CMD ["/bin/sidecar-git"]
 		EOT
 
-	labels = {
-		"org.opencontainers.image.authors" = "Stanislav.Ukolov@omzglobal.com"
-		"org.opencontainers.image.description" = "Sidecar container fetches config from repo and performs some setup"
-		"org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
-	}
+  labels = {
+    "org.opencontainers.image.authors" = "ukoloff@gmail.com"
+    "org.opencontainers.image.description" = "Sidecar container fetches config from repo and performs some setup"
+    "org.opencontainers.image.source" = "https://github.com/ukoloff/sandbox.docker"
+    "dev.dozzle.icon" = "it-tools"
+  }
 }
